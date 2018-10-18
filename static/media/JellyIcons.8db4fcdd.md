@@ -12,7 +12,7 @@ Questo il **link** a [Jelly Icons](https://assetstore.unity.com/packages/2d/gui/
 
 ![foo](../images/JellyIcons1.png)
 
-![foo](../images/JellyIcons2.jpg)
+![foo](../images/JellyIcons2.JPG)
 
-![foo](../images/JellyIcons3.jpg)
+![foo](../images/JellyIcons3.JPG)
 

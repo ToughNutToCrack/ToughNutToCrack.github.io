@@ -10,9 +10,16 @@ Sentitevi liberi di scaricarle ed utilizzarle come preferite nei vostri progetti
 
 Questo il **link** a [Jelly Icons](https://assetstore.unity.com/packages/2d/gui/icons/jelly-icons-99749)
 
-![foo](../images/JellyIcons1.png)
 
-![foo](../images/JellyIcons2.JPG)
+<p>
+    <img src="../images/JellyIcons1.png" class="col">
+</p>
 
-![foo](../images/JellyIcons3.JPG)
+<p>
+    <img src="../images/JellyIcons2.JPG" class="col-lg-8 col-ms-12">
+</p>
+
+<p>
+    <img src="../images/JellyIcons3.JPG" class="col-lg-8 col-ms-12">
+</p>
 

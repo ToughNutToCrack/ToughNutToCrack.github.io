@@ -1,9 +1,9 @@
 {
-  "main.css": "/static/css/main.e71839bc.chunk.css",
-  "main.js": "/static/js/main.40406cbd.chunk.js",
-  "main.js.map": "/static/js/main.40406cbd.chunk.js.map",
-  "static/js/1.a26dd953.chunk.js": "/static/js/1.a26dd953.chunk.js",
-  "static/js/1.a26dd953.chunk.js.map": "/static/js/1.a26dd953.chunk.js.map",
+  "main.css": "/static/css/main.c510bc0f.chunk.css",
+  "main.js": "/static/js/main.15c528ac.chunk.js",
+  "main.js.map": "/static/js/main.15c528ac.chunk.js.map",
+  "static/js/1.47ee2d32.chunk.js": "/static/js/1.47ee2d32.chunk.js",
+  "static/js/1.47ee2d32.chunk.js.map": "/static/js/1.47ee2d32.chunk.js.map",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
   "static/media/GameJam.png": "/static/media/GameJam.d702d0f1.png",
@@ -24,8 +24,8 @@
   "static/media/Course.jpg": "/static/media/Course.b1c4d919.jpg",
   "static/media/YT.jpg": "/static/media/YT.011ae569.jpg",
   "static/media/talk.jpg": "/static/media/talk.92bd93f8.jpg",
-  "static/css/main.e71839bc.chunk.css.map": "/static/css/main.e71839bc.chunk.css.map",
+  "static/css/main.c510bc0f.chunk.css.map": "/static/css/main.c510bc0f.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.78cc0914fd19b0f166ab61a16c016315.js": "/precache-manifest.78cc0914fd19b0f166ab61a16c016315.js",
+  "precache-manifest.452018a36628dfc81f8915d5eed28577.js": "/precache-manifest.452018a36628dfc81f8915d5eed28577.js",
   "service-worker.js": "/service-worker.js"
 }

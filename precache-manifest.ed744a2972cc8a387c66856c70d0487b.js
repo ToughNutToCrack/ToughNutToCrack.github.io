@@ -84,7 +84,7 @@ self.__precacheManifest = [
     "url": "/static/media/YT.011ae569.jpg"
   },
   {
-    "revision": "22ce55ed14c6a85c1042f9d1ef8daf3d",
+    "revision": "c897c57ce0dd37fa23ff964486663bc6",
     "url": "/index.html"
   }
 ];

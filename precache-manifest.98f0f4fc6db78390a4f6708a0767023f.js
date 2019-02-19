@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/ScrittaLogo.cde5032a.mtl"
   },
   {
-    "revision": "b2ef54b22697e97d8b72",
+    "revision": "155f0d081632f15563c5",
     "url": "/static/css/main.657acef9.chunk.css"
   },
   {
@@ -68,8 +68,8 @@ self.__precacheManifest = [
     "url": "/static/media/ScrittaLogo.7654cbda.obj"
   },
   {
-    "revision": "b2ef54b22697e97d8b72",
-    "url": "/static/js/main.b2ef54b2.chunk.js"
+    "revision": "155f0d081632f15563c5",
+    "url": "/static/js/main.155f0d08.chunk.js"
   },
   {
     "revision": "6aef1e99587765f8358fa99c8b1f31be",
@@ -136,7 +136,7 @@ self.__precacheManifest = [
     "url": "/static/media/Youtube.2b7c301d.png"
   },
   {
-    "revision": "74ce60c65814ab763732d03ebbf94258",
+    "revision": "2eea520317c7f268e89d0415543d5681",
     "url": "/index.html"
   }
 ];

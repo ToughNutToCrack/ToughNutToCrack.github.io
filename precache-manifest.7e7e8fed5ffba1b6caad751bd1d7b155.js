@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/Cloud1.14074a69.obj"
   },
   {
-    "revision": "365ee5c08c0732271143",
+    "revision": "2bc78bbbb09ab9c09da5",
     "url": "/static/css/main.fadce61c.chunk.css"
   },
   {
@@ -68,8 +68,8 @@ self.__precacheManifest = [
     "url": "/static/media/TorriMedie.21f6d7a7.mtl"
   },
   {
-    "revision": "365ee5c08c0732271143",
-    "url": "/static/js/main.365ee5c0.chunk.js"
+    "revision": "2bc78bbbb09ab9c09da5",
+    "url": "/static/js/main.2bc78bbb.chunk.js"
   },
   {
     "revision": "b676ce69388e71556494355628652446",
@@ -136,7 +136,7 @@ self.__precacheManifest = [
     "url": "/static/media/Game3.b983e678.jpg"
   },
   {
-    "revision": "0094e93e3d958235c838dfc493bef799",
+    "revision": "5f0d46d3ef030f8e0cc2270ed55e9401",
     "url": "/index.html"
   }
 ];

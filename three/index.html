@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - FBX loader</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a {
+				color: #046;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script src="three.js"></script>
+
+		<script src="inflate.min.js"></script>
+		<script src="FBXLoader.js"></script>
+
+		<script src="OrbitControls.js"></script>
+		<script src="TransformControls.js"></script>
+		<script src="WebGL.js"></script>
+		<script src="stats.min.js"></script>
+
+		<div id="info">
+			<a href="javascript:control.setMode( 'translate' );">"W" translate</a> |
+			<a href="javascript:control.setMode( 'rotate' );">"E" rotate</a> |
+			<a href="javascript:control.setMode( 'scale' );">"R" scale</a> |
+			<a href="javascript:control.setSize( control.size + 0.1 );">"+" increase size</a> |
+			<a href="javascript:control.setSize( Math.max( control.size - 0.1, 0.1 ) );">"-" decrease size</a><br />
+			<a href="javascript:control.setSpace( control.space === 'local' ? 'world' : 'local' );">"Q" toggle world/local space</a> | Hold "Ctrl" down to snap to grid<br />
+			<a href="javascript:control.showX = !control.showX">"X" toggle X</a> |
+			<a href="javascript:control.showY = !control.showY">"Y" toggle Y</a> |
+			<a href="javascript:control.showZ = !control.showZ">"Z" toggle Z</a> |
+			<a href="javascript:control.enabled = !control.enabled">"Spacebar" toggle enabled</a><br />
+		</div>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
+			}
+
+			var container, stats, controls;
+			var camera, scene, renderer, light;
+
+			var clock = new THREE.Clock();
+
+			var mixer;
+
+			init();
+			animate();
+			
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMap.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
+				camera.position.set( 100, 200, 300 );
+
+				orbit = new THREE.OrbitControls( camera );
+				orbit.target.set( 0, 100, 0 );
+				orbit.update();
+				orbit.addEventListener( 'change', render );
+
+				control = new THREE.TransformControls( camera, renderer.domElement );
+				control.addEventListener( 'change', render );
+
+				control.addEventListener( 'dragging-changed', function ( event ) {
+
+					orbit.enabled = ! event.value;
+
+				} );
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0xa0a0a0 );
+
+				light = new THREE.DirectionalLight( 0xffffff, 1 );
+				light.castShadow = true;
+				scene.add( light );
+
+				// ground
+				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+				mesh.rotation.x = - Math.PI / 2;
+				mesh.receiveShadow = true;
+				scene.add( mesh );
+
+				var grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
+				grid.material.opacity = 0.2;
+				grid.material.transparent = true;
+				scene.add( grid );
+
+				// model
+				var loader = new THREE.FBXLoader();
+
+				loader.load( './car.FBX', function ( object ) {
+					object.traverse( function ( child ) {
+						if ( child.isMesh ) {
+
+							const oldMat = child.material;
+
+							child.castShadow = true;
+							child.receiveShadow = true;
+							child.material = new THREE.MeshLambertMaterial( {
+							 	color: 0xDEB887
+							 });
+						}
+					} );
+					scene.add( object );
+					control.attach( object );
+					scene.add( control);
+				} );
+				
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				// stats
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				window.addEventListener( 'keydown', function ( event ) {
+
+				switch ( event.keyCode ) {
+				
+					case 81: // Q
+						control.setSpace( control.space === "local" ? "world" : "local" );
+						break;
+				
+					case 17: // Ctrl
+						control.setTranslationSnap( 100 );
+						control.setRotationSnap( THREE.Math.degToRad( 15 ) );
+						break;
+				
+					case 87: // W
+						control.setMode( "translate" );
+						break;
+				
+					case 69: // E
+						control.setMode( "rotate" );
+						break;
+				
+					case 82: // R
+						control.setMode( "scale" );
+						break;
+				
+					case 187:
+					case 107: // +, =, num+
+						control.setSize( control.size + 0.1 );
+						break;
+				
+					case 189:
+					case 109: // -, _, num-
+						control.setSize( Math.max( control.size - 0.1, 0.1 ) );
+						break;
+				
+					case 88: // X
+						control.showX = ! control.showX;
+						break;
+				
+					case 89: // Y
+						control.showY = ! control.showY;
+						break;
+				
+					case 90: // Z
+						control.showZ = ! control.showZ;
+						break;
+				
+					case 32: // Spacebar
+						control.enabled = ! control.enabled;
+						break;
+				}
+
+			} );
+
+			window.addEventListener( 'keyup', function ( event ) {
+			
+			switch ( event.keyCode ) {
+			
+				case 17: // Ctrl
+					control.setTranslationSnap( null );
+					control.setRotationSnap( null );
+					break;
+			}
+			});
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				var delta = clock.getDelta();
+
+				if ( mixer ) mixer.update( delta );
+
+				render();
+
+				stats.update();
+
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>

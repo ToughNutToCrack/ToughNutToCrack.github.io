@@ -39,7 +39,7 @@
 		<script src="WebGL.js"></script>
 		<script src="stats.min.js"></script>
 
-		<div id="info">
+		<!-- <div id="info">
 			<a href="javascript:control.setMode( 'translate' );">"W" translate</a> |
 			<a href="javascript:control.setMode( 'rotate' );">"E" rotate</a> |
 			<a href="javascript:control.setMode( 'scale' );">"R" scale</a> |
@@ -50,26 +50,20 @@
 			<a href="javascript:control.showY = !control.showY">"Y" toggle Y</a> |
 			<a href="javascript:control.showZ = !control.showZ">"Z" toggle Z</a> |
 			<a href="javascript:control.enabled = !control.enabled">"Spacebar" toggle enabled</a><br />
-		</div>
+		</div> -->
 
 		<script>
 
 			if ( WEBGL.isWebGLAvailable() === false ) {
-
 				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
-
 			}
 
 			var container, stats, controls;
 			var camera, scene, renderer, light;
-
 			var clock = new THREE.Clock();
 
-			var mixer;
-
 			init();
-			animate();
-			
+			update();
 
 			function init() {
 
@@ -92,21 +86,16 @@
 
 				control = new THREE.TransformControls( camera, renderer.domElement );
 				control.addEventListener( 'change', render );
-
 				control.addEventListener( 'dragging-changed', function ( event ) {
-
 					orbit.enabled = ! event.value;
-
 				} );
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0xa0a0a0 );
 
 				light = new THREE.DirectionalLight( 0xffffff, 1 );
 				light.castShadow = true;
 				scene.add( light );
 
-				// ground
 				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
 				mesh.rotation.x = - Math.PI / 2;
 				mesh.receiveShadow = true;
@@ -117,129 +106,260 @@
 				grid.material.transparent = true;
 				scene.add( grid );
 
-				// model
-				var loader = new THREE.FBXLoader();
+				var path = "textures/cube/SwedishRoyalCastle/";
+				var format = '.jpg';
+				var urls = [
+					path + 'px' + format, path + 'nx' + format,
+					path + 'py' + format, path + 'ny' + format,
+					path + 'pz' + format, path + 'nz' + format
+				];
 
-				loader.load( 'car.fbx', function ( object ) {
+				var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+				reflectionCube.format = THREE.RGBFormat;
+
+				var refractionCube = new THREE.CubeTextureLoader().load( urls );
+				refractionCube.mapping = THREE.CubeRefractionMapping;
+				refractionCube.format = THREE.RGBFormat;
+
+				scene.background = reflectionCube;
+
+				var loader = new THREE.FBXLoader();
+				loader.load( 'models/fbx/car.fbx', function ( object ) {
 					object.traverse( function ( child ) {
 						if ( child.isMesh ) {
-
-							const oldMat = child.material;
-
 							child.castShadow = true;
 							child.receiveShadow = true;
-							child.material = new THREE.MeshLambertMaterial( {
-							 	color: 0xDEB887
-							 });
+
+							switch (child.name) {
+
+								case 'Z3_fbxZ3_fbxZ3_grill2':
+								case 'Z3_fbxZ3_fbxZ3_front_bumper':
+								case 'Z3_fbxZ3_fbxZ3_left_headlight1':
+								case 'Z3_fbxZ3_fbxZ3_right_headlight1':
+								case 'Z3_fbxZ3_fbxZ3_molding':
+								case 'Z3_fbxZ3_fbxZ3_wheel2':
+								case 'Z3_fbxZ3_fbxZ3_wheel2001':
+								case 'Z3_fbxZ3_fbxZ3_wheel2002':
+								case 'Z3_fbxZ3_fbxZ3_wheel2003':
+								case 'Z3_fbxZ3_fbxZ3_wheel1':
+								case 'Z3_fbxZ3_fbxZ3_wheel1001':
+								case 'Z3_fbxZ3_fbxZ3_wheel1002':
+								case 'Z3_fbxZ3_fbxZ3_wheel1003':
+								case 'Z3_fbxZ3_fbxZ3_wheel3':
+								case 'Z3_fbxZ3_fbxZ3_wheel3001':
+								case 'Z3_fbxZ3_fbxZ3_wheel3002':
+								case 'Z3_fbxZ3_fbxZ3_wheel3003':
+								case 'Z3_fbxZ3_fbxZ3_wheel4':
+								case 'Z3_fbxZ3_fbxZ3_wheel4001':
+								case 'Z3_fbxZ3_fbxZ3_wheel4002':
+								case 'Z3_fbxZ3_fbxZ3_wheel4003':
+								case 'polySurface5':
+								case 'polySurface6':
+								case 'Z3_fbxZ3_fbxZ3_rear_bumper':
+								case 'Z3_fbxZ3_fbxZ3_exhaust':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight2':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight2':
+									//Metallo Grigio
+									child.material = new THREE.MeshLambertMaterial( {
+							 			color: 0x919191,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0.2
+							 		});
+									break;
+
+								case 'Z3_fbxZ3_fbxZ3_tyre1':
+								case 'Z3_fbxZ3_fbxZ3_tyre2':
+								case 'Z3_fbxZ3_fbxZ3_tyre3':
+								case 'Z3_fbxZ3_fbxZ3_tyre4':
+								case 'Z3_fbxZ3_fbxZ3_grill4':
+								case 'Z3_fbxZ3_fbxZ3_hood2':
+								case 'Z3_fbxZ3_fbxZ3_grill3':
+								case 'Z3_fbxZ3_fbxZ3_bottom':
+								case 'Z3_fbxZ3_fbxZ3_roof1':
+								case 'polySurface19':
+								case 'polySurface22':
+								case 'Z3_fbxZ3_fbxZ3_body4':
+									//Plastica Scura
+									child.material = new THREE.MeshLambertMaterial( {
+							 			color: 0x181818,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0
+							 		});
+									break;
+
+								case 'polySurface27':
+								case 'polySurface28':
+								case 'Z3_fbxZ3_fbxZ3_dashboard':
+								case 'Z3_fbxZ3_fbxZ3_gearbox':
+								case 'Z3_fbxZ3_fbxZ3_interior1':
+								case 'polySurface30':
+								case 'polySurface29':
+								case 'Z3_fbxZ3_fbxZ3_interior3':
+								case 'Z3_fbxZ3_fbxZ3_interior4':
+								case 'Z3_fbxZ3_fbxZ3_mirror2':
+									//Nero Interni
+									child.material = new THREE.MeshLambertMaterial( {
+							 			color: 0x1b1b1b,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0
+							 		});
+									break;
+
+								case 'Z3_fbxZ3_fbxZ3_seats':
+								case 'Z3_fbxZ3_fbxZ3_interior5':
+								case 'Z3_fbxZ3_fbxZ3_steering_wheel':
+									//Pelle marrone
+									child.material = new THREE.MeshLambertMaterial( {
+							 			color: 0x2f1f1f,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0
+							 		});
+									break;
+								
+								case 'polySurface9':
+								case 'polySurface14':
+								case 'Z3_fbxZ3_fbxZ3_glass1':
+								case 'Z3_fbxZ3_fbxZ3_roof2':
+								case 'polySurface10':
+								case 'polySurface13':
+								case 'Z3_fbxZ3_fbxZ3_right_headlight2':
+								case 'Z3_fbxZ3_fbxZ3_left_headlight2':
+								case 'Z3_fbxZ3_fbxZ3_right_turnlight1':
+								case 'Z3_fbxZ3_fbxZ3_right_turnlight2':
+								case 'Z3_fbxZ3_fbxZ3_right_turnlight3':
+								case 'Z3_fbxZ3_fbxZ3_right_turnlight4':
+								case 'Z3_fbxZ3_fbxZ3_right_turnlight5':
+								case 'Z3_fbxZ3_fbxZ3_left_turnlight1':
+								case 'Z3_fbxZ3_fbxZ3_left_turnlight2':
+								case 'Z3_fbxZ3_fbxZ3_left_turnlight3':
+								case 'Z3_fbxZ3_fbxZ3_left_turnlight4':
+								case 'Z3_fbxZ3_fbxZ3_left_turnlight5':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight1':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight2':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight3':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight4':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight5':
+								case 'Z3_fbxZ3_fbxZ3_right_rearlight6':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight1':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight2':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight3':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight4':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight5':
+								case 'Z3_fbxZ3_fbxZ3_left_rearlight6':
+									//Trasparenze
+									child.material = new THREE.MeshLambertMaterial( {
+										color: 0x111111,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0.6,
+										transparent: true,
+										opacity: 0.6
+									});
+									break;
+								
+								default: 
+									//Metallo Rosso
+									child.material = new THREE.MeshLambertMaterial( {
+							 			color: 0xb90f0f,
+										envMap: reflectionCube,
+										combine: THREE.MixOperation,
+										reflectivity: 0.3
+							 		});
+							}
 						}
-					} );
+					});
 					scene.add( object );
 					control.attach( object );
 					scene.add( control);
 				} );
-				
-				window.addEventListener( 'resize', onWindowResize, false );
 
-				// stats
 				stats = new Stats();
 				container.appendChild( stats.dom );
 
-				window.addEventListener( 'keydown', function ( event ) {
+				window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener( 'keydown', handleKeyDown);
+				window.addEventListener( 'keyup', handleKeyUp);
+			}
 
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+
+			function update() {
+				requestAnimationFrame(update);
+				var delta = clock.getDelta();
+				render();
+				stats.update();
+			}
+
+			function render() {
+				renderer.render( scene, camera );
+			}
+
+			function handleKeyUp() {
 				switch ( event.keyCode ) {
-				
+					case 17: // Ctrl
+						control.setTranslationSnap( null );
+						control.setRotationSnap( null );
+						break;
+				}
+			}
+
+			function handleKeyDown() {
+				switch ( event.keyCode ) {
 					case 81: // Q
 						control.setSpace( control.space === "local" ? "world" : "local" );
 						break;
-				
+					
 					case 17: // Ctrl
 						control.setTranslationSnap( 100 );
 						control.setRotationSnap( THREE.Math.degToRad( 15 ) );
 						break;
-				
+					
 					case 87: // W
 						control.setMode( "translate" );
 						break;
-				
+					
 					case 69: // E
 						control.setMode( "rotate" );
 						break;
-				
+					
 					case 82: // R
 						control.setMode( "scale" );
 						break;
-				
+					
 					case 187:
 					case 107: // +, =, num+
 						control.setSize( control.size + 0.1 );
 						break;
-				
+					
 					case 189:
 					case 109: // -, _, num-
 						control.setSize( Math.max( control.size - 0.1, 0.1 ) );
 						break;
-				
+					
 					case 88: // X
 						control.showX = ! control.showX;
 						break;
-				
+					
 					case 89: // Y
 						control.showY = ! control.showY;
 						break;
-				
+					
 					case 90: // Z
 						control.showZ = ! control.showZ;
 						break;
-				
+					
 					case 32: // Spacebar
 						control.enabled = ! control.enabled;
 						break;
 				}
-
-			} );
-
-			window.addEventListener( 'keyup', function ( event ) {
-			
-			switch ( event.keyCode ) {
-			
-				case 17: // Ctrl
-					control.setTranslationSnap( null );
-					control.setRotationSnap( null );
-					break;
-			}
-			});
-
-			}
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-			}
-
-			//
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				var delta = clock.getDelta();
-
-				if ( mixer ) mixer.update( delta );
-
-				render();
-
-				stats.update();
-
-			}
-
-			function render() {
-
-				renderer.render( scene, camera );
-
 			}
 
 		</script>

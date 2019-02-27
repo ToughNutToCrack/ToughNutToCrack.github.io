@@ -106,7 +106,7 @@
 				grid.material.transparent = true;
 				scene.add( grid );
 
-				var path = "textures/cube/SwedishRoyalCastle/";
+				var path = "hdr/";
 				var format = '.jpg';
 				var urls = [
 					path + 'px' + format, path + 'nx' + format,
@@ -124,7 +124,7 @@
 				scene.background = reflectionCube;
 
 				var loader = new THREE.FBXLoader();
-				loader.load( 'models/fbx/car.fbx', function ( object ) {
+				loader.load( 'car.fbx', function ( object ) {
 					object.traverse( function ( child ) {
 						if ( child.isMesh ) {
 							child.castShadow = true;

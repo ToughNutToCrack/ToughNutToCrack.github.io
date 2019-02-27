@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/static/media/TorriMedie.21f6d7a7.mtl"
   },
   {
-    "revision": "6e5887952f919b800f4d",
-    "url": "/static/css/main.33fcc331.chunk.css"
+    "revision": "f6b3d8c4b6586246249b",
+    "url": "/static/css/main.fadce61c.chunk.css"
   },
   {
     "revision": "b7f7272e947ec9862093",
@@ -52,44 +52,44 @@ self.__precacheManifest = [
     "url": "/static/media/AR3.e8aef87d.jpg"
   },
   {
-    "revision": "7654cbdabd5077d7c019c220cabe28c6",
-    "url": "/static/media/ScrittaLogo.7654cbda.obj"
+    "revision": "b9b82bd358e1834629aed834ff275e9e",
+    "url": "/static/media/ScrittaLogo.b9b82bd3.obj"
   },
   {
-    "revision": "cde5032ae75425c2ede84cd138e18386",
-    "url": "/static/media/ScrittaLogo.cde5032a.mtl"
+    "revision": "9a7a0343ac8f69413feeb4efd3e622a8",
+    "url": "/static/media/ScrittaLogo.9a7a0343.mtl"
   },
   {
     "revision": "6aef1e99587765f8358fa99c8b1f31be",
     "url": "/static/media/TorriMedie.6aef1e99.obj"
   },
   {
-    "revision": "6e5887952f919b800f4d",
-    "url": "/static/js/main.6e588795.chunk.js"
+    "revision": "f6b3d8c4b6586246249b",
+    "url": "/static/js/main.f6b3d8c4.chunk.js"
   },
   {
-    "revision": "b092c9c6ac47edda8a94e68e9d1f4a5a",
-    "url": "/static/media/Cloud1.b092c9c6.obj"
+    "revision": "14074a69aebb18332fdf035224dd06ab",
+    "url": "/static/media/Cloud1.14074a69.obj"
   },
   {
-    "revision": "69781895633887837168f77a0396561b",
-    "url": "/static/media/Cloud1.69781895.mtl"
+    "revision": "b676ce69388e71556494355628652446",
+    "url": "/static/media/Cloud1.b676ce69.mtl"
   },
   {
-    "revision": "8f5afe01c662d5142576625649c182c4",
-    "url": "/static/media/Cloud2.8f5afe01.obj"
+    "revision": "38917add93c19ea0d9933b8774320f29",
+    "url": "/static/media/Cloud2.38917add.obj"
   },
   {
-    "revision": "69781895633887837168f77a0396561b",
-    "url": "/static/media/Cloud2.69781895.mtl"
+    "revision": "b676ce69388e71556494355628652446",
+    "url": "/static/media/Cloud2.b676ce69.mtl"
   },
   {
-    "revision": "ba89c60a45b873c73a1be399b00b7611",
-    "url": "/static/media/Cloud3.ba89c60a.obj"
+    "revision": "7cc20fd297518513a6523c33f111a1cc",
+    "url": "/static/media/Cloud3.7cc20fd2.obj"
   },
   {
-    "revision": "69781895633887837168f77a0396561b",
-    "url": "/static/media/Cloud3.69781895.mtl"
+    "revision": "b676ce69388e71556494355628652446",
+    "url": "/static/media/Cloud3.b676ce69.mtl"
   },
   {
     "revision": "49f574c69e46b4fe35cabb56fd21d931",
@@ -124,7 +124,7 @@ self.__precacheManifest = [
     "url": "/static/media/Youtube.2b7c301d.png"
   },
   {
-    "revision": "9af665355f9aaf301be0d617a6922fbe",
+    "revision": "97ecbccaf8d3d659b55dc171e5561410",
     "url": "/index.html"
   }
 ];

@@ -39,19 +39,6 @@
 		<script src="WebGL.js"></script>
 		<script src="stats.min.js"></script>
 
-		<!-- <div id="info">
-			<a href="javascript:control.setMode( 'translate' );">"W" translate</a> |
-			<a href="javascript:control.setMode( 'rotate' );">"E" rotate</a> |
-			<a href="javascript:control.setMode( 'scale' );">"R" scale</a> |
-			<a href="javascript:control.setSize( control.size + 0.1 );">"+" increase size</a> |
-			<a href="javascript:control.setSize( Math.max( control.size - 0.1, 0.1 ) );">"-" decrease size</a><br />
-			<a href="javascript:control.setSpace( control.space === 'local' ? 'world' : 'local' );">"Q" toggle world/local space</a> | Hold "Ctrl" down to snap to grid<br />
-			<a href="javascript:control.showX = !control.showX">"X" toggle X</a> |
-			<a href="javascript:control.showY = !control.showY">"Y" toggle Y</a> |
-			<a href="javascript:control.showZ = !control.showZ">"Z" toggle Z</a> |
-			<a href="javascript:control.enabled = !control.enabled">"Spacebar" toggle enabled</a><br />
-		</div> -->
-
 		<script>
 
 			if ( WEBGL.isWebGLAvailable() === false ) {
@@ -79,8 +66,10 @@
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 5000 );
 				camera.position.set( 100, 200, 300 );
 
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0xa0a0a0, 600, 2000 );
+
 				orbit = new THREE.OrbitControls( camera );
-				orbit.target.set( 0, 100, 0 );
 				orbit.update();
 				orbit.addEventListener( 'change', render );
 
@@ -90,21 +79,26 @@
 					orbit.enabled = ! event.value;
 				} );
 
-				scene = new THREE.Scene();
+				var ambient = new THREE.AmbientLight(0x666666);
+				scene.add(ambient);
 
 				light = new THREE.DirectionalLight( 0xffffff, 1 );
+				light.position.set(-300, 400, 200);
 				light.castShadow = true;
+				light.shadowCameraVisible = true;
+
+    			light.shadowMapWidth = 512;
+    			light.shadowMapHeight = 512;
+
+    			var d = 200;
+    			light.shadowCameraLeft = -d;
+    			light.shadowCameraRight = d;
+    			light.shadowCameraTop = d;
+    			light.shadowCameraBottom = -d;
+
+    			light.shadowCameraFar = 1000;
+    			light.shadowDarkness = 0.2;
 				scene.add( light );
-
-				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
-				mesh.rotation.x = - Math.PI / 2;
-				mesh.receiveShadow = true;
-				scene.add( mesh );
-
-				var grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
-				grid.material.opacity = 0.2;
-				grid.material.transparent = true;
-				scene.add( grid );
 
 				var path = "hdr/";
 				var format = '.jpg';
@@ -124,6 +118,79 @@
 				scene.background = reflectionCube;
 
 				var loader = new THREE.FBXLoader();
+
+				var columnTexture = new THREE.TextureLoader().load('textures/WallBrickDiffuse.jpg');
+				columnTexture.wrapS = columnTexture.wrapT = THREE.RepeatWrapping;
+				columnTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+				var wallTexture = new THREE.TextureLoader().load('textures/WallBrickDiffuse.jpg');
+				wallTexture.wrapS = wallTexture.wrapT = THREE.RepeatWrapping;
+				wallTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+				wallTexture.repeat.set(10, 10);
+
+				var floorTexture = new THREE.TextureLoader().load('textures/Floor.jpg');
+				floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+				floorTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+				var floorNormalTexture = new THREE.TextureLoader().load('textures/FloorNormal.jpg');
+				floorNormalTexture.wrapS = floorNormalTexture.wrapT = THREE.RepeatWrapping;
+				floorNormalTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+				var metalMat = new THREE.MeshLambertMaterial( {
+					color: 0xb90f0f,
+					envMap: reflectionCube,
+					combine: THREE.MixOperation,
+					reflectivity: 0.3
+				});
+
+				loader.load( 'Garage.fbx', function ( object ) {
+
+					object.traverse( function ( child ) {
+
+						if ( child.isMesh ) {
+							child.castShadow = true;
+							child.receiveShadow = true;
+							switch (child.name) {
+								case 'Colonna':
+								case 'Colonna2':
+								case 'Colonna3':
+								case 'Colonna4':
+								child.material = new THREE.MeshBasicMaterial( {
+							 			color: 0xffffff,
+										map: columnTexture,
+							 		});
+								break;
+
+								case 'Plane005':
+								case 'Plane003':
+								case 'Plane011':
+								case 'Plane010':
+								case 'Plane009':
+								case 'Plane008':
+								case 'Plane007':
+								case 'Plane006':
+								child.material = new THREE.MeshBasicMaterial( {
+							 			color: 0xffffff,
+										map: wallTexture,
+							 		});
+								break;
+
+								case 'Plane002':
+								case 'Plane001':
+								child.material = new THREE.MeshPhongMaterial( {
+							 			color: 0xffffff,
+										map: floorTexture,
+										normalMap: floorNormalTexture,
+										normalScale: new THREE.Vector2( 0.6, 0.6 )
+							 		});
+								break;
+							}
+						}
+					} );
+
+					scene.add( object );
+				} );
+
 				loader.load( 'car.fbx', function ( object ) {
 					object.traverse( function ( child ) {
 						if ( child.isMesh ) {
@@ -263,12 +330,7 @@
 								
 								default: 
 									//Metallo Rosso
-									child.material = new THREE.MeshLambertMaterial( {
-							 			color: 0xb90f0f,
-										envMap: reflectionCube,
-										combine: THREE.MixOperation,
-										reflectivity: 0.3
-							 		});
+									child.material = metalMat;
 							}
 						}
 					});

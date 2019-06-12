@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "21f6d7a7ecd978896a3f137018ed8f8a",
-    "url": "/static/media/TorriMedie.21f6d7a7.mtl"
+    "revision": "eebaec8925fcb3d3e1515db66a5c73be",
+    "url": "/static/media/TorriMedie.eebaec89.mtl"
   },
   {
-    "revision": "f6b3d8c4b6586246249b",
-    "url": "/static/css/main.fadce61c.chunk.css"
+    "revision": "106e59a4176473b6a47a",
+    "url": "/static/css/main.0aa2c7f9.chunk.css"
   },
   {
     "revision": "b7f7272e947ec9862093",
@@ -60,12 +60,12 @@ self.__precacheManifest = [
     "url": "/static/media/ScrittaLogo.9a7a0343.mtl"
   },
   {
-    "revision": "6aef1e99587765f8358fa99c8b1f31be",
-    "url": "/static/media/TorriMedie.6aef1e99.obj"
+    "revision": "57c57db0495d513e98a7adfa20a7e133",
+    "url": "/static/media/TorriMedie.57c57db0.obj"
   },
   {
-    "revision": "f6b3d8c4b6586246249b",
-    "url": "/static/js/main.f6b3d8c4.chunk.js"
+    "revision": "106e59a4176473b6a47a",
+    "url": "/static/js/main.106e59a4.chunk.js"
   },
   {
     "revision": "14074a69aebb18332fdf035224dd06ab",
@@ -124,7 +124,7 @@ self.__precacheManifest = [
     "url": "/static/media/Youtube.2b7c301d.png"
   },
   {
-    "revision": "97ecbccaf8d3d659b55dc171e5561410",
+    "revision": "fd6b2ffa221afa8b69360b7771576020",
     "url": "/index.html"
   }
 ];

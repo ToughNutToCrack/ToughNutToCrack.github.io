@@ -5,8 +5,8 @@
 <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
 
 <body style='margin : 0px; overflow: hidden;'>
-	<!-- <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false"> -->
-	<a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'>
+	<a-scene embedded arjs="trackingMethod: artoolkit; sourceType: webcam; debugUIEnabled: false;" renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
+	<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
 		<a-assets>
 			<a-asset-item id="towers-obj" src="./models/towers/TorriMedie.obj"></a-asset-item>
 			<a-asset-item id="towers-mtl" src="./models/towers/TorriMedie.mtl"></a-asset-item>

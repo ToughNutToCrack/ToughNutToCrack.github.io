@@ -511,7 +511,7 @@
           }
         }
       ],
-      "name": "armature_book|armature_bookAction",
+      "name": "open",
       "samplers": [
         {
           "input": 22,

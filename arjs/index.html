@@ -69,11 +69,16 @@
 		<!-- <a-entity fps-counter></a-entity> -->
 		<a-entity camera="far:100000; near:0.01">
 			<a-entity cursor="rayOrigin: mouse"></a-entity>
-			<a-text id="hint"
+			<!-- <a-text id="hint"
 				align="center"
 				value= "Frames the TNTC marker"
-				position="0 0 -6" color="#fff"
-				visible=true></a-text>
+				position="0 -1 -6" color="#fff"
+				visible=true></a-text> -->
+				<a-entity 
+				id="hint"
+				text="align:center; value:Frames the TNTC marker; color:#FFFFFF; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/patuaone/PatuaOne-Regular.json;" 
+				position="0 -2 -10"
+				scale="10 10 10"></a-entity>     
 		</a-entity>
 
 	</a-scene>

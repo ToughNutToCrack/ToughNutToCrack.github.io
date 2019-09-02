@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/TorriMedie.21f6d7a7.mtl"
   },
   {
-    "revision": "5d9517a96810271de611",
+    "revision": "6abaf98c384ba32de73f",
     "url": "/static/css/main.fadce61c.chunk.css"
   },
   {
@@ -64,8 +64,8 @@ self.__precacheManifest = [
     "url": "/static/media/TorriMedie.6aef1e99.obj"
   },
   {
-    "revision": "5d9517a96810271de611",
-    "url": "/static/js/main.5d9517a9.chunk.js"
+    "revision": "6abaf98c384ba32de73f",
+    "url": "/static/js/main.6abaf98c.chunk.js"
   },
   {
     "revision": "14074a69aebb18332fdf035224dd06ab",
@@ -124,7 +124,7 @@ self.__precacheManifest = [
     "url": "/static/media/Youtube.2b7c301d.png"
   },
   {
-    "revision": "b7801f6aed5a350abf1bc5d0f67918f1",
+    "revision": "c69af892823d1390c5b38453bc09d27f",
     "url": "/index.html"
   }
 ];

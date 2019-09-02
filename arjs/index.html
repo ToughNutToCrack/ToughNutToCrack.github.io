@@ -3,10 +3,12 @@
 <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
 <script src="https://raw.githack.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
 <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
+<!-- <script src="./js/scene-logic.js"></script> -->
 
 <body style='margin : 0px; overflow: hidden;'>
-	<a-scene embedded arjs="trackingMethod: artoolkit; sourceType: webcam; debugUIEnabled: false;" renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
-	<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
+	<a-scene embedded arjs="trackingMethod: artoolkit; sourceType: webcam; debugUIEnabled: false;"
+		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false" >
+		<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
 		<a-assets>
 			<a-asset-item id="towers-obj" src="./models/towers/TorriMedie.obj"></a-asset-item>
 			<a-asset-item id="towers-mtl" src="./models/towers/TorriMedie.mtl"></a-asset-item>
@@ -29,7 +31,7 @@
 			<img id="imgVR" src="./images/vr.png" alt=""></img>
 			<img id="img3D" src="./images/3d.png" alt=""></img>
 			<img id="imgGames" src="./images/games.png" alt=""></img>
-			
+
 		</a-assets>
 
 		<a-marker preset='custom' type='pattern' url='marker/pattern-Marker23.patt'>
@@ -37,27 +39,40 @@
 			<!-- <a-entity id="redBook" gltf-model="#book" scale="0.1 0.1 0.1" animation-mixer="clip: Idle; "> </a-entity> -->
 
 			<a-entity id="book" gltf-model="#bookTNTC" scale="0.5 0.5 0.5" animation-mixer="clip: Open; timeScale:0;"> </a-entity>
-			
-			<a-obj-model id="towers" src="#towers-obj" mtl="#towers-mtl" scale="0.1 0.1 0.1" visible="false" position="-0.6 0.7 0"></a-obj-model>
-			<a-obj-model id="cloud01" src="#cloud01-obj" mtl="#cloud01-mtl" scale="0.05 0.05 0.05" visible="false" position="-0.3 1.4 -2"></a-obj-model>
-			<a-obj-model id="cloud02" src="#cloud02-obj" mtl="#cloud02-mtl" scale="0.04 0.03 0.02" visible="false" position="0.7 3 0"></a-obj-model>
-			<a-obj-model id="cloud03" src="#cloud03-obj" mtl="#cloud03-mtl" scale="0.08 0.05 0.05" visible="false" position="-0.5 2.2 -0.5"></a-obj-model>
-			<a-obj-model id="nutty" src="#nutty-obj" mtl="#nutty-mtl" scale="1 1 1" visible="false"position="-2 0.5 0" rotation="0 -45 0" ></a-obj-model>
 
-			<a-image id="ar" src="#imgAR" position="1.3 1 0.2" width="1" height="1" alphatest= 'val: 0.5' visible="false"></a-image>
-			<a-image id="vr" src="#imgVR" position="-2 2 -0.3" width="1" height="1" alphatest= 'val: 0.5' visible="false"></a-image>
-			<a-image id="ddd" src="#img3D" position="-3 0.3 1.5" width="1" height="1" alphatest= 'val: 0.5' visible="false"></a-image>
-			<a-image id="games" src="#imgGames" position="-0.2 -0.1 1.2" width="1" height="1" alphatest= 'val: 0.5' visible="false"></a-image>
+			<a-obj-model id="towers" src="#towers-obj" mtl="#towers-mtl" scale="0.1 0.1 0.1" visible="false"
+				position="-0.6 0.7 0"></a-obj-model>
+			<a-obj-model id="cloud01" src="#cloud01-obj" mtl="#cloud01-mtl" scale="0.05 0.05 0.05" visible="false"
+				position="-0.3 1.4 -2"></a-obj-model>
+			<a-obj-model id="cloud02" src="#cloud02-obj" mtl="#cloud02-mtl" scale="0.04 0.03 0.02" visible="false"
+				position="0.7 3 0"></a-obj-model>
+			<a-obj-model id="cloud03" src="#cloud03-obj" mtl="#cloud03-mtl" scale="0.08 0.05 0.05" visible="false"
+				position="-0.5 2.2 -0.5"></a-obj-model>
+			<a-obj-model id="nutty" src="#nutty-obj" mtl="#nutty-mtl" scale="1 1 1" visible="false" position="-2 0.5 0"
+				rotation="0 -45 0"></a-obj-model>
+
+			<a-image id="ar" src="#imgAR" position="1.3 1 0.2" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="vr" src="#imgVR" position="-2 2 -0.3" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="ddd" src="#img3D" position="-3 0.3 1.5" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="games" src="#imgGames" position="-0.2 -0.1 1.2" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
 		</a-marker>
 
 		<!-- <a-camera><a-cursor></a-cursor></a-camera> -->
-		<a-entity camera="far:100000; near:0.01" ></a-entity>
+		<a-entity camera="far:100000; near:0.01"><a-entity cursor="rayOrigin: mouse"></a-entity></a-entity>
 	</a-scene>
 
 	<script type="text/javascript">
 
-		let isOpen = false;
-		var opened = new Event('opened')
+		let firstTime = true
+		let isOpen = false
+		let duringAnimation = false
+
+		var openBook = new Event('open-book')
+		var closeBook = new Event('close-book')
 
 		let marker = document.querySelector("a-marker")
 
@@ -74,73 +89,130 @@
 		let nutty = document.querySelector("#nutty")
 
 
-		book.addEventListener('opened', function(evt){
-		// redBook.addEventListener('animation-finished', function(evt){
+		book.addEventListener('open-book', function (evt) {
 			
 			towers.setAttribute('visible', true);
-			towers.setAttribute ('animation', "property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: linear")
-
-			setTimeout(function(evt){
 			cloud01.setAttribute('visible', true);
-			cloud01.setAttribute ('animation', "property: scale; from: 0 0 0; to: 0.05 0.05 0.05; dur: 1500; easing: linear")
-			}, 400)
+			cloud02.setAttribute('visible', true);
+			cloud03.setAttribute('visible', true);
+			ar.setAttribute('visible', true);
+			vr.setAttribute('visible', true);
+			ddd.setAttribute('visible', true);
+			games.setAttribute('visible', true);
+			nutty.setAttribute('visible', true);
 
-			setTimeout(function(evt){
-				cloud02.setAttribute('visible', true);
-				cloud02.setAttribute ('animation', "property: scale; from: 0 0 0; to: 0.05 0.03 0.05; dur: 1500; easing: linear")
-			}, 300)
-			
-			setTimeout(function(evt){
-				cloud03.setAttribute('visible', true);
-				cloud03.setAttribute ('animation', "property: scale; from: 0 0 0; to: 0.08 0.05 0.05; dur: 1500; easing: linear")
-			}, 100)
+			towers.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: linear")
 
-			setTimeout(function(evt){
-				ar.setAttribute('visible', true);
-				ar.setAttribute ('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
-			}, 200)
+			cloud01.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.05 0.05; dur: 1500; easing: linear")
 
-			setTimeout(function(evt){
-				vr.setAttribute('visible', true);
-				vr.setAttribute ('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
-			}, 300)
+			cloud02.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.03 0.05; dur: 1500; easing: linear")
+		
+			cloud03.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.08 0.05 0.05; dur: 1500; easing: linear")
 
-			setTimeout(function(evt){
-				ddd.setAttribute('visible', true);
-				ddd.setAttribute ('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
-			}, 400)
+			ar.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+		
+			vr.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
 
-			setTimeout(function(evt){
-				games.setAttribute('visible', true);
-				games.setAttribute ('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
-			}, 300)
+			ddd.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
 
-			setTimeout(function(evt){
-				nutty.setAttribute('visible', true);
-				nutty.setAttribute ('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: linear")
-			}, 100)
+			games.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+			nutty.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: linear")
+
 		})
 
-		marker.addEventListener('markerFound', function(evt){
-			if(!isOpen){
-				isOpen = true
+		book.addEventListener('close-book', function (evt) {
+
+
+			towers.setAttribute('animation', "property: scale; from: 0.1 0.1 0.1; to: 0 0 0; dur: 1000; easing: linear")
+
+			cloud01.setAttribute('animation', "property: scale; from: 0.05 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+			cloud02.setAttribute('animation', "property: scale; from: 0.05 0.03 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+			cloud03.setAttribute('animation', "property: scale; from: 0.08 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+			ar.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+			vr.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+			ddd.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+			games.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+			nutty.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 1000; easing: linear")
+
+			setTimeout(function (evt){
+				towers.setAttribute('visible', false);
+				cloud01.setAttribute('visible', false);
+				cloud02.setAttribute('visible', false);
+				cloud03.setAttribute('visible', false);
+				ar.setAttribute('visible', false);
+				vr.setAttribute('visible', false);
+				ddd.setAttribute('visible', false);
+				games.setAttribute('visible', false);
+				nutty.setAttribute('visible', false);
+			}, 1500)
+			
+		})
+
+		book.addEventListener('click', function (evt) {
+
+		    if (isOpen && !duringAnimation) {
+				duringAnimation = true
+				book.dispatchEvent(closeBook)
 
 				setTimeout(function(evt){
-					book.setAttribute('animation-mixer', "clip: Open; timeScale:1; duration: 2;")
+					book.setAttribute('animation-mixer', "clip: Open; timeScale:-1; loop:once; duration: 2;")
 
-					setTimeout(function(evt){
-						book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
-						book.dispatchEvent(opened)
+					setTimeout(function (evt) {
+						book.setAttribute('animation-mixer', "clip: Open; loop:repeat; repetitions:Infinity; timeScale:0;")
+						isOpen = false
+						duringAnimation = false
 					}, 2000)
+				},1600)
 
+				
+			} else if (!isOpen && !duringAnimation) {
+				duringAnimation = true
+
+				book.setAttribute('animation-mixer', "clip: Open; timeScale:1; loop:once; duration: 2;")
+
+				setTimeout(function (evt) {
+					book.setAttribute('animation-mixer', "clip: Open; loop:repeat; repetitions:Infinity; timeScale:0;")
+					book.dispatchEvent(openBook)
+					isOpen = true
+					setTimeout(function (evt){
+						duringAnimation = false
+					},1500)
+				}, 2000)
+
+			}
+
+		})
+
+		marker.addEventListener('markerFound', function (evt) {
+			if (!isOpen && !duringAnimation && firstTime) {
+				duringAnimation = true
+
+				setTimeout(function (evt) {
+					book.setAttribute('animation-mixer', "clip: Open; timeScale:1; loop:once;  duration: 2;")
+
+					setTimeout(function (evt) {
+						book.setAttribute('animation-mixer', "clip: Open; loop:repeat; timeScale:0;")
+						book.dispatchEvent(openBook)
+						firstTime = false
+						isOpen = true
+						setTimeout(function (evt){
+							duringAnimation = false
+						},1600)
+					}, 2000)
 				}, 1000)
-
 			}
 		})
 
-
-
 	</script>
+
 </body>
 
 </html>

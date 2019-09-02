@@ -56,7 +56,7 @@
 
 	<script type="text/javascript">
 
-		let state = false;
+		let isOpen = false;
 		var opened = new Event('opened')
 
 		let marker = document.querySelector("a-marker")
@@ -122,8 +122,8 @@
 		})
 
 		marker.addEventListener('markerFound', function(evt){
-			if(!state){
-				state = true
+			if(!isOpen){
+				isOpen = true
 
 				setTimeout(function(evt){
 					book.setAttribute('animation-mixer', "clip: Open; timeScale:1; duration: 2;")
@@ -137,6 +137,8 @@
 
 			}
 		})
+
+
 
 	</script>
 </body>

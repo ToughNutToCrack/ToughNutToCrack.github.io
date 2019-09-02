@@ -3,12 +3,14 @@
 <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
 <script src="https://raw.githack.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
 <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
-<script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script> 
+<script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
 <!-- <script src="./js/scene-logic.js"></script> -->
 
 <body style='margin : 0px; overflow: hidden;'>
+
+
 	<a-scene embedded arjs="trackingMethod: artoolkit; sourceType: webcam; debugUIEnabled: false;"
-		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false" >
+		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
 		<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
 		<a-assets>
 			<a-asset-item id="towers-obj" src="./models/towers/TorriMedie.obj"></a-asset-item>
@@ -39,7 +41,8 @@
 			<!-- <a-obj-model id="tntcBook" src="#book-obj" scale="1 1 1"></a-obj-model> -->
 			<!-- <a-entity id="redBook" gltf-model="#book" scale="0.1 0.1 0.1" animation-mixer="clip: Idle; "> </a-entity> -->
 
-			<a-entity id="book" gltf-model="#bookTNTC" scale="0.5 0.5 0.5" animation-mixer="clip: Open; timeScale:0; loop:pingpong;"> </a-entity>
+			<a-entity id="book" gltf-model="#bookTNTC" scale="0.5 0.5 0.5"
+				animation-mixer="clip: Open; timeScale:0; loop:pingpong;"> </a-entity>
 
 			<a-obj-model id="towers" src="#towers-obj" mtl="#towers-mtl" scale="0.1 0.1 0.1" visible="false"
 				position="-0.6 0.7 0"></a-obj-model>
@@ -64,7 +67,15 @@
 
 		<!-- <a-camera><a-cursor></a-cursor></a-camera> -->
 		<!-- <a-entity fps-counter></a-entity> -->
-		<a-entity camera="far:100000; near:0.01"><a-entity cursor="rayOrigin: mouse"></a-entity></a-entity>
+		<a-entity camera="far:100000; near:0.01">
+			<a-entity cursor="rayOrigin: mouse"></a-entity>
+			<a-text id="hint"
+				align="center"
+				value= "Frames the TNTC marker"
+				position="0 0 -6" color="#fff"
+				visible=true></a-text>
+		</a-entity>
+
 	</a-scene>
 
 	<script type="text/javascript">
@@ -77,6 +88,7 @@
 		var closeBook = new Event('close-book')
 
 		let marker = document.querySelector("a-marker")
+		let hint = document.querySelector("#hint")
 
 		let book = document.querySelector("#book")
 
@@ -92,85 +104,89 @@
 
 
 		book.addEventListener('open-book', function (evt) {
-			
-			towers.setAttribute('visible', true);
-			cloud01.setAttribute('visible', true);
-			cloud02.setAttribute('visible', true);
-			cloud03.setAttribute('visible', true);
-			ar.setAttribute('visible', true);
-			vr.setAttribute('visible', true);
-			ddd.setAttribute('visible', true);
-			games.setAttribute('visible', true);
-			nutty.setAttribute('visible', true);
 
-			towers.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: linear")
+			if(duringAnimation && !isOpen){
 
-			cloud01.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.05 0.05; dur: 1500; easing: linear")
+				towers.setAttribute('visible', true);
+				cloud01.setAttribute('visible', true);
+				cloud02.setAttribute('visible', true);
+				cloud03.setAttribute('visible', true);
+				ar.setAttribute('visible', true);
+				vr.setAttribute('visible', true);
+				ddd.setAttribute('visible', true);
+				games.setAttribute('visible', true);
+				nutty.setAttribute('visible', true);
 
-			cloud02.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.03 0.05; dur: 1500; easing: linear")
-		
-			cloud03.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.08 0.05 0.05; dur: 1500; easing: linear")
+				towers.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: linear")
 
-			ar.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
-		
-			vr.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+				cloud01.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.05 0.05; dur: 1500; easing: linear")
 
-			ddd.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+				cloud02.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.03 0.05; dur: 1500; easing: linear")
 
-			games.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+				cloud03.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.08 0.05 0.05; dur: 1500; easing: linear")
 
-			nutty.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: linear")
+				ar.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
 
+				vr.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				ddd.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				games.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				nutty.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: linear")
+
+			}
 		})
 
 		book.addEventListener('close-book', function (evt) {
 
+			if(duringAnimation && isOpen){
 
-			towers.setAttribute('animation', "property: scale; from: 0.1 0.1 0.1; to: 0 0 0; dur: 1000; easing: linear")
+				towers.setAttribute('animation', "property: scale; from: 0.1 0.1 0.1; to: 0 0 0; dur: 1000; easing: linear")
 
-			cloud01.setAttribute('animation', "property: scale; from: 0.05 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+				cloud01.setAttribute('animation', "property: scale; from: 0.05 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
 
-			cloud02.setAttribute('animation', "property: scale; from: 0.05 0.03 0.05; to: 0 0 0; dur: 1500; easing: linear")
+				cloud02.setAttribute('animation', "property: scale; from: 0.05 0.03 0.05; to: 0 0 0; dur: 1500; easing: linear")
 
-			cloud03.setAttribute('animation', "property: scale; from: 0.08 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+				cloud03.setAttribute('animation', "property: scale; from: 0.08 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
 
-			ar.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+				ar.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
 
-			vr.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+				vr.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
 
-			ddd.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+				ddd.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
 
-			games.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+				games.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
 
-			nutty.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 1000; easing: linear")
+				nutty.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 1000; easing: linear")
 
-			setTimeout(function (evt){
-				towers.setAttribute('visible', false);
-				cloud01.setAttribute('visible', false);
-				cloud02.setAttribute('visible', false);
-				cloud03.setAttribute('visible', false);
-				ar.setAttribute('visible', false);
-				vr.setAttribute('visible', false);
-				ddd.setAttribute('visible', false);
-				games.setAttribute('visible', false);
-				nutty.setAttribute('visible', false);
-			}, 1500)
-			
+				setTimeout(function (evt) {
+					towers.setAttribute('visible', false);
+					cloud01.setAttribute('visible', false);
+					cloud02.setAttribute('visible', false);
+					cloud03.setAttribute('visible', false);
+					ar.setAttribute('visible', false);
+					vr.setAttribute('visible', false);
+					ddd.setAttribute('visible', false);
+					games.setAttribute('visible', false);
+					nutty.setAttribute('visible', false);
+				}, 1500)
+			}
 		})
 
-		book.addEventListener('animation-loop', function(evt){
-			book.setAttribute('animation-mixer',  "timeScale:0;")
+		book.addEventListener('animation-loop', function (evt) {
+			book.setAttribute('animation-mixer', "timeScale:0;")
 		})
 
 		book.addEventListener('click', function (evt) {
 
-		    if (isOpen && !duringAnimation) {
+			if (isOpen && !duringAnimation) {
 				duringAnimation = true
 				book.dispatchEvent(closeBook)
 
-				setTimeout(function(evt){
+				setTimeout(function (evt) {
 					book.setAttribute('animation-mixer', "timeScale:1;")
-					
+
 					// book.setAttribute('animation-mixer', "clip: Open; timeScale:-1; loop:once; duration: 2; clampWhenFinished:false;")
 
 					setTimeout(function (evt) {
@@ -178,9 +194,9 @@
 						isOpen = false
 						duringAnimation = false
 					}, 2000)
-				},1500)
+				}, 1500)
 
-				
+
 			} else if (!isOpen && !duringAnimation) {
 				duringAnimation = true
 				// book.setAttribute('animation-mixer', "clip: 0; clampWhenFinished:false;")
@@ -191,9 +207,9 @@
 					// book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
 					book.dispatchEvent(openBook)
 					isOpen = true
-					setTimeout(function (evt){
+					setTimeout(function (evt) {
 						duringAnimation = false
-					},1500)
+					}, 1500)
 				}, 2000)
 
 			}
@@ -203,20 +219,20 @@
 		marker.addEventListener('markerFound', function (evt) {
 			if (!isOpen && !duringAnimation && firstTime) {
 				duringAnimation = true
-
+				hint.setAttribute('visible', false)
 				setTimeout(function (evt) {
 					book.setAttribute('animation-mixer', "timeScale:1;")
 					// book.setAttribute('animation-mixer', "clip: Open; timeScale:1; loop:once;  duration: 2; clampWhenFinished:true;")
-					
+
 
 					setTimeout(function (evt) {
 						// book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
 						book.dispatchEvent(openBook)
-						firstTime = false
 						isOpen = true
-						setTimeout(function (evt){
+						firstTime = false
+						setTimeout(function (evt) {
 							duringAnimation = false
-						},1500)
+						}, 1500)
 					}, 2000)
 				}, 1000)
 			}

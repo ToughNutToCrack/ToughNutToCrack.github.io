@@ -175,66 +175,62 @@
 		})
 
 		book.addEventListener('animation-loop', function (evt) {
-			book.setAttribute('animation-mixer', "timeScale:0;")
+			book.setAttribute('animation-mixer', "timeScale:0; ")
+			
 		})
 
 		book.addEventListener('click', function (evt) {
 
+			if(duringAnimation || firstTime){
+				return
+			}
+			
 			if (isOpen && !duringAnimation) {
 				duringAnimation = true
 				book.dispatchEvent(closeBook)
 
 				setTimeout(function (evt) {
-					book.setAttribute('animation-mixer', "timeScale:1;")
-
-					// book.setAttribute('animation-mixer', "clip: Open; timeScale:-1; loop:once; duration: 2; clampWhenFinished:false;")
-
-					setTimeout(function (evt) {
-						// book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
-						isOpen = false
-						duringAnimation = false
-					}, 2000)
-				}, 1500)
-
+					book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
+					isOpen = false
+				}, 2000)
 
 			} else if (!isOpen && !duringAnimation) {
+		
+				book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
 				duringAnimation = true
-				// book.setAttribute('animation-mixer', "clip: 0; clampWhenFinished:false;")
-				// book.setAttribute('animation-mixer', "clip: Open; timeScale:1; loop:once; duration: 2; clampWhenFinished:true;")
-				book.setAttribute('animation-mixer', "timeScale:1;")
 
 				setTimeout(function (evt) {
-					// book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
 					book.dispatchEvent(openBook)
 					isOpen = true
-					setTimeout(function (evt) {
-						duringAnimation = false
-					}, 1500)
 				}, 2000)
 
 			}
+
+			setTimeout(function (evt) {
+				duringAnimation = false
+			}, 4500)
 
 		})
 
 		marker.addEventListener('markerFound', function (evt) {
 			if (!isOpen && !duringAnimation && firstTime) {
-				duringAnimation = true
+				
 				hint.setAttribute('visible', false)
-				setTimeout(function (evt) {
-					book.setAttribute('animation-mixer', "timeScale:1;")
-					// book.setAttribute('animation-mixer', "clip: Open; timeScale:1; loop:once;  duration: 2; clampWhenFinished:true;")
 
+				setTimeout(function (evt) {
+					book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
+					duringAnimation = true
 
 					setTimeout(function (evt) {
-						// book.setAttribute('animation-mixer', "clip: Open; timeScale:0;")
 						book.dispatchEvent(openBook)
 						isOpen = true
 						firstTime = false
-						setTimeout(function (evt) {
-							duringAnimation = false
-						}, 1500)
-					}, 2000)
+					}, 2100)
 				}, 1000)
+
+				setTimeout(function (evt) {
+					duringAnimation = false
+				}, 5500)
 			}
 		})
 

@@ -1,0 +1,239 @@
+<!doctype HTML>
+<html>
+<script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
+<script src="https://raw.githack.com/jeromeetienne/AR.js/1.7.1/aframe/build/aframe-ar.js"></script>
+<script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.min.js"></script>
+<script src="https://unpkg.com/aframe-fps-counter-component/dist/aframe-fps-counter-component.min.js"></script>
+<!-- <script src="./js/scene-logic.js"></script> -->
+
+<body style='margin : 0px; overflow: hidden;'>
+
+
+	<a-scene embedded arjs="trackingMethod: artoolkit; sourceType: webcam; debugUIEnabled: false;"
+		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
+		<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
+		<a-assets>
+			<a-asset-item id="towers-obj" src="./models/towers/TorriMedie.obj"></a-asset-item>
+			<a-asset-item id="towers-mtl" src="./models/towers/TorriMedie.mtl"></a-asset-item>
+
+			<!-- <a-asset-item id="book" src="./models/book/book.gltf"></a-asset-item>
+			<a-asset-item id="book-obj" src="./models/book/LibroTNTC.obj"></a-asset-item> -->
+			<a-asset-item id="bookTNTC" src="./models/bookTNTC/book.gltf"></a-asset-item>
+
+			<a-asset-item id="cloud01-obj" src="./models/clouds/Cloud1.obj"></a-asset-item>
+			<a-asset-item id="cloud01-mtl" src="./models/clouds/Cloud1.mtl"></a-asset-item>
+			<a-asset-item id="cloud02-obj" src="./models/clouds/Cloud2.obj"></a-asset-item>
+			<a-asset-item id="cloud02-mtl" src="./models/clouds/Cloud2.mtl"></a-asset-item>
+			<a-asset-item id="cloud03-obj" src="./models/clouds/Cloud3.obj"></a-asset-item>
+			<a-asset-item id="cloud03-mtl" src="./models/clouds/Cloud3.mtl"></a-asset-item>
+
+			<a-asset-item id="nutty-obj" src="./models/nutty/nutty.obj"></a-asset-item>
+			<a-asset-item id="nutty-mtl" src="./models/nutty/nutty.mtl"></a-asset-item>
+
+			<img id="imgAR" src="./images/ar.png" alt=""></img>
+			<img id="imgVR" src="./images/vr.png" alt=""></img>
+			<img id="img3D" src="./images/3d.png" alt=""></img>
+			<img id="imgGames" src="./images/games.png" alt=""></img>
+
+		</a-assets>
+
+		<a-marker preset='custom' type='pattern' url='marker/pattern-Marker23.patt'>
+			<!-- <a-obj-model id="tntcBook" src="#book-obj" scale="1 1 1"></a-obj-model> -->
+			<!-- <a-entity id="redBook" gltf-model="#book" scale="0.1 0.1 0.1" animation-mixer="clip: Idle; "> </a-entity> -->
+
+			<a-entity id="book" gltf-model="#bookTNTC" scale="0.5 0.5 0.5"
+				animation-mixer="clip: Open; timeScale:0; loop:pingpong;"> </a-entity>
+
+			<a-obj-model id="towers" src="#towers-obj" mtl="#towers-mtl" scale="0.1 0.1 0.1" visible="false"
+				position="-0.6 0.7 0"></a-obj-model>
+			<a-obj-model id="cloud01" src="#cloud01-obj" mtl="#cloud01-mtl" scale="0.05 0.05 0.05" visible="false"
+				position="-0.3 1.4 -2"></a-obj-model>
+			<a-obj-model id="cloud02" src="#cloud02-obj" mtl="#cloud02-mtl" scale="0.04 0.03 0.02" visible="false"
+				position="0.7 3 0"></a-obj-model>
+			<a-obj-model id="cloud03" src="#cloud03-obj" mtl="#cloud03-mtl" scale="0.08 0.05 0.05" visible="false"
+				position="-0.5 2.2 -0.5"></a-obj-model>
+			<a-obj-model id="nutty" src="#nutty-obj" mtl="#nutty-mtl" scale="1 1 1" visible="false" position="-2 0.5 0"
+				rotation="0 -45 0"></a-obj-model>
+
+			<a-image id="ar" src="#imgAR" position="1.3 1 0.2" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="vr" src="#imgVR" position="-2 2 -0.3" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="ddd" src="#img3D" position="-3 0.3 1.5" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+			<a-image id="games" src="#imgGames" position="-0.2 -0.1 1.2" width="1" height="1" alphatest='val: 0.5'
+				visible="false"></a-image>
+		</a-marker>
+
+		<a-entity camera="far:100000; near:0.01">
+			<a-entity cursor="rayOrigin: mouse"></a-entity>
+				<a-entity 
+				id="hint"
+				text="align:center; value:Frames the TNTC marker; color:#FFFFFF; shader: msdf; font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/patuaone/PatuaOne-Regular.json;" 
+				position="0 -2 -10"
+				scale="3.5 3.5 3.5"></a-entity>     
+		</a-entity>
+
+	</a-scene>
+
+	<script type="text/javascript">
+
+		let firstTime = true
+		let isOpen = false
+		let duringAnimation = false
+
+		var openBook = new Event('open-book')
+		var closeBook = new Event('close-book')
+
+		let marker = document.querySelector("a-marker")
+		let hint = document.querySelector("#hint")
+
+		let book = document.querySelector("#book")
+
+		let towers = document.querySelector('#towers')
+		let cloud01 = document.querySelector('#cloud01')
+		let cloud02 = document.querySelector('#cloud02')
+		let cloud03 = document.querySelector('#cloud03')
+		let ar = document.querySelector("#ar")
+		let vr = document.querySelector("#vr")
+		let ddd = document.querySelector("#ddd")
+		let games = document.querySelector("#games")
+		let nutty = document.querySelector("#nutty")
+
+
+		book.addEventListener('open-book', function (evt) {
+
+			if(duringAnimation && !isOpen){
+
+				towers.setAttribute('visible', true);
+				cloud01.setAttribute('visible', true);
+				cloud02.setAttribute('visible', true);
+				cloud03.setAttribute('visible', true);
+				ar.setAttribute('visible', true);
+				vr.setAttribute('visible', true);
+				ddd.setAttribute('visible', true);
+				games.setAttribute('visible', true);
+				nutty.setAttribute('visible', true);
+
+				towers.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.1 0.1 0.1; dur: 1000; easing: linear")
+
+				cloud01.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.05 0.05; dur: 1500; easing: linear")
+
+				cloud02.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.05 0.03 0.05; dur: 1500; easing: linear")
+
+				cloud03.setAttribute('animation', "property: scale; from: 0 0 0; to: 0.08 0.05 0.05; dur: 1500; easing: linear")
+
+				ar.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				vr.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				ddd.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				games.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: linear")
+
+				nutty.setAttribute('animation', "property: scale; from: 0 0 0; to: 1 1 1; dur: 1000; easing: linear")
+
+			}
+		})
+
+		book.addEventListener('close-book', function (evt) {
+
+			if(duringAnimation && isOpen){
+
+				towers.setAttribute('animation', "property: scale; from: 0.1 0.1 0.1; to: 0 0 0; dur: 1000; easing: linear")
+
+				cloud01.setAttribute('animation', "property: scale; from: 0.05 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+				cloud02.setAttribute('animation', "property: scale; from: 0.05 0.03 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+				cloud03.setAttribute('animation', "property: scale; from: 0.08 0.05 0.05; to: 0 0 0; dur: 1500; easing: linear")
+
+				ar.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+				vr.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+				ddd.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+				games.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 500; easing: linear")
+
+				nutty.setAttribute('animation', "property: scale; from: 1 1 1; to: 0 0 0; dur: 1000; easing: linear")
+
+				setTimeout(function (evt) {
+					towers.setAttribute('visible', false);
+					cloud01.setAttribute('visible', false);
+					cloud02.setAttribute('visible', false);
+					cloud03.setAttribute('visible', false);
+					ar.setAttribute('visible', false);
+					vr.setAttribute('visible', false);
+					ddd.setAttribute('visible', false);
+					games.setAttribute('visible', false);
+					nutty.setAttribute('visible', false);
+				}, 1500)
+			}
+		})
+
+		book.addEventListener('animation-loop', function (evt) {
+			book.setAttribute('animation-mixer', "timeScale:0; ")
+			
+		})
+
+		book.addEventListener('click', function (evt) {
+
+			if(duringAnimation || firstTime){
+				return
+			}
+			
+			if (isOpen && !duringAnimation) {
+				duringAnimation = true
+				book.dispatchEvent(closeBook)
+
+				setTimeout(function (evt) {
+					book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
+					isOpen = false
+				}, 2000)
+
+			} else if (!isOpen && !duringAnimation) {
+		
+				book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
+				duringAnimation = true
+
+				setTimeout(function (evt) {
+					book.dispatchEvent(openBook)
+					isOpen = true
+				}, 2000)
+
+			}
+
+			setTimeout(function (evt) {
+				duringAnimation = false
+			}, 4500)
+
+		})
+
+		marker.addEventListener('markerFound', function (evt) {
+			if (!isOpen && !duringAnimation && firstTime) {
+				
+				hint.setAttribute('visible', false)
+
+				setTimeout(function (evt) {
+					book.setAttribute('animation-mixer', "timeScale:1; duration:2;")
+					duringAnimation = true
+
+					setTimeout(function (evt) {
+						book.dispatchEvent(openBook)
+						isOpen = true
+						firstTime = false
+					}, 2100)
+				}, 1000)
+
+				setTimeout(function (evt) {
+					duringAnimation = false
+				}, 5500)
+			}
+		})
+
+	</script>
+
+</body>
+
+</html>

@@ -13,13 +13,21 @@
 		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
 		<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
 		<a-assets>
-			<video id="tntc-video" src="./video/business-card.mp4"></video>
-			<img id="logo" src="images/ar.png">
+			<img id="imgAR" src="./images/ar.png" alt=""></img>
+			<img id="imgVR" src="./images/vr.png" alt=""></img>
+			<img id="img3D" src="./images/3d.png" alt=""></img>
 		</a-assets>
 
 		<a-marker preset='custom' type='pattern' url='marker/pattern-Marker.patt'>
 			<!-- <a-video id="vid" src="#tntc-video" width="2" height="1.3" position="0 0 0" rotation="-90 0 0"></a-video> -->
-			<a-image src="#logo" width="3" height="1.5" rotation="-90 0 0"></a-image>
+			<!-- <a-image id="ar" src="#imgAR" position="0 1 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image>
+			<a-image id="vr" src="#imgVR" position="0 0.5 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image>
+			<a-image id="3d" src="img3D" position="0 -0.5 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image>
+			<a-image id="games" src="imgGames" position="0 -1 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image> -->
+
+			<a-plane id="ar" position="0 0 0.6" rotation="-90 0 0" material="src:#imgAR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
+			<a-plane id="vr" position="0 0 0" rotation="-90 0 0" material="src:#imgVR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
+			<a-plane id="ddd" position="0 0 -0.6" rotation="-90 0 0" material="src:#img3D; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
 		</a-marker>
 
 		<a-entity camera="far:100000; near:0.01">
@@ -37,18 +45,27 @@
 
 		let marker = document.querySelector("a-marker")
 		let hint = document.querySelector("#hint")
-		let vid = document.querySelector("#tntc-video")
+
+		let ar = document.querySelector("#ar")
+		let vr = document.querySelector("#vr")
+		let ddd = document.querySelector("#ddd")
+
+		// animation="property: components.material.material.opacity; from: 1; to: 0"
 
 		marker.addEventListener('markerFound', function (evt) {
 			if (firstTime) {
 				hint.setAttribute('visible', false)
-				vid.play()
 				firstTime = false
+
 			}
+
+			ar.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
+			vr.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
+			ddd.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
 		})
 
 		marker.addEventListener('click', function (evt) {
-			vid.play()
+			// vid.play()
 		})
 
 	</script>

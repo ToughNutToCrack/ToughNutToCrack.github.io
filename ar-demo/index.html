@@ -13,9 +13,9 @@
 		renderer="logarithmicDepthBuffer: true;" vr-mode-ui="enabled: false">
 		<!-- <a-scene embedded artoolkit='sourceType: webcam;' renderer='logarithmicDepthBuffer: true;'> -->
 		<a-assets>
-			<img id="imgAR" src="./images/ar.png" alt=""></img>
-			<img id="imgVR" src="./images/vr.png" alt=""></img>
-			<img id="img3D" src="./images/3d.png" alt=""></img>
+			<img id="imgAR" src="./images/teaser.jpg" alt=""></img>
+			<!-- <img id="imgVR" src="./images/vr.png" alt=""></img> -->
+			<!-- <img id="img3D" src="./images/3d.png" alt=""></img> -->
 		</a-assets>
 
 		<a-marker preset='custom' type='pattern' url='marker/pattern-Marker.patt'>
@@ -25,9 +25,9 @@
 			<a-image id="3d" src="img3D" position="0 -0.5 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image>
 			<a-image id="games" src="imgGames" position="0 -1 0" rotation="-90 0 0" width="1" height="1" alphatest='val: 0.5' visible="true"></a-image> -->
 
-			<a-plane id="ar" position="0 0 0.6" rotation="-90 0 0" material="src:#imgAR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
-			<a-plane id="vr" position="0 0 0" rotation="-90 0 0" material="src:#imgVR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
-			<a-plane id="ddd" position="0 0 -0.6" rotation="-90 0 0" material="src:#img3D; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
+			<a-plane id="ar" position="0 0 0.6" scale="10 5 1" rotation="-90 0 0" material="src:#imgAR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane>
+			<!-- <a-plane id="vr" position="0 0 0" rotation="-90 0 0" material="src:#imgVR; transparent:true; opacity:0; alpha-test:0.5" ></a-plane> -->
+			<!-- <a-plane id="ddd" position="0 0 -0.6" rotation="-90 0 0" material="src:#img3D; transparent:true; opacity:0; alpha-test:0.5" ></a-plane> -->
 		</a-marker>
 
 		<a-entity camera="far:100000; near:0.01">
@@ -60,8 +60,8 @@
 			}
 
 			ar.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
-			vr.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
-			ddd.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
+			// vr.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
+			// ddd.setAttribute('animation', "property: components.material.material.opacity; from: 0; to: 0.9; dur: 1000; easing: linear")
 		})
 
 		marker.addEventListener('click', function (evt) {

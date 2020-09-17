@@ -19,6 +19,10 @@ function createUnityMatrix(el){
     return rotated;
 }
 
+function playVideo() {
+    unityInstance.SendMessage("DetectionManager", "playVideo");
+}
+
 AFRAME.registerComponent('markercontroller', {
     schema: {
         name : {type: 'string'}

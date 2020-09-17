@@ -9,13 +9,42 @@
     <script src="Build/UnityLoader.js"></script>
     <script src="js/app.js"></script>
 
+    <style>
+      .container {
+        height: 200px;
+        position: relative;
+        border: 3px solid green;
+      }
+      
+      .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+      </style>
+
   </head>
 
   <body style="margin: 0px; overflow: hidden;">
+    <div class="container">
+      <div class="center">
+        <button onclick="playVideo()">Centered Button</button>
+      </div>
+    </div>
     <a-scene embedded arjs vr-mode-ui="enabled: false" copycanvas>
       <div id="unityContainer" style="z-index: 2" ></div>
-		<a-marker type="pattern" url="data/markers\pattern-marker-01.patt" markercontroller="name : pattern-marker-01"></a-marker>
-        <a-entity camera cameratransform></a-entity>
+	  
+      <!-- <a-marker preset="hiro"> <a-box></a-box> </a-marker> -->
+      <!-- <a-marker type="pattern" url="data/markers/pattern-arjs.patt"><a-box></a-box></a-marker> -->
+      <!-- <a-marker type="pattern" url="data/markers/test.patt" markercontroller="name : hiro"></a-marker> -->
+
+			<a-marker type="pattern" url="data/markers\Bear.patt" markercontroller="name : Bear"></a-marker>
+			<a-marker type="pattern" url="data/markers\Deer.patt" markercontroller="name : Deer"></a-marker>
+
+      <a-entity camera cameratransform></a-entity>
     </a-scene>
   </body>
 </html>

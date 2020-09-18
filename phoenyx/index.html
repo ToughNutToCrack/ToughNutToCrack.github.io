@@ -10,29 +10,29 @@
     <script src="js/app.js"></script>
 
     <style>
-      .container {
-        height: 200px;
-        position: relative;
-        border: 3px solid green;
-      }
-      
       .center {
         margin: 0;
         position: absolute;
-        top: 50%;
+        top: 90%;
         left: 50%;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
+		z-index: 10;
       }
+	  
+	  .button {
+	    background-color: green;
+		text-decoration: none;
+		border-radius: 10px;
+		border: 2px solid #4CAF50;
+	  }
       </style>
 
   </head>
 
   <body style="margin: 0px; overflow: hidden;">
-    <div class="container">
-      <div class="center">
-        <button onclick="playVideo()">Centered Button</button>
-      </div>
+    <div class="center" id="center">
+        <!-- <button class="button" onclick="playVideo()">Play/Stop Video!</button> -->
     </div>
     <a-scene embedded arjs vr-mode-ui="enabled: false" copycanvas>
       <div id="unityContainer" style="z-index: 2" ></div>

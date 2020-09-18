@@ -10,6 +10,7 @@ function cameraReady(){
 
 function detectionManagerReady(){
     isDetectionManagerReady = true;
+	buttonFunction();
 }
 
 function createUnityMatrix(el){
@@ -20,7 +21,11 @@ function createUnityMatrix(el){
 }
 
 function playVideo() {
-    unityInstance.SendMessage("DetectionManager", "playVideo");
+    unityInstance.SendMessage("DetectionManager", "playVideo");	
+}
+
+function buttonFunction(){
+     document.getElementById("center").innerHTML = '<button class="button" onclick="playVideo()">Play/Stop Video!</button>';
 }
 
 AFRAME.registerComponent('markercontroller', {

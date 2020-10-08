@@ -1,1 +1,89 @@
-const _0x5ee8=['instantiate','ctx','height','projectionMatrix','markercontroller','SendMessage','registerComponent','innerHTML','toArray','dontClearOnFrameStart','camera','Quaternion','setProjection','Main\x20Camera','width','elements','name','Vector3','setPosition','center','canvas','cameratransform','decompose','copycanvas','multiply','DetectionManager','Build/BuildWEBGL.json','<button\x20class=\x22button\x22\x20onclick=\x22playVideo()\x22>Play/Stop\x20Video!</button>','Module','Matrix4','visible','makeRotationX','setRotation','markerInfos','makeScale','playVideo','getElementsByTagName','matrix','unityContainer','clone'];(function(_0x33074d,_0x5ee8df){const _0x5630fc=function(_0x36710e){while(--_0x36710e){_0x33074d['push'](_0x33074d['shift']());}};_0x5630fc(++_0x5ee8df);}(_0x5ee8,0x13a));const _0x5630=function(_0x33074d,_0x5ee8df){_0x33074d=_0x33074d-0x0;let _0x5630fc=_0x5ee8[_0x33074d];return _0x5630fc;};const _0x58f8b7=_0x5630,unityInstance=UnityLoader[_0x58f8b7('0x6')](_0x58f8b7('0x4'),_0x58f8b7('0x20'));let isCameraReady=![],isDetectionManagerReady=![],gl=null;function cameraReady(){const _0x428e2d=_0x58f8b7;isCameraReady=!![],gl=unityInstance[_0x428e2d('0x22')][_0x428e2d('0x7')];}function detectionManagerReady(){isDetectionManagerReady=!![],buttonFunction();}function createUnityMatrix(_0x36710e){const _0xa91ed7=_0x58f8b7,_0xcab7c2=_0x36710e['matrix'][_0xa91ed7('0x5')](),_0x25b777=new THREE[(_0xa91ed7('0x23'))]()[_0xa91ed7('0x0')](0x1,0x1,-0x1)['multiply'](_0xcab7c2),_0x8e2988=_0x25b777[_0xa91ed7('0x1e')](new THREE[(_0xa91ed7('0x23'))]()[_0xa91ed7('0x25')](-Math['PI']/0x2));return _0x8e2988;}function playVideo(){const _0x1173e5=_0x58f8b7;unityInstance[_0x1173e5('0xb')](_0x1173e5('0x1f'),_0x1173e5('0x1'));}function buttonFunction(){const _0x4ee1b1=_0x58f8b7;document['getElementById'](_0x4ee1b1('0x19'))[_0x4ee1b1('0xd')]=_0x4ee1b1('0x21');}AFRAME[_0x58f8b7('0xc')](_0x58f8b7('0xa'),{'schema':{'name':{'type':'string'}},'tock':function(_0x5bc4a7,_0x24081a){const _0x1d5d93=_0x58f8b7;let _0x9b53a8=new THREE[(_0x1d5d93('0x17'))](),_0x482f16=new THREE[(_0x1d5d93('0x11'))](),_0x3014f3=new THREE[(_0x1d5d93('0x17'))]();createUnityMatrix(this['el']['object3D'])['decompose'](_0x9b53a8,_0x482f16,_0x3014f3);const _0x58c853=this['data'][_0x1d5d93('0x16')]+','+this['el']['object3D'][_0x1d5d93('0x24')]+','+_0x9b53a8['toArray']()+','+_0x482f16[_0x1d5d93('0xe')]()+','+_0x3014f3['toArray']();isDetectionManagerReady&&unityInstance[_0x1d5d93('0xb')](_0x1d5d93('0x1f'),_0x1d5d93('0x27'),_0x58c853);}}),AFRAME[_0x58f8b7('0xc')](_0x58f8b7('0x1b'),{'tick':function(_0x5f53cb,_0x1e121b){const _0x3d90e2=_0x58f8b7;let _0x17c2d1=new THREE['Vector3'](),_0x185b7a=new THREE['Quaternion'](),_0x288db4=new THREE[(_0x3d90e2('0x17'))]();this['el']['object3D'][_0x3d90e2('0x3')][_0x3d90e2('0x5')]()[_0x3d90e2('0x1c')](_0x17c2d1,_0x185b7a,_0x288db4);const _0x1f0018=this['el']['components'][_0x3d90e2('0x10')][_0x3d90e2('0x10')][_0x3d90e2('0x9')][_0x3d90e2('0x5')](),_0x177366=''+[..._0x1f0018[_0x3d90e2('0x15')]],_0x1cb7ea=''+[..._0x17c2d1[_0x3d90e2('0xe')]()],_0x5e4206=''+[..._0x185b7a[_0x3d90e2('0xe')]()];isCameraReady&&(unityInstance[_0x3d90e2('0xb')](_0x3d90e2('0x13'),_0x3d90e2('0x12'),_0x177366),unityInstance['SendMessage'](_0x3d90e2('0x13'),_0x3d90e2('0x18'),_0x1cb7ea),unityInstance[_0x3d90e2('0xb')](_0x3d90e2('0x13'),_0x3d90e2('0x26'),_0x5e4206)),gl!=null&&(gl[_0x3d90e2('0xf')]=!![]);}}),AFRAME[_0x58f8b7('0xc')](_0x58f8b7('0x1d'),{'tick':function(_0x4670c8,_0x753e52){const _0x247ad7=_0x58f8b7,_0x2e69d6=document[_0x247ad7('0x2')](_0x247ad7('0x1a'))[0x0];_0x2e69d6[_0x247ad7('0x14')]=this['el'][_0x247ad7('0x1a')][_0x247ad7('0x14')],_0x2e69d6[_0x247ad7('0x8')]=this['el'][_0x247ad7('0x1a')][_0x247ad7('0x8')];}});
+const unityInstance = UnityLoader.instantiate("unityContainer", "Build/BuildWEBGL.json");
+let isCameraReady = false;
+let isDetectionManagerReady = false;
+let gl = null;
+
+function cameraReady(){
+    isCameraReady = true;
+    gl = unityInstance.Module.ctx;
+}
+
+function detectionManagerReady(){
+    isDetectionManagerReady = true;
+}
+
+function createUnityMatrix(el){
+    const m = el.matrix.clone();
+    const zFlipped = new THREE.Matrix4().makeScale(1, 1, -1).multiply(m);
+    const rotated = zFlipped.multiply(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+    return rotated;
+}
+
+AFRAME.registerComponent('markercontroller', {
+    schema: {
+        name : {type: 'string'}
+    },
+    tock: function(time, timeDelta){
+
+        let position = new THREE.Vector3();
+        let rotation = new THREE.Quaternion();
+        let scale = new THREE.Vector3();
+
+        createUnityMatrix(this.el.object3D).decompose(position, rotation, scale);
+
+        const serializedInfos = `${this.data.name},${this.el.object3D.visible},${position.toArray()},${rotation.toArray()},${scale.toArray()}`;
+
+        if(isDetectionManagerReady){
+          unityInstance.SendMessage("DetectionManager", "markerInfos", serializedInfos);
+        }
+    } 
+});
+
+AFRAME.registerComponent('cameratransform', {
+    tock: function(time, timeDelta){
+
+        let camtr = new THREE.Vector3();
+        let camro = new THREE.Quaternion();
+        let camsc = new THREE.Vector3();
+
+        this.el.object3D.matrix.clone().decompose(camtr, camro, camsc);
+
+        const projection = this.el.components.camera.camera.projectionMatrix.clone();
+        const serializedProj = `${[...projection.elements]}`
+
+        const posCam = `${[...camtr.toArray()]}`
+        const rotCam = `${[...camro.toArray()]}`
+ 
+        if(isCameraReady){
+            unityInstance.SendMessage("Main Camera", "setProjection", serializedProj);
+            unityInstance.SendMessage("Main Camera", "setPosition", posCam);
+            unityInstance.SendMessage("Main Camera", "setRotation", rotCam);
+
+            let w = window.innerWidth;
+            let h = window.innerHeight; 
+
+            const unityCanvas = document.getElementsByTagName('canvas')[0];
+
+            const ratio = unityCanvas.height / h;
+
+            w *= ratio
+            h *= ratio
+
+            const size = `${w},${h}`
+
+            unityInstance.SendMessage("Canvas", "setSize", size);
+        }
+
+        if(gl != null){
+            gl.dontClearOnFrameStart = true;
+        }
+    } 
+});
+
+AFRAME.registerComponent('copycanvas', {
+    tick: function(time, timeDelta){
+        const unityCanvas = document.getElementsByTagName('canvas')[0];
+        unityCanvas.width = this.el.canvas.width
+        unityCanvas.height = this.el.canvas.height
+    } 
+});

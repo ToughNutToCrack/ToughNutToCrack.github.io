@@ -1,0 +1,268 @@
+---
+import Layout     from '../../layouts/Layout.astro';
+import Nav        from '../../components/Nav.astro';
+import Footer     from '../../components/Footer.astro';
+import VideoLoop    from '../../components/VideoLoop.astro';
+import VimeoEmbed   from '../../components/VimeoEmbed.astro';
+import YoutubeEmbed from '../../components/YoutubeEmbed.astro';
+import { projects, getProjectBySlug } from '../../data/projects';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () =>
+  projects.map((p) => ({ params: { slug: p.slug } }));
+
+const { slug }   = Astro.params;
+const project    = getProjectBySlug(slug!)!;
+
+// Prev / Next navigation
+const idx  = projects.findIndex((p) => p.slug === slug);
+const prev = idx > 0                    ? projects[idx - 1] : null;
+const next = idx < projects.length - 1  ? projects[idx + 1] : null;
+---
+
+<Layout
+  title={`${project.title} — Your Name`}
+  description={project.tagline}
+  ogImage={project.cover}
+>
+  <Nav />
+
+  <main>
+
+    <!-- ── Header ────────────────────────────────────────────── -->
+    <div class="px-6 md:px-14 lg:px-20 pt-28 md:pt-32 pb-10 md:pb-14">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-[0.6rem] tracking-[0.22em] uppercase transition-opacity duration-200 hover:opacity-60 mb-10 md:mb-14 block"
+        style="color: var(--muted);"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back
+      </a>
+      <h1
+        class="leading-[1.1]"
+        style="font-size: clamp(2.5rem, 7vw, 5.5rem); color: var(--ink);"
+      >
+        {project.title}
+      </h1>
+    </div>
+
+    <!-- ── Content grid ──────────────────────────────────────── -->
+    <div class="px-6 md:px-14 lg:px-20 pb-16 md:pb-24
+                grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 md:gap-20">
+
+      <!-- Left: description -->
+      <div>
+        <p
+          class="font-serif font-medium leading-[1.45]"
+          style="font-size: clamp(1.2rem, 2.5vw, 1.7rem); color: var(--ink);"
+          set:html={project.description}
+        />
+        {project.descriptionExtra && (
+          <p
+            class="mt-6 text-[0.78rem] leading-[1.8] tracking-[0.03em]"
+            style="color: var(--muted);"
+          >
+            {project.descriptionExtra}
+          </p>
+        )}
+        {project.href && (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 mt-10 text-[0.62rem] tracking-[0.22em] uppercase
+                   transition-colors duration-200 group"
+            style="color: var(--ink);"
+          >
+            <span
+              class="block w-8 h-px transition-all duration-300 group-hover:w-14"
+              style="background: var(--accent);"
+            ></span>
+            View live project
+          </a>
+        )}
+      </div>
+
+      <!-- Right: detail sidebar -->
+      {project.details && project.details.length > 0 && (
+        <aside>
+          <dl class="flex flex-col gap-5">
+            {project.details.map(({ label, value }) => (
+              <div class="border-t pt-4" style="border-color: var(--border);">
+                <dt
+                  class="text-[0.55rem] tracking-[0.24em] uppercase mb-1"
+                  style="color: var(--muted);"
+                >
+                  {label}
+                </dt>
+                <dd class="text-[0.78rem] tracking-[0.04em]" style="color: var(--ink);">
+                  {value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      )}
+    </div>
+
+    <!-- ── Gallery ───────────────────────────────────────────── -->
+    {project.gallery && project.gallery.length > 0 && (
+      <section
+        class="px-6 md:px-14 lg:px-20 pb-20 md:pb-32"
+        aria-label="Project gallery"
+      >
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+          {project.gallery.map((item) => {
+            const spanFull = item.size === 'full';
+            const wrapClass = ['overflow-hidden', spanFull ? 'sm:col-span-2' : ''].join(' ');
+            const mediaType = item.type ?? 'image';
+
+            return (
+              <div class={wrapClass}>
+                {mediaType === 'video-loop' && (
+                  <VideoLoop
+                    webm={item.webm}
+                    mp4={item.mp4}
+                    poster={item.poster}
+                    alt={item.alt}
+                    rounded={false}
+                  />
+                )}
+
+                {mediaType === 'vimeo' && (
+                  <VimeoEmbed
+                    id={item.vimeoId!}
+                    title={item.title ?? item.alt}
+                    thumbnail={item.thumbnail}
+                    rounded={false}
+                  />
+                )}
+
+                {mediaType === 'youtube' && (
+                  <YoutubeEmbed
+                    id={item.youtubeId!}
+                    title={item.title ?? item.alt}
+                    thumbnail={item.thumbnail}
+                    rounded={false}
+                  />
+                )}
+
+                {mediaType === 'image' && (
+                  <div
+                    class="w-full overflow-hidden"
+                    style={`position:relative; aspect-ratio:16/9; background:${project.placeholder ?? '#2a2420'};`}
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
+                      onerror="this.style.display='none'"
+                    />
+                    <div
+                      aria-hidden="true"
+                      style="position:absolute;bottom:1rem;left:1rem;font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);"
+                    >
+                      {item.alt}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- ── Prev / Next navigation ────────────────────────────── -->
+    <nav
+      class="border-t"
+      style="border-color: var(--border);"
+      aria-label="Project navigation"
+    >
+      <div class="grid grid-cols-2 divide-x" style="border-color: var(--border);">
+
+        <!-- Prev -->
+        <div>
+          {prev ? (
+            <a
+              href={`/projects/${prev.slug}`}
+              class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20
+                     transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+            >
+              <span
+                class="text-[0.55rem] tracking-[0.26em] uppercase"
+                style="color: var(--muted);"
+              >
+                ← Previous
+              </span>
+              <span
+                class="font-serif font-medium leading-tight transition-colors duration-200"
+                style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
+              >
+                {prev.title}
+              </span>
+              <span
+                class="text-[0.58rem] tracking-[0.16em]"
+                style="color: var(--muted);"
+              >
+                {prev.category}
+              </span>
+            </a>
+          ) : (
+            <div class="px-6 py-10 md:px-14 md:py-12 lg:px-20 opacity-30">
+              <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+                ← Previous
+              </span>
+            </div>
+          )}
+        </div>
+
+        <!-- Next -->
+        <div>
+          {next ? (
+            <a
+              href={`/projects/${next.slug}`}
+              class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right
+                     transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+            >
+              <span
+                class="text-[0.55rem] tracking-[0.26em] uppercase"
+                style="color: var(--muted);"
+              >
+                Next →
+              </span>
+              <span
+                class="font-serif font-medium leading-tight transition-colors duration-200"
+                style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
+              >
+                {next.title}
+              </span>
+              <span
+                class="text-[0.58rem] tracking-[0.16em]"
+                style="color: var(--muted);"
+              >
+                {next.category}
+              </span>
+            </a>
+          ) : (
+            <div class="px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right opacity-30">
+              <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+                Next →
+              </span>
+            </div>
+          )}
+        </div>
+
+      </div>
+    </nav>
+
+  </main>
+
+  <Footer />
+</Layout>

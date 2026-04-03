@@ -1,0 +1,113 @@
+---
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+
+const links = [
+  { label: 'Portfolio',    href: isHome ? '#work'    : '/#work'    },
+  { label: 'About',   href: isHome ? '#about'   : '/#about'   },
+  { label: 'Contact', href: isHome ? '#contact' : '/#contact' },
+];
+
+const logoHref = isHome ? '#home' : '/';
+---
+
+<header
+  id="nav"
+  class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-5 md:px-10 md:py-6"
+  style="background: rgba(30,30,30,0.82); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(195,195,195,0.1);"
+  aria-label="Main navigation"
+>
+  <!-- Logo / Name -->
+  <a
+    href={logoHref}
+    class="transition-opacity duration-200 hover:opacity-70"
+    aria-label="Go to top"
+  >
+    <img src="/images/logoW.png" alt="TNTC Studio" class="h-10 w-auto" />
+  </a>
+
+  <!-- Desktop links -->
+  <nav class="hidden sm:flex items-center gap-8" aria-label="Site sections">
+    {links.map(({ label, href }) => (
+      <a href={href} class="nav-link">{label}</a>
+    ))}
+  </nav>
+
+  <!-- Mobile hamburger -->
+  <button
+    id="menu-toggle"
+    class="sm:hidden flex flex-col gap-[5px] p-2 -mr-2"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <span class="hamburger-line block w-5 h-px bg-[rgba(245,242,236,0.8)] transition-all duration-300 origin-center"></span>
+    <span class="hamburger-line block w-5 h-px bg-[rgba(245,242,236,0.8)] transition-all duration-300"></span>
+    <span class="hamburger-line block w-5 h-px bg-[rgba(245,242,236,0.8)] transition-all duration-300 origin-center"></span>
+  </button>
+</header>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 flex flex-col items-center justify-center gap-10
+         bg-ink opacity-0 pointer-events-none transition-opacity duration-300"
+  aria-hidden="true"
+>
+  {links.map(({ label, href }) => (
+    <a
+      href={href}
+      class="mobile-nav-link font-serif text-[#f5f2ec] text-4xl font-light italic tracking-wide
+             opacity-0 translate-y-4 transition-all duration-300"
+    >
+      {label}
+    </a>
+  ))}
+</div>
+
+<script>
+  const toggle    = document.getElementById('menu-toggle')!;
+  const menu      = document.getElementById('mobile-menu')!;
+  const mLinks    = menu.querySelectorAll<HTMLElement>('.mobile-nav-link');
+  const hLines    = toggle.querySelectorAll<HTMLElement>('.hamburger-line');
+  const nav       = document.getElementById('nav')!;
+
+  let open = false;
+
+  function openMenu() {
+    open = true;
+    toggle.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    menu.classList.remove('opacity-0', 'pointer-events-none');
+    menu.classList.add('opacity-100');
+    // Animate hamburger → X
+    hLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+    hLines[1].style.opacity   = '0';
+    hLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+    // Stagger links in
+    mLinks.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.opacity   = '1';
+        el.style.transform = 'translateY(0)';
+      }, 80 + i * 60);
+    });
+  }
+
+  function closeMenu() {
+    open = false;
+    toggle.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    menu.classList.add('opacity-0', 'pointer-events-none');
+    menu.classList.remove('opacity-100');
+    hLines[0].style.transform = '';
+    hLines[1].style.opacity   = '';
+    hLines[2].style.transform = '';
+    mLinks.forEach((el) => {
+      el.style.opacity   = '0';
+      el.style.transform = 'translateY(4px)';
+    });
+  }
+
+  toggle.addEventListener('click', () => (open ? closeMenu() : openMenu()));
+  mLinks.forEach((el) => el.addEventListener('click', closeMenu));
+
+</script>

@@ -1,0 +1,154 @@
+---
+interface Props {
+  /** Ordered list of video paths inside /public */
+  videos?: string[];
+  /** Fallback poster image shown before video plays */
+  poster?: string;
+  /** Tagline shown above the main title */
+  tagline?: string;
+}
+
+const {
+  videos  = [],
+  poster,
+  tagline = 'Meet TNTC Studio',
+} = Astro.props;
+---
+
+<section
+  id="home"
+  class="relative h-svh min-h-[560px] flex flex-col justify-center overflow-hidden"
+  aria-label="Cover"
+>
+  <!-- Background videos (cycle with crossfade) -->
+  {videos.length > 0 ? (
+    <div class="absolute inset-0" aria-hidden="true">
+      {videos.map((src, i) => (
+        <video
+          class="hero-video absolute inset-0 w-full h-full object-cover object-center"
+          data-index={i}
+          src={src}
+          muted
+          playsinline
+          preload={i === 0 ? 'auto' : 'none'}
+          poster={i === 0 && poster ? poster : undefined}
+          style={`opacity:${i === 0 ? 1 : 0}; transition: opacity 1s ease; z-index: ${i === 0 ? 1 : 0};`}
+        />
+      ))}
+    </div>
+  ) : poster ? (
+    <img
+      src={poster}
+      alt=""
+      aria-hidden="true"
+      class="absolute inset-0 w-full h-full object-cover object-center"
+      fetchpriority="high"
+      decoding="async"
+    />
+  ) : (
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(155deg, #2c2720 0%, #1a1410 45%, #3d2e1e 100%);"
+      aria-hidden="true"
+    ></div>
+  )}
+
+  <!-- Base darkening -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    aria-hidden="true"
+    style="background: rgba(30,30,30,0.38); z-index: 10;"
+  ></div>
+
+  <!-- Vignette — dark edges, open center -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    aria-hidden="true"
+    style="background: radial-gradient(ellipse at center, transparent 30%, rgba(30,30,30,0.75) 100%); z-index: 11;"
+  ></div>
+
+  <!-- Bottom gradient — anchors the text -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    aria-hidden="true"
+    style="background: linear-gradient(to top, rgba(30,30,30,0.78) 0%, transparent 45%); z-index: 12;"
+  ></div>
+
+  <!-- Scanlines -->
+  <div
+    class="absolute inset-0 pointer-events-none"
+    aria-hidden="true"
+    style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px); z-index: 13;"
+  ></div>
+
+  <!-- Content -->
+  <div class="relative px-6 pb-12 md:px-14 md:pb-16 lg:px-20 lg:pb-20 flex flex-col items-end text-right" style="z-index: 20;">
+    <p
+      class="mb-4 text-[0.6rem] tracking-[0.32em] uppercase"
+      style="color: var(--accent);"
+    >
+      {tagline}
+    </p>
+
+    <h1 class="cover-title">
+      Videogames<br />
+      <em>&amp;&nbsp;immersive</em><br />
+      experiences
+    </h1>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute right-6 bottom-12 hidden sm:flex"
+    aria-hidden="true"
+    style="color: rgba(245,242,236,0.38); z-index: 20;"
+  >
+    <span class="scroll-indicator">Scroll</span>
+  </div>
+</section>
+
+<script>
+  function initHeroVideos() {
+    const videos = Array.from(
+      document.querySelectorAll<HTMLVideoElement>('.hero-video')
+    );
+    if (videos.length === 0) return;
+
+    let current = 0;
+
+    function playAt(index: number) {
+      const next = videos[index];
+
+      // Preload next video
+      if (next.preload === 'none') next.preload = 'auto';
+
+      next.style.zIndex  = '2';
+      next.style.opacity = '1';
+      next.play().catch(() => {});
+
+      // Fade out and demote the previous video after transition
+      const prev = videos.find((_, i) => i !== index && parseFloat(_.style.opacity) === 1);
+      if (prev) {
+        prev.style.opacity = '0';
+        setTimeout(() => {
+          prev.style.zIndex = '0';
+          prev.pause();
+          prev.currentTime = 0;
+        }, 1000); // matches the CSS transition duration
+      }
+    }
+
+    // On each video end, crossfade to the next
+    videos.forEach((video, i) => {
+      video.addEventListener('ended', () => {
+        current = (i + 1) % videos.length;
+        playAt(current);
+      });
+    });
+
+    // Start first video
+    playAt(0);
+  }
+
+  document.addEventListener('astro:page-load', initHeroVideos);
+</script>

@@ -1,0 +1,261 @@
+---
+/**
+ * VimeoEmbed — a privacy-first, performant Vimeo embed.
+ *
+ * Instead of loading the full Vimeo iframe immediately (which fires ~400 KB of
+ * JS and tracking requests on page load), this component shows a thumbnail
+ * with a play button. The real iframe is only injected when the user clicks —
+ * a pattern sometimes called a "facade" or "lite embed".
+ *
+ * Modes:
+ *   default  → thumbnail + play button facade, click to load iframe
+ *   autoplay → silent background video (no controls, no click required)
+ *              useful for hero sections; treated like a VideoLoop
+ *
+ * Usage — standard embed:
+ *   <VimeoEmbed
+ *     id="123456789"
+ *     title="Brand identity case study"
+ *   />
+ *
+ * Usage — background / hero video (silent autoplay, no controls):
+ *   <VimeoEmbed
+ *     id="123456789"
+ *     mode="background"
+ *     aspectRatio="16/9"
+ *   />
+ *
+ * Getting the Vimeo video ID:
+ *   From URL https://vimeo.com/123456789 → id is "123456789"
+ *
+ * Getting a custom thumbnail:
+ *   Upload a thumbnail in Vimeo's video settings, or use their API:
+ *   https://api.vimeo.com/videos/{id}?fields=pictures
+ *   Or just supply your own image as the `thumbnail` prop.
+ */
+
+interface Props {
+  /** Vimeo video ID (numeric string from the URL) */
+  id: string;
+  /** Accessible title of the video */
+  title?: string;
+  /**
+   * 'default'    — shows a play-button facade; loads iframe on click
+   * 'background' — silent autoplay loop with no UI chrome (like VideoLoop but hosted)
+   */
+  mode?: 'default' | 'background';
+  /**
+   * Custom poster/thumbnail image path.
+   * If omitted in default mode, falls back to Vimeo's own thumbnail via oEmbed.
+   * In background mode you should always supply this to avoid a blank frame on load.
+   */
+  thumbnail?: string;
+  /** Aspect ratio string used for the wrapper, e.g. "16/9" or "4/3" */
+  aspectRatio?: string;
+  /** Corner rounding */
+  rounded?: boolean;
+  /** Extra CSS classes on the outer wrapper */
+  class?: string;
+  /** Caption shown below the embed */
+  caption?: string;
+  /** Start time in seconds */
+  startAt?: number;
+}
+
+const {
+  id,
+  title       = 'Video',
+  mode        = 'default',
+  thumbnail,
+  aspectRatio = '16/9',
+  rounded     = false,
+  class: cls  = '',
+  caption,
+  startAt     = 0,
+} = Astro.props;
+
+const uid = `vimeo-${id}-${Math.random().toString(36).slice(2, 6)}`;
+
+// Build the iframe src URL with appropriate parameters
+const params = new URLSearchParams({
+  autoplay:     '1',
+  autopause:    '0',
+  muted:        mode === 'background' ? '1' : '0',
+  // loop:         mode === 'background' ? '1' : '0',
+  loop:        '1', // Vimeo's loop parameter is buggy and only works if autoplay is enabled, so we just always set it and rely on autoplay=0 to prevent looping in default mode
+  background:   mode === 'background' ? '1' : '0', // hides all controls + UI chrome
+  byline:       '0',
+  portrait:     '0',
+  title:        '0',
+  dnt:          '1',
+  controls:     '1',  // do not track — privacy-first
+  ...(startAt > 0 ? { '#t': `${startAt}s` } : {}),
+});
+const iframeSrc = `https://player.vimeo.com/video/${id}?${params}`;
+
+// Vimeo thumbnail API (used as fallback when no custom thumbnail is provided)
+// We fetch this at build time so there's no client-side request on page load.
+let resolvedThumbnail = thumbnail;
+if (!resolvedThumbnail && mode === 'default') {
+  try {
+    const res  = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${id}&width=1280`);
+    const data = await res.json();
+    resolvedThumbnail = data.thumbnail_url_with_play_button ?? data.thumbnail_url;
+  } catch {
+    // silently fail — the facade will just show the accent-coloured placeholder
+  }
+}
+---
+
+<figure class:list={['vimeo-embed-wrap', cls]} style="margin:0;">
+  <div
+    id={uid}
+    class="vimeo-embed-container"
+    style={[
+      `position:relative;`,
+      `aspect-ratio:${aspectRatio};`,
+      `background:#0a0806;`,
+      `overflow:hidden;`,
+      rounded ? 'border-radius:8px;' : '',
+    ].join('')}
+  >
+
+    {mode === 'background' ? (
+      /* ── Background / hero mode ─────────────────────────── */
+      /* Load the iframe immediately — it's muted and silent */
+      <>
+        {resolvedThumbnail && (
+          <img
+            src={resolvedThumbnail}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"
+          />
+        )}
+        <iframe
+          src={iframeSrc}
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          title={title}
+          loading="lazy"
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2;"
+        ></iframe>
+      </>
+    ) : (
+      /* ── Default / facade mode ──────────────────────────── */
+      /* Show thumbnail + play button; inject iframe on click */
+      <>
+        {/* Thumbnail */}
+        {resolvedThumbnail ? (
+          <img
+            src={resolvedThumbnail}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            class="vimeo-thumb"
+            style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;transition:transform 0.5s ease;"
+          />
+        ) : (
+          /* Fallback gradient if no thumbnail */
+          <div
+            aria-hidden="true"
+            style="position:absolute;inset:0;background:linear-gradient(135deg,#2c2720,#1a1410);z-index:1;"
+          ></div>
+        )}
+
+        {/* Dark overlay */}
+        <div
+          aria-hidden="true"
+          class="vimeo-overlay"
+          style="position:absolute;inset:0;background:rgba(10,8,6,0.32);z-index:2;transition:background 0.3s;"
+        ></div>
+
+        {/* Play button */}
+        <button
+          class="vimeo-play-btn"
+          aria-label={`Play ${title}`}
+          style={[
+            'position:absolute;inset:0;width:100%;height:100%;',
+            'display:flex;align-items:center;justify-content:center;',
+            'background:transparent;border:none;cursor:pointer;z-index:3;',
+          ].join('')}
+        >
+          <span class="vimeo-play-icon" aria-hidden="true">
+            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="36" cy="36" r="35.5" fill="rgba(10,8,6,0.55)" stroke="rgba(245,242,236,0.3)"/>
+              <path d="M28 24l22 12-22 12V24z" fill="#FFFFFF"/>
+            </svg>
+          </span>
+        </button>
+
+        {/* Video title badge */}
+        <div
+          class="vimeo-title-badge"
+          aria-hidden="true"
+          style={[
+            'position:absolute;bottom:1rem;left:1rem;z-index:3;',
+            'font-family:"DM Mono",monospace;font-size:0.6rem;',
+            'letter-spacing:0.2em;text-transform:uppercase;',
+            'color:rgba(255,255,255,0.75);',
+            'transition:opacity 0.3s;',
+          ].join('')}
+        >
+          {title}
+        </div>
+      </>
+    )}
+  </div>
+
+  {caption && (
+    <figcaption
+      style="margin-top:0.6rem;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted, #8a8278);"
+    >
+      {caption}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .vimeo-play-btn:hover .vimeo-thumb {
+    transform: scale(1.03);
+  }
+  .vimeo-play-btn:hover .vimeo-play-icon circle {
+    fill: rgba(193,127,61,0.7);
+    stroke: rgba(193,127,61,0.6);
+  }
+  .vimeo-play-btn:hover ~ .vimeo-overlay {
+    background: rgba(10,8,6,0.18);
+  }
+  .vimeo-play-btn:focus-visible {
+    outline: 2px solid #c17f3d;
+    outline-offset: 4px;
+  }
+  .vimeo-play-btn:hover ~ .vimeo-title-badge {
+    opacity: 0;
+  }
+</style>
+
+{mode === 'default' && (
+  <script define:vars={{ uid, iframeSrc, title }}>
+    const container = document.getElementById(uid);
+    if (!container) return;
+
+    const btn = container.querySelector('.vimeo-play-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      // Replace the facade with the real iframe
+      container.innerHTML = `
+        <iframe
+          src="${iframeSrc}"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          title="${title}"
+          style="position:absolute;inset:0;width:100%;height:100%;border:0;"
+        ></iframe>
+      `;
+    });
+  </script>
+)}

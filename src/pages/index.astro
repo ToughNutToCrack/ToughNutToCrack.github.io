@@ -1,0 +1,58 @@
+---
+import Layout        from '../layouts/Layout.astro';
+import Nav           from '../components/Nav.astro';
+import Cover         from '../components/Cover.astro';
+import About         from '../components/About.astro';
+import PortfolioGrid from '../components/PortfolioGrid.astro';
+import Footer        from '../components/Footer.astro';
+import { projects }  from '../data/projects';
+import type { FooterLink } from '../components/Footer.astro';
+
+// Map central data → PortfolioGrid shape.
+// Cards now link to each project's own page.
+const gridProjects = projects.map((p) => ({
+  title:       p.title,
+  category:    p.category,
+  image:       p.cover,
+  alt:         p.coverAlt,
+  placeholder: p.placeholder,
+  href:        `/projects/${p.slug}`,
+  icon:        p.icon,
+}));
+
+const footerLinks: FooterLink[] = [
+  { label: 'Email',    href: 'mailto:info@tntc.it'                  },
+  { label: 'GitHub',   href: 'https://github.com/ToughNutToCrack'        },
+  { label: 'LinkedIn', href: 'https://it.linkedin.com/company/tntc'  },
+  { label: 'Youtube', href: 'http://youtube.com/tntcproject'      },
+];
+---
+
+<Layout
+  title="TNTC Studio"
+  description="Meet TNTC Studio and craft realtime experiences with us!"
+>
+  <Nav />
+
+  <main>
+    <Cover
+      tagline="Meet TNTC Studio"
+      videos={[
+        '/videos/hero0r.mp4',
+        '/videos/hero1r.mp4',
+        '/videos/hero5r.mp4',
+        // '/videos/hero2r.mp4',
+        '/videos/hero4r.mp4',
+      ]}
+    />
+
+    <About
+      headline="TNTC is a studio focused on real-time development, specializing in gamedev, XR, and custom Unity solutions."
+      body="We're a team of senior developers. Unity insider. We cover the full development cycle, from concept to deployment, and we work with clients of all sizes, from startups to established brands. We also create our own original content, including games and interactive experiences."
+    />
+
+    <PortfolioGrid projects={gridProjects} />
+  </main>
+
+  <Footer name="TNTC Studio" links={footerLinks} />
+</Layout>

@@ -1,0 +1,122 @@
+---
+export interface Project {
+  title:    string;
+  category: string;
+  /** Path relative to /public, e.g. "/images/projects/project-1.jpg" */
+  image:    string;
+  alt:      string;
+  /** Optional link to a project page or external URL */
+  href?:    string;
+  /** Optional placeholder colour used when image is not yet available */
+  placeholder?: string;
+  /** SVG markup for the lower-right card icon */
+  icon?:    string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+
+const fallbackGradients = [
+  'linear-gradient(135deg, #3d2e20 0%, #6b4a2e 100%)',
+  'linear-gradient(135deg, #1e2832 0%, #2e4055 100%)',
+  'linear-gradient(135deg, #1e2820 0%, #2e4830 100%)',
+  'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+  'linear-gradient(135deg, #30221a 0%, #5a3828 100%)',
+  'linear-gradient(135deg, #1a2430 0%, #283848 100%)',
+];
+---
+
+<section
+  id="work"
+  class="pb-24 md:pb-32"
+  aria-label="Portfolio"
+>
+  <!-- Section header -->
+  <div class="flex items-baseline justify-between px-6 md:px-14 lg:px-20 mb-6 md:mb-8">
+    <h2 class="font-serif text-xl md:text-3xl font-light tracking-[0.04em]">
+      Selected Porfolio
+    </h2>
+    <span
+      class="text-[0.58rem] tracking-[0.22em] uppercase tabular-nums"
+      style="color: var(--muted);"
+    >
+      {String(projects.length).padStart(2, '0')} Projects
+    </span>
+  </div>
+
+  <!-- Responsive square grid -->
+  <!--
+    Columns:
+    Mobile (< 640px):  1 column
+    sm    (≥ 640px):   2 columns
+    lg    (≥ 1024px):  3 columns
+    xl    (≥ 1280px):  3 columns (can bump to 4 if you have more projects)
+  -->
+  <ul
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[var(--gap)]
+           px-[var(--gap)] list-none"
+    role="list"
+  >
+    {projects.map((project, i) => {
+      const Tag = project.href ? 'a' : 'div';
+      const gradient = project.placeholder ?? fallbackGradients[i % fallbackGradients.length];
+
+      return (
+        <li>
+          <Tag
+            {...(project.href ? { href: project.href } : {})}
+            class="card focus-visible:outline-accent"
+            aria-label={project.href ? `View project: ${project.title}` : project.title}
+          >
+            <!-- Image or gradient placeholder -->
+            <div
+              class="card-bg"
+              style={`background: ${gradient};`}
+            >
+              {/* Real image layered on top of gradient — if image is missing the gradient shows */}
+              <img
+                src={project.image}
+                alt={project.alt}
+                loading="eager"
+                decoding="async"
+                class="card-img w-full h-full object-cover object-center"
+                onerror="this.style.display='none'"
+              />
+            </div>
+
+            <div class="card-overlay" aria-hidden="true"></div>
+
+            <div class="card-info">
+              <p class="card-title">{project.title}</p>
+              <p class="card-category">{project.category}</p>
+            </div>
+
+            {project.icon && (
+              <div class="card-icon" aria-hidden="true" set:html={project.icon} />
+            )}
+          </Tag>
+        </li>
+      );
+    })}
+  </ul>
+</section>
+
+<script>
+  function resetCardImages() {
+    document.querySelectorAll<HTMLImageElement>('.card-img').forEach((img) => {
+      if (img.style.display === 'none') {
+        img.style.display = '';
+        // Re-trigger load by bouncing the src
+        const src = img.getAttribute('src') ?? '';
+        img.setAttribute('src', '');
+        img.setAttribute('src', src);
+      }
+    });
+  }
+
+  // Runs on first load and after every View Transition
+  document.addEventListener('astro:page-load', resetCardImages);
+</script>

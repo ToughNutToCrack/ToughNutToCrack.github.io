@@ -1,0 +1,157 @@
+---
+/**
+ * VideoLoop — a drop-in GIF replacement.
+ *
+ * Renders a silent, looping, auto-playing video with a poster image shown
+ * while the video loads. Supports intersection-based lazy loading so off-screen
+ * videos don't consume bandwidth until they scroll into view.
+ *
+ * Usage:
+ *   <VideoLoop
+ *     webm="/media/demo.webm"
+ *     mp4="/media/demo.mp4"
+ *     poster="/media/demo-poster.jpg"
+ *     alt="Screen recording of the checkout flow"
+ *     width={1200}
+ *     height={675}
+ *   />
+ *
+ * FFmpeg conversion commands (run locally):
+ *   WebM: ffmpeg -i input.gif -vf scale=800:-1 -c:v libvpx-vp9 -b:v 0 -crf 33 output.webm
+ *   MP4:  ffmpeg -i input.gif -vf scale=800:-1 -c:v libx264 -pix_fmt yuv420p output.mp4
+ *   For a video file instead of GIF, same commands without the scale filter:
+ *   WebM: ffmpeg -i input.mp4 -c:v libvpx-vp9 -b:v 0 -crf 33 output.webm
+ */
+
+interface Props {
+  /** Path to the .webm source (preferred, smallest file) */
+  webm?: string;
+  /** Path to the .mp4 source (Safari fallback) */
+  mp4?: string;
+  /** Poster image shown before the video plays (recommend: first frame as JPEG) */
+  poster?: string;
+  /** Accessible description of what the video shows */
+  alt?: string;
+  /** Intrinsic width in px — prevents layout shift */
+  width?: number;
+  /** Intrinsic height in px — prevents layout shift */
+  height?: number;
+  /** Extra CSS classes on the wrapper div */
+  class?: string;
+  /** Corner rounding (default: none) */
+  rounded?: boolean;
+  /** Caption shown below the video */
+  caption?: string;
+}
+
+const {
+  webm,
+  mp4,
+  poster,
+  alt       = '',
+  width     = 1920,
+  height    = 1080,
+  class: cls = '',
+  rounded   = false,
+  caption,
+} = Astro.props;
+
+// Unique ID so the IntersectionObserver can target this specific video
+const uid = `vl-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<figure class:list={['video-loop-wrap', cls]} style="margin:0;">
+  <div
+    class="video-loop-container"
+    style={`position:relative; aspect-ratio:${width}/${height}; background:#0a0806; overflow:hidden; ${rounded ? 'border-radius:8px;' : ''}`}
+    aria-label={alt}
+    role="img"
+  >
+    <!-- Poster shown while video is loading or paused -->
+    {poster && (
+      <img
+        src={poster}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;"
+      />
+    )}
+
+    <!--
+      The video element itself.
+      - preload="none"  → don't fetch anything until we're ready
+      - data-src-*      → real sources stored in data attrs, swapped in by JS
+      - aria-hidden     → screen readers use the figure's aria-label instead
+    -->
+    <video
+      id={uid}
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="none"
+      {...poster ? { poster } : {}}
+      aria-hidden="true"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;"
+    >
+      {webm && <source data-src={webm} type="video/webm" />}
+      {mp4  && <source data-src={mp4}  type="video/mp4"  />}
+    </video>
+  </div>
+
+  {caption && (
+    <figcaption
+      style="margin-top:0.6rem;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted, #8a8278);"
+    >
+      {caption}
+    </figcaption>
+  )}
+</figure>
+
+<script define:vars={{ uid }}>
+  // Lazy-load: only activate the video when it enters the viewport.
+  // This prevents every off-screen VideoLoop from fetching its source simultaneously.
+  const video = document.getElementById(uid);
+  if (!video) return;
+
+  function activate(vid) {
+    // Swap data-src → src on each <source>, then load
+    vid.querySelectorAll('source[data-src]').forEach((s) => {
+      s.src = s.dataset.src;
+      delete s.dataset.src;
+    });
+    vid.load();
+    // Attempt to play (browsers may block if tab is hidden — that's fine)
+    vid.play().catch(() => {});
+  }
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activate(video);
+            io.disconnect();
+          }
+        });
+      },
+      { rootMargin: '200px' }   // start loading 200px before it enters viewport
+    );
+    io.observe(video);
+  } else {
+    // Fallback for old browsers
+    activate(video);
+  }
+
+  // Pause when tab is hidden, resume when visible (saves CPU/battery)
+  document.addEventListener('visibilitychange', () => {
+    document.hidden ? video.pause() : video.play().catch(() => {});
+  });
+
+  // Respect prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.pause();
+  }
+</script>

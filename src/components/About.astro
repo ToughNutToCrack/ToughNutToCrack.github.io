@@ -1,0 +1,48 @@
+---
+interface Props {
+  headline?: string;
+  body?: string;
+  image?: string;
+}
+
+const {
+  headline = 'I design and build things that are <em>intentional</em>, considered, and built to last.',
+  body     = 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+  image    = '/images/tntc.webp',
+} = Astro.props;
+---
+
+<section
+  id="about"
+  class="py-24 md:py-32 lg:py-40 px-6 md:px-14 lg:px-20"
+  aria-label="About"
+>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+
+    <!-- Left: text -->
+    <div>
+      <p
+        class="about-text"
+        set:html={headline}
+      />
+      <p
+        class="mt-6 text-[0.75rem] leading-[1.85] tracking-[0.04em]"
+        style="color: var(--muted);"
+      >
+        {body}
+      </p>
+    </div>
+
+    <!-- Right: image -->
+    <div class="overflow-hidden">
+      <img
+        src={image}
+        alt="TNTC Studio"
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
+    </div>
+
+  </div>
+</section>

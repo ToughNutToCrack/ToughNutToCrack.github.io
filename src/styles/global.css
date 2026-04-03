@@ -1,0 +1,276 @@
+/* ─── Google Fonts ─────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&family=Patua+One&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Custom Properties ────────────────────────────────── */
+:root {
+  --ink:          #1E1E1E;
+  --paper:        #FFFFFF;
+  --accent:       #FFB861;
+  --accent-red:   #E85356;
+  --muted:        #5A6369;
+  --border:       #C3C3C3;
+  --gap:          clamp(4px, 1vw, 10px);
+}
+
+/* ─── Base ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'DM Mono', monospace;
+  background-color: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: 'Patua One', serif;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Utilities ─────────────────────────────────────────── */
+.patua {
+  font-family: 'Patua One', serif;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ─── Nav ───────────────────────────────────────────────── */
+.nav-link {
+  font-family: 'Patua One', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--accent-red);
+}
+
+/* ─── Cover ─────────────────────────────────────────────── */
+.cover-title {
+  font-family: 'Patua One', serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  line-height: 0.93;
+  color: #FFFFFF;
+  letter-spacing: -0.01em;
+}
+.cover-title em {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* ─── About ─────────────────────────────────────────────── */
+.about-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 300;
+  line-height: 1.35;
+}
+.about-text em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ─── Portfolio Card ────────────────────────────────────── */
+.card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--ink);
+  cursor: pointer;
+  display: block;
+}
+
+.card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.card:hover .card-bg,
+.card:focus-visible .card-bg {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(30, 30, 30, 0.92) 0%,
+    rgba(30, 30, 30, 0.15) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+.card:hover .card-overlay,
+.card:focus-visible .card-overlay {
+  opacity: 1;
+}
+
+.card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.4rem 1.1rem 1.1rem;
+  transform: translateY(8px);
+  opacity: 0;
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.card:hover .card-info,
+.card:focus-visible .card-info {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.card-title {
+  font-family: 'Patua One', serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.card-category {
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.35rem;
+}
+
+.card-icon {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  color: #FFFFFF;
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+/* ─── Footer link underline ─────────────────────────────── */
+.footer-link {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  position: relative;
+  transition: color 0.2s ease;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+.footer-link:hover {
+  color: var(--accent);
+}
+.footer-link:hover::after {
+  width: 100%;
+  right: auto;
+  left: 0;
+}
+
+/* ─── Scroll indicator ──────────────────────────────────── */
+.scroll-indicator {
+  writing-mode: vertical-rl;
+  font-size: 0.52rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.scroll-indicator::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 3rem;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ─── Page transition (native View Transitions API) ────── */
+@view-transition {
+  navigation: auto;
+}
+
+/* ─── Project gallery image hover ──────────────────────── */
+.gallery-img {
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+.gallery-img:hover {
+  transform: scale(1.03);
+}
+
+/* ─── Focus visible global ──────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ─── Grain texture overlay ─────────────────────────────── */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}

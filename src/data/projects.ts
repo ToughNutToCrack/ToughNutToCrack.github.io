@@ -128,28 +128,27 @@ export const projects: Project[] = [
     href: '',
   },
   {
-    slug:        'ActiveAR',
-    title:       'Active AR',
-    category:    'Mobile · AR',
-    tagline:     'An AR Android/iOS mobile experience that transforms ceramic tiles into interactive storytelling surfaces',
-    cover:       '/images/projects/activeAR/4.jpg',
-    coverAlt:    '',
-    placeholder: 'linear-gradient(135deg, #1e2832 0%, #2e4055 100%)',
-    icon: ICON_AR,
-    description: 'An AR mobile experience that transforms ceramic tiles into interactive storytelling surfaces. By simply framing a marker, users trigger immersive scenes that reveal each tile’s key properties — self-cleaning, anti-pollution, antibacterial, and anti-odour — through engaging visual metaphors.',
-    descriptionExtra: 'Built with Unity AR Foundation, ARCore, and ARKit.',
+    slug:        'The procedural Building System behind Expedition 33',
+    title:       'The procedural Building System behind Expedition 33',
+    category:    'Videogame · Tool',
+    tagline:     'A procedural city-building tool for Unity',
+    cover:       '/images/projects/expedition/1.jpg',
+    coverAlt:    'A procedural city-building tool for Unity',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_GAME,
+    description: 'We recreated a procedural building generation tool in Unity, inspired by the modular architecture of Expedition 33: Clear Obscure. Starting from artist-drawn footprints, we generated building outlines, sides, corners, and rules for repeating facade elements like windows, doors, columns, balconies, terraces, and roofs. Our system uses a combination of procedural logic and pre-modeled assets: each building element is placed according to rules for spacing, repetition, and variation. Special care was taken for the roof structure and upper floors, adapting outline shrinking and segment-based techniques to match the reference style. The final mesh can be combined and exported as a single FBX, keeping material assignments intact. This project allowed us to explore modular workflows, procedural control, and export-ready pipelines entirely inside Unity, while experimenting with ways to alter models after placement and maintain consistent style across large cityscapes.',
     gallery: [
-      { thumbnail: '/images/projects/activeAR/6.jpg', alt: 'Active AR live action',   size: 'full', type: 'vimeo', vimeoId: '1179146385' },
-      { src: '/images/projects/activeAR/2.jpg', alt: 'Behind the scene 1', size: 'half' },
-      { src: '/images/projects/activeAR/3.jpg', alt: 'Behind the scene 2', size: 'half' },
-      { src: '/images/projects/activeAR/7.jpg', alt: 'Behind the scene 3', size: 'half' },
-      { src: '/images/projects/activeAR/5.jpg', alt: 'Behind the scene 4', size: 'half' },
+      { type: 'youtube',  youtubeId: 'hm5UIC0C4mQ',  title: 'Making of',  thumbnail: '/images/projects/expedition/2.jpg', alt: 'Making of', size: 'full' },
+      { thumbnail: '/images/projects/expedition/1.webp', alt: 'Showcase 1',   size: 'half', type: 'vimeo', vimeoId: '1179643105'},
+      { thumbnail: '/images/projects/expedition/2.webp', alt: 'Showcase 2',   size: 'half', type: 'vimeo', vimeoId: '1179643136'},
+      { thumbnail: '/images/projects/expedition/3.webp', alt: 'Showcase 3',   size: 'half', type: 'vimeo', vimeoId: '1179643044'},
+      { thumbnail: '/images/projects/expedition/4.webp', alt: 'Showcase 4',   size: 'half', type: 'vimeo', vimeoId: '1179643077'},
     ],
     details: [
-      { label: 'Client',   value: 'Publics, Discromie, IRIS ceramica group'    },
-      { label: 'Destination',    value: 'AR, Artistic' },
-      { label: 'Technologies',    value: 'Unity3D, Blender, Substance Painter' }
+      { label: 'Destination',    value: 'Patreon' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
     ],
+    href: 'https://www.patreon.com/posts/procedural-tool-148203435?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link'
   },
   {
     slug:        'Golinelli Live',
@@ -174,50 +173,47 @@ export const projects: Project[] = [
     href: 'https://golinelli.live/',
   },
   {
-    slug:        'Golinelli Live - Ceramic Training',
-    title:       'Golinelli Live - Ceramic Training',
-    category:    'VR · Training',
-    tagline:     'A VR training module for ceramic manufacturing.',
-    cover:       '/images/projects/acimac/1.jpg',
-    coverAlt:    'A VR training module for ceramic manufacturing',
+    slug:        'Merging Worlds like Split Fiction',
+    title:       'Merging Worlds like Split Fiction',
+    category:    'Videogame · Tool',
+    tagline:     'Multi-world visual effects',
+    cover:       '/images/projects/splitfiction/4.webp',
+    coverAlt:    'Multi-world visual effects',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_VR,
-    description: 'A VR training module for ceramic manufacturing, built on the Golinelli Live framework. The experience guides users through the process of firing ceramic slabs, detailing each production phase and the associated parameters such as temperature and machine settings. Through interactive simulation, users can explore common errors and system failures, gaining practical understanding without the risks of a real production environment.',
+    icon: ICON_GAME,
+    description: 'Recreation of the multi-world split mechanic from SplitFiction. The goal of this project was to explore how multiple 3D scenes can coexist on the same screen space, with dynamic masks and shapes controlling visibility and interactions. Using the stencil buffer and custom shaders in Unity, each world is isolated while maintaining consistent player collisions and logic. This project allowed us to experiment with advanced rendering techniques and dynamic scene management in real-time.',
     gallery: [
-      { thumbnail: '/images/projects/acimac/3.jpg', alt: 'Laboratory Fingerprint',   size: 'full', type: 'vimeo', vimeoId: '1179514079' },
-      { src: '/images/projects/acimac/1.jpg', alt: 'Unity view', size: 'half' },
-      { src: '/images/projects/acimac/2.jpg', alt: 'Unity view', size: 'half' },
-
+      { src: '/images/projects/splitfiction/3.webp', alt: 'Custom shapes', size: 'half' },
+      { thumbnail: '/images/projects/splitfiction/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179646806'},
+      { thumbnail: '/images/projects/splitfiction/2.webp', type: 'youtube',  youtubeId: 'PgCiQHmZFBE',  title: 'Making of', alt: 'Making of', size: 'full' },
     ],
     details: [
-      { label: 'Client',   value: 'Fondazione Golinelli'    },
-      { label: 'Destination',    value: 'Meta Quest 2, 3' },
-      { label: 'Technologies',    value: 'Unity3D' }
+      { label: 'Destination',    value: 'Patreon' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
     ],
-    href: 'https://golinelli.live/',
+    href: 'https://www.patreon.com/posts/splitfiction-134416817'
   },
   {
-    slug:        'Salewa Showcase',
-    title:       'Salewa Showcase',
-    category:    'VR · Marketing',
-    tagline:     'A VR product showcase set in a dynamic mountain environment.',
-    cover:       '/images/projects/salewa/1.webp',
-    coverAlt:    'A VR product showcase set in a dynamic mountain environment.',
+    slug:        'Hold Person spell - VFX Breakdown',
+    title:       'Hold Person spell - VFX Breakdown',
+    category:    'Videogame · VFX',
+    tagline:     'A real-time VFX breakdown inspired by the “Hold Person” spell.',
+    cover:       '/images/projects/baldurs/1.jpg',
+    coverAlt:    'A real-time VFX breakdown inspired by the “Hold Person” spell.',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_VR,
-    description: 'A VR product showcase set in a dynamic mountain environment. Users experience Salewa’s tent across a full day-night cycle, observing it under changing light and conditions. Built for quick, frictionless sessions in-store and at trade fairs, the experience is optimized for first-time users — minimizing motion sickness and using hand tracking to deliver an immediate, engaging interaction.',
+    icon: ICON_GAME,
+    description: 'Real-time VFX recreation of the Hold Person spell from Baldur’s Gate 3. The goal of this project was to break down a complex, layered effect and rebuild it in a real-time environment, with a strong focus on readability, timing, and overall gameplay clarity. Particular attention was given to how each element contributes to communicating the spell’s behavior and impact to the player. During the process, we also had the opportunity to talk with the original VFX artist behind the effect, gaining additional insight into production workflows and design decisions.',
     gallery: [
-      { src: '/images/projects/salewa/1.jpg', alt: 'Night scene', size: 'half' },
-      { src: '/images/projects/salewa/2.webp', alt: 'Day scene', size: 'half' },
-      { thumbnail: '/images/projects/salewa/3.jpg', alt: 'Live experience',   size: 'full', type: 'vimeo', vimeoId: '1179520988' },
+      { src: '/images/projects/baldurs/3.webp', alt: 'Custom shapes', size: 'half' },
+      { thumbnail: '/images/projects/baldurs/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179714014'},
+      { thumbnail: '/images/projects/baldurs/2.jpg', type: 'youtube',  youtubeId: 'KkwqVooP3Ew',  title: 'Making of', alt: 'Making of', size: 'full' },
     ],
     details: [
-      { label: 'Client',   value: 'Coral Climb, Salewa'    },
-      { label: 'Destination',    value: 'Oculus Quest 2, 3' },
-      { label: 'Technologies',    value: 'Unity, Blender' }
+      { label: 'Destination',    value: 'Youtube' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
     ],
-    href: '',
-  },
+    href: ''
+  }, 
   {
     slug:        'Guercino in piazza',
     title:       'Guercino in piazza',
@@ -251,12 +247,12 @@ export const projects: Project[] = [
     description: 'Step into the Emilian countryside of the 1800s and witness the fall of the Renazzo meteorite. In the stillness of a cold night, a sudden light cuts through the sky — followed by three thunderous explosions that shatter the silence. This VR experience allows users to relive the event as it unfolded, combining immersive storytelling with educational insight to bring history back to life.',
     descriptionExtra: 'Alongside the interactive experience, a documentary video was produced for the Guercino Museum in Cento — extending the project into a cinematic format designed for a broader audience and on-site exhibition.',
     gallery: [
-      { src: '/images/projects/bicentenario/1.jpg', alt: 'Environment shot 1', size: 'half' },
-      { src: '/images/projects/bicentenario/2.jpg', alt: 'Environment shot 2', size: 'half' },
-      { src: '/images/projects/bicentenario/3.jpg', alt: 'Environment shot 3', size: 'half' },
-      { src: '/images/projects/bicentenario/1.webp', alt: 'Environment shot 4', size: 'half' },
       { src: '/images/projects/bicentenario/2.webp', alt: 'Having fun!', size: 'half' },
       { src: '/images/projects/bicentenario/5.jpg', alt: 'Exposed beside the real meteorite', size: 'half' },
+      { src: '/images/projects/bicentenario/3.jpg', alt: 'Environment shot 1', size: 'half' },
+      { src: '/images/projects/bicentenario/1.webp', alt: 'Environment shot 2', size: 'half' },
+      { src: '/images/projects/bicentenario/1.jpg', alt: 'Environment shot 3', size: 'half' },
+      { src: '/images/projects/bicentenario/2.jpg', alt: 'Environment shot 4', size: 'half' },
     ],
     details: [
       { label: 'Destination',    value: 'Meta Quest 3' },
@@ -311,28 +307,24 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'BI-REX',
-    title:       'BI-REX Virtual Experience',
-    category:    'VR · Gamification',
-    tagline:     'Discover the secret of the competence center',
-    cover:       '/images/projects/birex/4.jpg',
-    coverAlt:    'BI-REX Virtual Experience cover',
-    placeholder: 'linear-gradient(135deg, #3d2e20 0%, #6b4a2e 100%)',
-    icon: ICON_VR,
-    description: 'Step into an immersive virtual experience at the BI-REX Competence Center in Bologna. Guided by Robo Tino, users engage in three interactive mini-games — eliminating corrupted data, assembling robotic systems, and navigating a drone through obstacles. A series of playful yet meaningful interactions designed to translate big data, automation, and industrial processes into clear, memorable experiences.',
-    descriptionExtra: '',
+    slug:        'Painting Effect - Splatoon',
+    title:       'Painting Effect - Splatoon',
+    category:    'Videogame · Tool',
+    tagline:     '',
+    cover:       '/images/projects/splatoon/1.jpg',
+    coverAlt:    'Real-time surface painting system in Unity',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_GAME,
+    description: 'Real-time surface painting system in Unity, designed to support gameplay-driven interaction and environmental feedback. The project focuses on UV-space painting for consistency and control, with a modular architecture that supports multiple input sources such as particles and collisions. The system was later used in collaboration with Mix and Jam, where it was integrated to recreate a Splatoon-like gameplay mechanic.',
     gallery: [
-      { thumbnail: '/images/projects/birex/2.jpg', alt: 'BI-REX gameplay',   size: 'full', type: 'vimeo', vimeoId: '1179008152'},
-      { src: '/images/projects/birex/1.jpg', alt: 'Competence Center scene', size: 'half' },
-      { thumbnail: '/images/projects/birex/3.jpg', alt: 'MIR substance painter',   size: 'half', type: 'vimeo', vimeoId: '1179014699' },
+      { thumbnail: '/images/projects/splatoon/1.webp', type: 'youtube',  youtubeId: 'YUWfHX_ZNCw',  title: 'Making of', alt: 'Making of', size: 'half' },
+      { thumbnail: '/images/projects/splatoon/2.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179894273'},
     ],
     details: [
-      { label: 'Year',     value: '2024'               },
-      { label: 'Client',   value: 'BI-REX Competence Center, Bologna'    },
-      { label: 'Destination',    value: 'VR, Gamification' },
-      { label: 'Technologies',    value: 'Unity3D, Blender, Substance Painter' }
+      { label: 'Destination',    value: 'Youtube' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
     ],
-    href: '',
+    href: ''
   },
   {
     slug:        'RoboTino',
@@ -406,6 +398,121 @@ export const projects: Project[] = [
     href: 'https://politicopoetico.org/monologhi/',
   },
   {
+    slug:        'World cutting - Viewfinder',
+    title:       'World cutting - Viewfinder',
+    category:    'Videogame · Mechanic',
+    tagline:     'A recreation of a world-cutting mechanic inspired by Viewfinder.',
+    cover:       '/images/projects/viewfinder/4.webp',
+    coverAlt:    'A recreation of a world-cutting mechanic inspired by Viewfinder.',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_GAME,
+    description: 'Real-time recreation of the picture-based environment manipulation mechanic from Viewfinder. The goal of this project was to explore how a player can capture a portion of a 3D world and reposition it dynamically, preserving both geometry and gameplay interactions. Using Unity, we implemented real-time mesh slicing, frustum-based object selection, and camera-controlled placement, while maintaining consistent collisions and visual fidelity. Particular focus was given to handling dynamic meshes efficiently and recreating the interaction between the captured elements and the surrounding environment.',
+    gallery: [
+      { thumbnail: '/images/projects/viewfinder/2.jpg', type: 'youtube',  youtubeId: 'rdExK08zYBI',  title: 'Making of', alt: 'Making of', size: 'half' },
+      { thumbnail: '/images/projects/viewfinder/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717078'},
+      { thumbnail: '/images/projects/viewfinder/2.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717057'},
+      { thumbnail: '/images/projects/viewfinder/3.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717100'},
+    ],
+    details: [
+      { label: 'Destination',    value: 'Youtube' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
+    ],
+    href: 'https://github.com/ToughNutToCrack/ViewFinder'
+  },
+  {
+    slug:        'ActiveAR',
+    title:       'Active AR',
+    category:    'Mobile · AR',
+    tagline:     'An AR Android/iOS mobile experience that transforms ceramic tiles into interactive storytelling surfaces',
+    cover:       '/images/projects/activeAR/4.jpg',
+    coverAlt:    '',
+    placeholder: 'linear-gradient(135deg, #1e2832 0%, #2e4055 100%)',
+    icon: ICON_AR,
+    description: 'An AR mobile experience that transforms ceramic tiles into interactive storytelling surfaces. By simply framing a marker, users trigger immersive scenes that reveal each tile’s key properties — self-cleaning, anti-pollution, antibacterial, and anti-odour — through engaging visual metaphors.',
+    descriptionExtra: 'Built with Unity AR Foundation, ARCore, and ARKit.',
+    gallery: [
+      { thumbnail: '/images/projects/activeAR/6.jpg', alt: 'Active AR live action',   size: 'full', type: 'vimeo', vimeoId: '1179146385' },
+      { src: '/images/projects/activeAR/2.jpg', alt: 'Behind the scene 1', size: 'half' },
+      { src: '/images/projects/activeAR/3.jpg', alt: 'Behind the scene 2', size: 'half' },
+      { src: '/images/projects/activeAR/7.jpg', alt: 'Behind the scene 3', size: 'half' },
+      { src: '/images/projects/activeAR/5.jpg', alt: 'Behind the scene 4', size: 'half' },
+    ],
+    details: [
+      { label: 'Client',   value: 'Publics, Discromie, IRIS ceramica group'    },
+      { label: 'Destination',    value: 'AR, Artistic' },
+      { label: 'Technologies',    value: 'Unity3D, Blender, Substance Painter' }
+    ],
+  },
+  {
+    slug:        'Golinelli Live - Ceramic Training',
+    title:       'Golinelli Live - Ceramic Training',
+    category:    'VR · Training',
+    tagline:     'A VR training module for ceramic manufacturing.',
+    cover:       '/images/projects/acimac/1.jpg',
+    coverAlt:    'A VR training module for ceramic manufacturing',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_VR,
+    description: 'A VR training module for ceramic manufacturing, built on the Golinelli Live framework. The experience guides users through the process of firing ceramic slabs, detailing each production phase and the associated parameters such as temperature and machine settings. Through interactive simulation, users can explore common errors and system failures, gaining practical understanding without the risks of a real production environment.',
+    gallery: [
+      { thumbnail: '/images/projects/acimac/3.jpg', alt: 'Laboratory Fingerprint',   size: 'full', type: 'vimeo', vimeoId: '1179514079' },
+      { src: '/images/projects/acimac/1.jpg', alt: 'Unity view', size: 'half' },
+      { src: '/images/projects/acimac/2.jpg', alt: 'Unity view', size: 'half' },
+
+    ],
+    details: [
+      { label: 'Client',   value: 'Fondazione Golinelli'    },
+      { label: 'Destination',    value: 'Meta Quest 2, 3' },
+      { label: 'Technologies',    value: 'Unity3D' }
+    ],
+    href: 'https://golinelli.live/',
+  },
+  {
+    slug:        'Salewa Showcase',
+    title:       'Salewa Showcase',
+    category:    'VR · Marketing',
+    tagline:     'A VR product showcase set in a dynamic mountain environment.',
+    cover:       '/images/projects/salewa/1.webp',
+    coverAlt:    'A VR product showcase set in a dynamic mountain environment.',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_VR,
+    description: 'A VR product showcase set in a dynamic mountain environment. Users experience Salewa’s tent across a full day-night cycle, observing it under changing light and conditions. Built for quick, frictionless sessions in-store and at trade fairs, the experience is optimized for first-time users — minimizing motion sickness and using hand tracking to deliver an immediate, engaging interaction.',
+    gallery: [
+      { src: '/images/projects/salewa/1.jpg', alt: 'Night scene', size: 'half' },
+      { src: '/images/projects/salewa/2.webp', alt: 'Day scene', size: 'half' },
+      { thumbnail: '/images/projects/salewa/3.jpg', alt: 'Live experience',   size: 'full', type: 'vimeo', vimeoId: '1179520988' },
+    ],
+    details: [
+      { label: 'Client',   value: 'Coral Climb, Salewa'    },
+      { label: 'Destination',    value: 'Oculus Quest 2, 3' },
+      { label: 'Technologies',    value: 'Unity, Blender' }
+    ],
+    href: '',
+  },
+  {
+    slug:        'BI-REX',
+    title:       'BI-REX Virtual Experience',
+    category:    'VR · Gamification',
+    tagline:     'Discover the secret of the competence center',
+    cover:       '/images/projects/birex/4.jpg',
+    coverAlt:    'BI-REX Virtual Experience cover',
+    placeholder: 'linear-gradient(135deg, #3d2e20 0%, #6b4a2e 100%)',
+    icon: ICON_VR,
+    description: 'Step into an immersive virtual experience at the BI-REX Competence Center in Bologna. Guided by Robo Tino, users engage in three interactive mini-games — eliminating corrupted data, assembling robotic systems, and navigating a drone through obstacles. A series of playful yet meaningful interactions designed to translate big data, automation, and industrial processes into clear, memorable experiences.',
+    descriptionExtra: '',
+    gallery: [
+      { thumbnail: '/images/projects/birex/2.jpg', alt: 'BI-REX gameplay',   size: 'full', type: 'vimeo', vimeoId: '1179008152'},
+      { src: '/images/projects/birex/1.jpg', alt: 'Competence Center scene', size: 'half' },
+      { thumbnail: '/images/projects/birex/3.jpg', alt: 'MIR substance painter',   size: 'half', type: 'vimeo', vimeoId: '1179014699' },
+    ],
+    details: [
+      { label: 'Year',     value: '2024'               },
+      { label: 'Client',   value: 'BI-REX Competence Center, Bologna'    },
+      { label: 'Destination',    value: 'VR, Gamification' },
+      { label: 'Technologies',    value: 'Unity3D, Blender, Substance Painter' }
+    ],
+    href: '',
+  },
+  {
     slug:        'Comune di Peccioli',
     title:       'Comune di Peccioli',
     category:    'Web 3D',
@@ -427,113 +534,6 @@ export const projects: Project[] = [
       { label: 'Technologies',    value: 'Three JS, Blender' }
     ],
     href: '',
-  },
-  {
-    slug:        'The procedural Building System behind Expedition 33',
-    title:       'The procedural Building System behind Expedition 33',
-    category:    'Videogame · Tool',
-    tagline:     'A procedural city-building tool for Unity',
-    cover:       '/images/projects/expedition/1.jpg',
-    coverAlt:    'A procedural city-building tool for Unity',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_GAME,
-    description: 'We recreated a procedural building generation tool in Unity, inspired by the modular architecture of Expedition 33: Clear Obscure. Starting from artist-drawn footprints, we generated building outlines, sides, corners, and rules for repeating facade elements like windows, doors, columns, balconies, terraces, and roofs. Our system uses a combination of procedural logic and pre-modeled assets: each building element is placed according to rules for spacing, repetition, and variation. Special care was taken for the roof structure and upper floors, adapting outline shrinking and segment-based techniques to match the reference style. The final mesh can be combined and exported as a single FBX, keeping material assignments intact. This project allowed us to explore modular workflows, procedural control, and export-ready pipelines entirely inside Unity, while experimenting with ways to alter models after placement and maintain consistent style across large cityscapes.',
-    gallery: [
-      { type: 'youtube',  youtubeId: 'hm5UIC0C4mQ',  title: 'Making of',  thumbnail: '/images/projects/expedition/2.jpg', alt: 'Making of', size: 'full' },
-      { thumbnail: '/images/projects/expedition/1.webp', alt: 'Showcase 1',   size: 'half', type: 'vimeo', vimeoId: '1179643105'},
-      { thumbnail: '/images/projects/expedition/2.webp', alt: 'Showcase 2',   size: 'half', type: 'vimeo', vimeoId: '1179643136'},
-      { thumbnail: '/images/projects/expedition/3.webp', alt: 'Showcase 3',   size: 'half', type: 'vimeo', vimeoId: '1179643044'},
-      { thumbnail: '/images/projects/expedition/4.webp', alt: 'Showcase 4',   size: 'half', type: 'vimeo', vimeoId: '1179643077'},
-    ],
-    details: [
-      { label: 'Destination',    value: 'Patreon' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-    href: 'https://www.patreon.com/posts/procedural-tool-148203435?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link'
-  },
-  {
-    slug:        'Merging Worlds like Split Fiction',
-    title:       'Merging Worlds like Split Fiction',
-    category:    'Videogame · Tool',
-    tagline:     'Multi-world visual effects',
-    cover:       '/images/projects/splitfiction/4.webp',
-    coverAlt:    'Multi-world visual effects',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_GAME,
-    description: 'Recreation of the multi-world split mechanic from SplitFiction. The goal of this project was to explore how multiple 3D scenes can coexist on the same screen space, with dynamic masks and shapes controlling visibility and interactions. Using the stencil buffer and custom shaders in Unity, each world is isolated while maintaining consistent player collisions and logic. This project allowed us to experiment with advanced rendering techniques and dynamic scene management in real-time.',
-    gallery: [
-      { src: '/images/projects/splitfiction/3.webp', alt: 'Custom shapes', size: 'half' },
-      { thumbnail: '/images/projects/splitfiction/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179646806'},
-      { thumbnail: '/images/projects/splitfiction/2.webp', type: 'youtube',  youtubeId: 'PgCiQHmZFBE',  title: 'Making of', alt: 'Making of', size: 'full' },
-    ],
-    details: [
-      { label: 'Destination',    value: 'Patreon' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-    href: 'https://www.patreon.com/posts/splitfiction-134416817'
-  },
-  {
-    slug:        'Hold Person spell - VFX Breakdown',
-    title:       'Hold Person spell - VFX Breakdown',
-    category:    'Videogame · VFX',
-    tagline:     'A real-time VFX breakdown inspired by the “Hold Person” spell.',
-    cover:       '/images/projects/baldurs/1.jpg',
-    coverAlt:    'A real-time VFX breakdown inspired by the “Hold Person” spell.',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_GAME,
-    description: 'Real-time VFX recreation of the Hold Person spell from Baldur’s Gate 3. The goal of this project was to break down a complex, layered effect and rebuild it in a real-time environment, with a strong focus on readability, timing, and overall gameplay clarity. Particular attention was given to how each element contributes to communicating the spell’s behavior and impact to the player. During the process, we also had the opportunity to talk with the original VFX artist behind the effect, gaining additional insight into production workflows and design decisions.',
-    gallery: [
-      { src: '/images/projects/baldurs/3.webp', alt: 'Custom shapes', size: 'half' },
-      { thumbnail: '/images/projects/baldurs/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179714014'},
-      { thumbnail: '/images/projects/baldurs/2.jpg', type: 'youtube',  youtubeId: 'KkwqVooP3Ew',  title: 'Making of', alt: 'Making of', size: 'full' },
-    ],
-    details: [
-      { label: 'Destination',    value: 'Youtube' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-    href: ''
-  }, 
-  {
-    slug:        'Painting Effect - Splatoon',
-    title:       'Painting Effect - Splatoon',
-    category:    'Videogame · Tool',
-    tagline:     '',
-    cover:       '/images/projects/splatoon/1.jpg',
-    coverAlt:    'Real-time surface painting system in Unity',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_GAME,
-    description: 'Real-time surface painting system in Unity, designed to support gameplay-driven interaction and environmental feedback. The project focuses on UV-space painting for consistency and control, with a modular architecture that supports multiple input sources such as particles and collisions. The system was later used in collaboration with Mix and Jam, where it was integrated to recreate a Splatoon-like gameplay mechanic.',
-    gallery: [
-      { thumbnail: '/images/projects/splatoon/1.webp', type: 'youtube',  youtubeId: 'YUWfHX_ZNCw',  title: 'Making of', alt: 'Making of', size: 'half' },
-      { thumbnail: '/images/projects/splatoon/2.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179894273'},
-    ],
-    details: [
-      { label: 'Destination',    value: 'Youtube' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-    href: ''
-  },
-  {
-    slug:        'World cutting - Viewfinder',
-    title:       'World cutting - Viewfinder',
-    category:    'Videogame · Mechanic',
-    tagline:     'A recreation of a world-cutting mechanic inspired by Viewfinder.',
-    cover:       '/images/projects/viewfinder/4.webp',
-    coverAlt:    'A recreation of a world-cutting mechanic inspired by Viewfinder.',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_GAME,
-    description: 'Real-time recreation of the picture-based environment manipulation mechanic from Viewfinder. The goal of this project was to explore how a player can capture a portion of a 3D world and reposition it dynamically, preserving both geometry and gameplay interactions. Using Unity, we implemented real-time mesh slicing, frustum-based object selection, and camera-controlled placement, while maintaining consistent collisions and visual fidelity. Particular focus was given to handling dynamic meshes efficiently and recreating the interaction between the captured elements and the surrounding environment.',
-    gallery: [
-      { thumbnail: '/images/projects/viewfinder/2.jpg', type: 'youtube',  youtubeId: 'rdExK08zYBI',  title: 'Making of', alt: 'Making of', size: 'half' },
-      { thumbnail: '/images/projects/viewfinder/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717078'},
-      { thumbnail: '/images/projects/viewfinder/2.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717057'},
-      { thumbnail: '/images/projects/viewfinder/3.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179717100'},
-    ],
-    details: [
-      { label: 'Destination',    value: 'Youtube' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-    href: 'https://github.com/ToughNutToCrack/ViewFinder'
   },
   {
     slug:        'Procedural Ivy - Niantic Game Jam',

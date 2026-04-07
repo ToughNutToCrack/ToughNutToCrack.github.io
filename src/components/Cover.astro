@@ -1,7 +1,13 @@
 ---
+interface CoverText {
+  lines: string[];
+}
+
 interface Props {
   /** Ordered list of video paths inside /public */
   videos?: string[];
+  /** One text block per video — lines rendered as separate spans */
+  texts?: CoverText[];
   /** Fallback poster image shown before video plays */
   poster?: string;
   /** Tagline shown above the main title */
@@ -10,6 +16,7 @@ interface Props {
 
 const {
   videos  = [],
+  texts   = [],
   poster,
   tagline = 'Meet TNTC Studio',
 } = Astro.props;
@@ -90,18 +97,36 @@ const {
       {tagline}
     </p>
 
-    <h1 class="cover-title">
-      Videogames<br />
-      <em>&amp;&nbsp;immersive</em><br />
-      experiences
-    </h1>
+    <!-- One h1 per video, crossfaded by JS -->
+    <div class="relative">
+      {texts.length > 0 ? texts.map((text, i) => (
+        <h1
+          class="hero-text cover-title"
+          data-index={i}
+          style={`opacity:${i === 0 ? 1 : 0}; transition: opacity 0.8s ease; ${i !== 0 ? 'position:absolute; top:0; right:0;' : ''}`}
+        >
+          {text.lines.map((line, j) => (
+            <>
+              {j > 0 && <br />}
+              <span set:html={line} />
+            </>
+          ))}
+        </h1>
+      )) : (
+        <h1 class="cover-title">
+          Videogames<br />
+          <em>&amp;&nbsp;immersive</em><br />
+          experiences
+        </h1>
+      )}
+    </div>
   </div>
 
   <!-- Scroll indicator -->
   <div
     class="absolute right-6 bottom-12 hidden sm:flex"
     aria-hidden="true"
-    style="color: rgba(245,242,236,0.38); z-index: 20;"
+    style="color: rgba(255,255,255,0.38); z-index: 20;"
   >
     <span class="scroll-indicator">Scroll</span>
   </div>
@@ -114,19 +139,26 @@ const {
     );
     if (videos.length === 0) return;
 
+    const textBlocks = Array.from(
+      document.querySelectorAll<HTMLElement>('.hero-text')
+    );
+
     let current = 0;
 
     function playAt(index: number) {
       const next = videos[index];
 
-      // Preload next video
       if (next.preload === 'none') next.preload = 'auto';
-
       next.style.zIndex  = '2';
       next.style.opacity = '1';
       next.play().catch(() => {});
 
-      // Fade out and demote the previous video after transition
+      // Crossfade text
+      textBlocks.forEach((el, i) => {
+        el.style.opacity = i === index ? '1' : '0';
+      });
+
+      // Fade out previous video
       const prev = videos.find((_, i) => i !== index && parseFloat(_.style.opacity) === 1);
       if (prev) {
         prev.style.opacity = '0';
@@ -134,11 +166,10 @@ const {
           prev.style.zIndex = '0';
           prev.pause();
           prev.currentTime = 0;
-        }, 1000); // matches the CSS transition duration
+        }, 1000);
       }
     }
 
-    // On each video end, crossfade to the next
     videos.forEach((video, i) => {
       video.addEventListener('ended', () => {
         current = (i + 1) % videos.length;
@@ -146,7 +177,6 @@ const {
       });
     });
 
-    // Start first video
     playAt(0);
   }
 

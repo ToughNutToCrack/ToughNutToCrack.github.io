@@ -107,7 +107,7 @@ a {
 /* ─── About ─────────────────────────────────────────────── */
 .about-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   font-weight: 300;
   line-height: 1.35;
 }

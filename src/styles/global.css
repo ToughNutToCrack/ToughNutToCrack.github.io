@@ -180,6 +180,16 @@ a {
   opacity: 1;
 }
 
+@media (max-width: 639px) and (orientation: portrait) {
+  .card-overlay {
+    opacity: 1;
+  }
+  .card-info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .card-title {
   font-family: 'Patua One', serif;
   font-size: 1.15rem;

@@ -7,6 +7,16 @@ import VimeoEmbed   from '../../components/VimeoEmbed.astro';
 import YoutubeEmbed from '../../components/YoutubeEmbed.astro';
 import { projects, getProjectBySlug } from '../../data/projects';
 import type { GetStaticPaths } from 'astro';
+import type { FooterLink } from '../../components/Footer.astro';
+
+const footerLinks: FooterLink[] = [
+  { label: 'Email',    href: 'mailto:info@tntc.it'                  },
+  { label: 'Youtube', href: 'http://youtube.com/tntcproject'      },
+  { label: 'Patreon', href: 'https://www.patreon.com/c/tntcproject'     },
+  { label: 'LinkedIn', href: 'https://it.linkedin.com/company/tntc'  },
+  { label: 'Bluesky', href: 'https://bsky.app/profile/tntcproject.bsky.social'  },
+  { label: 'GitHub',   href: 'https://github.com/ToughNutToCrack'        },
+];
 
 export const getStaticPaths: GetStaticPaths = () =>
   projects.map((p) => ({ params: { slug: p.slug } }));
@@ -16,8 +26,8 @@ const project    = getProjectBySlug(slug!)!;
 
 // Prev / Next navigation
 const idx  = projects.findIndex((p) => p.slug === slug);
-const prev = idx > 0                    ? projects[idx - 1] : null;
-const next = idx < projects.length - 1  ? projects[idx + 1] : null;
+const prev = projects[(idx - 1 + projects.length) % projects.length];
+const next = projects[(idx + 1) % projects.length];
 ---
 
 <Layout
@@ -31,7 +41,63 @@ const next = idx < projects.length - 1  ? projects[idx + 1] : null;
 
     <!-- ── Header ────────────────────────────────────────────── -->
     <div class="px-6 md:px-14 lg:px-20 pt-28 md:pt-32 pb-10 md:pb-14">
-      <a
+
+<nav
+      class="border-b"
+      style="border-color: var(--border);"
+      aria-label="Project navigation"
+    >
+      <div class="grid grid-cols-2 divide-x" style="border-color: var(--border);">
+
+        <!-- Prev -->
+        <div>
+          <a
+            href={`/projects/${prev.slug}`}
+            class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20
+                   transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          >
+            <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+              ← Previous
+            </span>
+            <span
+              class="font-serif font-medium leading-tight transition-colors duration-200"
+              style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
+            >
+              {prev.title}
+            </span>
+            <span class="text-[0.58rem] tracking-[0.16em]" style="color: var(--muted);">
+              {prev.category}
+            </span>
+          </a>
+        </div>
+
+        <!-- Next -->
+        <div>
+          <a
+            href={`/projects/${next.slug}`}
+            class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right
+                   transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          >
+            <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+              Next →
+            </span>
+            <span
+              class="font-serif font-medium leading-tight transition-colors duration-200"
+              style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
+            >
+              {next.title}
+            </span>
+            <span class="text-[0.58rem] tracking-[0.16em]" style="color: var(--muted);">
+              {next.category}
+            </span>
+          </a>
+        </div>
+
+      </div>
+    </nav>
+    <br />
+
+      <!-- <a
         href="/"
         class="inline-flex items-center gap-2 text-[0.6rem] tracking-[0.22em] uppercase transition-opacity duration-200 hover:opacity-60 mb-10 md:mb-14 block"
         style="color: var(--muted);"
@@ -41,7 +107,7 @@ const next = idx < projects.length - 1  ? projects[idx + 1] : null;
           <polyline points="12 19 5 12 12 5"/>
         </svg>
         Back
-      </a>
+      </a> -->
       <h1
         class="leading-[1.1]"
         style="font-size: clamp(2.5rem, 7vw, 5.5rem); color: var(--ink);"
@@ -189,74 +255,46 @@ const next = idx < projects.length - 1  ? projects[idx + 1] : null;
 
         <!-- Prev -->
         <div>
-          {prev ? (
-            <a
-              href={`/projects/${prev.slug}`}
-              class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20
-                     transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          <a
+            href={`/projects/${prev.slug}`}
+            class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20
+                   transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          >
+            <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+              ← Previous
+            </span>
+            <span
+              class="font-serif font-medium leading-tight transition-colors duration-200"
+              style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
             >
-              <span
-                class="text-[0.55rem] tracking-[0.26em] uppercase"
-                style="color: var(--muted);"
-              >
-                ← Previous
-              </span>
-              <span
-                class="font-serif font-medium leading-tight transition-colors duration-200"
-                style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
-              >
-                {prev.title}
-              </span>
-              <span
-                class="text-[0.58rem] tracking-[0.16em]"
-                style="color: var(--muted);"
-              >
-                {prev.category}
-              </span>
-            </a>
-          ) : (
-            <div class="px-6 py-10 md:px-14 md:py-12 lg:px-20 opacity-30">
-              <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
-                ← Previous
-              </span>
-            </div>
-          )}
+              {prev.title}
+            </span>
+            <span class="text-[0.58rem] tracking-[0.16em]" style="color: var(--muted);">
+              {prev.category}
+            </span>
+          </a>
         </div>
 
         <!-- Next -->
         <div>
-          {next ? (
-            <a
-              href={`/projects/${next.slug}`}
-              class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right
-                     transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          <a
+            href={`/projects/${next.slug}`}
+            class="group flex flex-col gap-2 px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right
+                   transition-colors duration-200 hover:bg-[rgba(195,195,195,0.08)]"
+          >
+            <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
+              Next →
+            </span>
+            <span
+              class="font-serif font-medium leading-tight transition-colors duration-200"
+              style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
             >
-              <span
-                class="text-[0.55rem] tracking-[0.26em] uppercase"
-                style="color: var(--muted);"
-              >
-                Next →
-              </span>
-              <span
-                class="font-serif font-medium leading-tight transition-colors duration-200"
-                style="font-size: clamp(1rem, 2.5vw, 1.5rem); color: var(--ink);"
-              >
-                {next.title}
-              </span>
-              <span
-                class="text-[0.58rem] tracking-[0.16em]"
-                style="color: var(--muted);"
-              >
-                {next.category}
-              </span>
-            </a>
-          ) : (
-            <div class="px-6 py-10 md:px-14 md:py-12 lg:px-20 text-right opacity-30">
-              <span class="text-[0.55rem] tracking-[0.26em] uppercase" style="color: var(--muted);">
-                Next →
-              </span>
-            </div>
-          )}
+              {next.title}
+            </span>
+            <span class="text-[0.58rem] tracking-[0.16em]" style="color: var(--muted);">
+              {next.category}
+            </span>
+          </a>
         </div>
 
       </div>
@@ -264,5 +302,5 @@ const next = idx < projects.length - 1  ? projects[idx + 1] : null;
 
   </main>
 
-  <Footer />
+  <Footer name="TNTC Studio" links={footerLinks}/>
 </Layout>

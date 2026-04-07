@@ -80,7 +80,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug:        'Space Spree',
+    slug:        'space-spree',
     title:       'Space Spree',
     category:    'Videogame · Mobile',
     tagline:     'A fast-paced mobile shooter set in space',
@@ -102,7 +102,7 @@ export const projects: Project[] = [
     href: 'https://play.google.com/store/apps/details?id=com.TNTC.SpaceSpree'
   },
   {
-    slug:        'Agile Configurator',
+    slug:        'agile-configurator',
     title:       'Agile Configurator',
     category:    'Web · Desktop · Configurator',
     tagline:     'A real-time platform for designing, simulating, and monitoring parcel sorting systems.',
@@ -128,7 +128,7 @@ export const projects: Project[] = [
     href: '',
   },
   {
-    slug:        'The procedural Building System behind Expedition 33',
+    slug:        'procedural-building-system-expedition-33',
     title:       'The procedural Building System behind Expedition 33',
     category:    'Videogame · Tool',
     tagline:     'A procedural city-building tool for Unity',
@@ -151,7 +151,7 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/procedural-tool-148203435?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link'
   },
   {
-    slug:        'Golinelli Live',
+    slug:        'golinelli-live',
     title:       'Golinelli Live',
     category:    'VR · Multiplayer',
     tagline:     'A VR platform for immersive education in life sciences and manufacturing',
@@ -173,7 +173,7 @@ export const projects: Project[] = [
     href: 'https://golinelli.live/',
   },
   {
-    slug:        'Merging Worlds like Split Fiction',
+    slug:        'merging-worlds-split-fiction',
     title:       'Merging Worlds like Split Fiction',
     category:    'Videogame · Tool',
     tagline:     'Multi-world visual effects',
@@ -194,7 +194,7 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/splitfiction-134416817'
   },
   {
-    slug:        'Hold Person spell - VFX Breakdown',
+    slug:        'hold-person-spell-vfx-breakdown',
     title:       'Hold Person spell - VFX Breakdown',
     category:    'Videogame · VFX',
     tagline:     'A real-time VFX breakdown inspired by the “Hold Person” spell.',
@@ -215,7 +215,7 @@ export const projects: Project[] = [
     href: ''
   }, 
   {
-    slug:        'Guercino in piazza',
+    slug:        'guercino-in-piazza',
     title:       'Guercino in piazza',
     category:    'VR · Art Installation',
     tagline:     'A mixed reality experience for Meta Quest 3 set in the heart of Cento, Guercino’s hometown.',
@@ -236,7 +236,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'Bicentenario Renazzo',
+    slug:        'bicentenario-renazzo',
     title:       'Bicentenario Renazzo',
     category:    'VR · Art Installation',
     tagline:     'Step into the Emilian countryside of the 1800s and witness the fall of the Renazzo meteorite.',
@@ -260,7 +260,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'La Casa AR',
+    slug:        'la-casa-ar',
     title:       'La Casa AR',
     category:    'AR · Art Installation',
     tagline:     'A permanent AR installation inside Bologna’s Sala Borsa.',
@@ -284,7 +284,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'U.MANO & ARTEFIERA',
+    slug:        'umano-artefiera',
     title:       'U.MANO & ARTEFIERA',
     category:    'VR · AR · Experimental Art Installation',
     tagline:     'An experimental art exhibition.',
@@ -307,7 +307,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'Painting Effect - Splatoon',
+    slug:        'painting-effect-splatoon',
     title:       'Painting Effect - Splatoon',
     category:    'Videogame · Tool',
     tagline:     '',
@@ -327,7 +327,7 @@ export const projects: Project[] = [
     href: ''
   },
   {
-    slug:        'RoboTino',
+    slug:        'robotino',
     title:       'Robo Tino - Character Design for VR',
     category:    'Character Design · VR',
     tagline:     'An assistant for a virtual reality experience',
@@ -352,7 +352,7 @@ export const projects: Project[] = [
   },
   
   {
-    slug:        'Enchanted Forest - Viverse',
+    slug:        'enchanted-forest-viverse',
     title:       'Enchanted Forest - Viverse',
     category:    'Videogame · Web',
     tagline:     'Step into a magical forest where mystery and music come to life.',
@@ -376,7 +376,7 @@ export const projects: Project[] = [
     href: 'https://www.viverse.com/hp3X3BA'
   },
   {
-    slug:        'Politico Poetico Il parlamento',
+    slug:        'politico-poetico-il-parlamento',
     title:       'Politico Poetico Il parlamento',
     category:    'Web 3D',
     tagline:     'A 3D web platform that gives young people a voice in shaping sustainable futures.',
@@ -398,7 +398,7 @@ export const projects: Project[] = [
     href: 'https://politicopoetico.org/monologhi/',
   },
   {
-    slug:        'World cutting - Viewfinder',
+    slug:        'world-cutting-viewfinder',
     title:       'World cutting - Viewfinder',
     category:    'Videogame · Mechanic',
     tagline:     'A recreation of a world-cutting mechanic inspired by Viewfinder.',
@@ -420,7 +420,7 @@ export const projects: Project[] = [
     href: 'https://github.com/ToughNutToCrack/ViewFinder'
   },
   {
-    slug:        'ActiveAR',
+    slug:        'active-ar',
     title:       'Active AR',
     category:    'Mobile · AR',
     tagline:     'An AR Android/iOS mobile experience that transforms ceramic tiles into interactive storytelling surfaces',
@@ -444,7 +444,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug:        'Golinelli Live - Ceramic Training',
+    slug:        'golinelli-live-ceramic-training',
     title:       'Golinelli Live - Ceramic Training',
     category:    'VR · Training',
     tagline:     'A VR training module for ceramic manufacturing.',
@@ -467,7 +467,7 @@ export const projects: Project[] = [
     href: 'https://golinelli.live/',
   },
   {
-    slug:        'Salewa Showcase',
+    slug:        'salewa-showcase',
     title:       'Salewa Showcase',
     category:    'VR · Marketing',
     tagline:     'A VR product showcase set in a dynamic mountain environment.',
@@ -489,7 +489,7 @@ export const projects: Project[] = [
     href: '',
   },
   {
-    slug:        'BI-REX',
+    slug:        'bi-rex',
     title:       'BI-REX Virtual Experience',
     category:    'VR · Gamification',
     tagline:     'Discover the secret of the competence center',
@@ -513,7 +513,7 @@ export const projects: Project[] = [
     href: '',
   },
   {
-    slug:        'Comune di Peccioli',
+    slug:        'comune-di-peccioli',
     title:       'Comune di Peccioli',
     category:    'Web 3D',
     tagline:     'A 3D web experience to explore Peccioli through a playful journey.',
@@ -536,7 +536,7 @@ export const projects: Project[] = [
     href: '',
   },
   {
-    slug:        'Procedural Ivy - Niantic Game Jam',
+    slug:        'procedural-ivy-niantic-game-jam',
     title:       'Procedural Ivy - Niantic Game Jam',
     category:    'Videogame · Mobile · AR',
     tagline:     'A procedural ivy effect that adapts to real-world surfaces',
@@ -557,7 +557,7 @@ export const projects: Project[] = [
     href: ''
   },
   {
-    slug:        'Procedural Content Generation System',
+    slug:        'procedural-content-generation-system',
     title:       'Procedural Content Generation System',
     category:    'Videogame · Tool',
     tagline:     'Procedural content generation system developed in Unity',
@@ -577,7 +577,7 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/125773474'
   }, 
   {
-    slug:        'TronnorT',
+    slug:        'tronnort',
     title:       'TronnorT',
     category:    'Videogame · Mobile · Multiplayer',
     tagline:     'A minimalist multiplayer game where movement becomes your weapon.',
@@ -598,7 +598,7 @@ export const projects: Project[] = [
     ]
   }, 
   {
-    slug:        'W.O.O.D',
+    slug:        'wood',
     title:       'W.O.O.D - Character Design',
     category:    'Character Design',
     tagline:     'W.O.O.D was created as a free and fully shareable mascot',
@@ -620,7 +620,7 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/130775711/',
   },
   {
-    slug:        'Procedural Hands',
+    slug:        'procedural-hands',
     title:       'Procedural Hands',
     category:    'VR · Tool Development',
     tagline:     'A procedural hand interaction system for VR',

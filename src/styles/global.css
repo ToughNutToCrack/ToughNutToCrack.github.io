@@ -34,6 +34,11 @@ body {
   background-color: var(--paper);
   color: var(--ink);
   overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 h1 {

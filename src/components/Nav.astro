@@ -155,6 +155,10 @@ const logoHref = isHome ? '#home' : '/';
 
     toggle.addEventListener('click', () => (open ? closeMenu() : openMenu()));
     mLinks.forEach((el) => el.addEventListener('click', closeMenu));
+
+    // Close when viewport becomes ≥ 640px (sm breakpoint) — e.g. on rotation
+    const mq = window.matchMedia('(min-width: 640px)');
+    mq.addEventListener('change', (e) => { if (e.matches && open) closeMenu(); });
   }
 
   document.addEventListener('astro:page-load', initNav);

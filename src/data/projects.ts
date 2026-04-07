@@ -204,9 +204,8 @@ export const projects: Project[] = [
     icon: ICON_GAME,
     description: 'Real-time VFX recreation of the Hold Person spell from Baldur’s Gate 3. The goal of this project was to break down a complex, layered effect and rebuild it in a real-time environment, with a strong focus on readability, timing, and overall gameplay clarity. Particular attention was given to how each element contributes to communicating the spell’s behavior and impact to the player. During the process, we also had the opportunity to talk with the original VFX artist behind the effect, gaining additional insight into production workflows and design decisions.',
     gallery: [
-      { src: '/images/projects/baldurs/3.webp', alt: 'Custom shapes', size: 'half' },
       { thumbnail: '/images/projects/baldurs/1.webp', alt: 'Gameplay',   size: 'half', type: 'vimeo', vimeoId: '1179714014'},
-      { thumbnail: '/images/projects/baldurs/2.jpg', type: 'youtube',  youtubeId: 'KkwqVooP3Ew',  title: 'Making of', alt: 'Making of', size: 'full' },
+      { thumbnail: '/images/projects/baldurs/2.jpg', type: 'youtube',  youtubeId: 'KkwqVooP3Ew',  title: 'Making of', alt: 'Making of', size: 'half' },
     ],
     details: [
       { label: 'Destination',    value: 'Youtube' },

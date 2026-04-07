@@ -22,9 +22,10 @@ const gridProjects = projects.map((p) => ({
 
 const footerLinks: FooterLink[] = [
   { label: 'Email',    href: 'mailto:info@tntc.it'                  },
-  { label: 'GitHub',   href: 'https://github.com/ToughNutToCrack'        },
-  { label: 'LinkedIn', href: 'https://it.linkedin.com/company/tntc'  },
   { label: 'Youtube', href: 'http://youtube.com/tntcproject'      },
+  { label: 'Patreon', href: 'https://www.patreon.com/c/tntcproject'     },
+  { label: 'LinkedIn', href: 'https://it.linkedin.com/company/tntc'  },
+  { label: 'GitHub',   href: 'https://github.com/ToughNutToCrack'        },
 ];
 ---
 
@@ -38,17 +39,18 @@ const footerLinks: FooterLink[] = [
     <Cover
       tagline="Meet TNTC Studio"
       videos={[
-        '/videos/hero0r.mp4',
         '/videos/hero1r.mp4',
-        '/videos/hero3r.mp4',
         '/videos/hero5r.mp4',
+        '/videos/hero2r.mp4',
+        '/videos/hero0r.mp4',
+        '/videos/hero3r.mp4',
         '/videos/hero4r.mp4',
       ]}
     />
 
     <About
-      headline="TNTC is a studio focused on real-time development, specializing in gamedev, XR, and custom Unity solutions."
-      body="We're a team of senior developers. Unity insider. We cover the full development cycle, from concept to deployment, and we work with clients of all sizes, from startups to established brands. We also create our own original content, including games and interactive experiences."
+      headline="TNTC specializes in gamedev, XR, and custom tools."
+      body="We are a team of experienced developers with a long presence in the industry. Over the years, we have worked across every stage of development, completing real-time projects in full or focusing on specific phases, always learning and refining our approach. We’ve collaborated with clients of every scale, from startups to major brands. Thanks to our online work and contributions to the game development community, we are also part of the Unity Insider program.  Alongside all of this, we create our own original content, including games, experiments, and interactive experiences."
     />
 
     <PortfolioGrid projects={gridProjects} />

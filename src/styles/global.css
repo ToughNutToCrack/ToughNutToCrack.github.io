@@ -81,6 +81,16 @@ a {
   color: var(--accent-red);
 }
 
+.patreon-link {
+  color: #FFFFFF;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+.patreon-link:hover {
+  color: var(--accent-red);
+}
+
 /* ─── Cover ─────────────────────────────────────────────── */
 .cover-title {
   font-family: 'Patua One', serif;

@@ -110,7 +110,7 @@ export const projects: Project[] = [
     coverAlt:    '',
     placeholder: 'linear-gradient(135deg, #1e2820 0%, #2e4830 100%)',
     icon: ICON_WEB,
-    description: 'A real-time platform for designing, simulating, and monitoring parcel sorting systems. Agile Configurator enables users to build modular plant layouts via a desktop app, defining routes, conveyors, and operational logic with full control. Through a connected web interface, each configuration can be linked to live data — allowing real parcels to be visualized in real time within the simulation. Built-in monitoring tools surface errors and machine states instantly, turning the platform into both a design tool and an operational dashboard.',
+    description: 'A real-time platform for designing, simulating, and monitoring parcel sorting systems. Agile Configurator enables users to build modular plant layouts via a desktop app, defining routes, conveyors, and operational logic with full control. Through a connected web interface, each configuration can be linked to live data, allowing real parcels to be visualized in real time within the simulation. Built-in monitoring tools surface errors and machine states instantly, turning the platform into both a design tool and an operational dashboard.',
     gallery: [
       { thumbnail: '/images/projects/agile/3.webp', alt: 'Live play 1',   size: 'half', type: 'vimeo', vimeoId: '1179903224' },
       { thumbnail: '/images/projects/agile/1.webp', alt: 'Live play 2',   size: 'half', type: 'vimeo', vimeoId: '1179903280' },
@@ -159,7 +159,7 @@ export const projects: Project[] = [
     coverAlt:    'A VR platform for immersive education in life sciences and manufacturing',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_VR,
-    description: 'A VR platform for immersive education in life sciences and manufacturing. Golinelli Live enables teachers to host and orchestrate real-time, multiplayer learning experiences, guiding students through interactive lab scenarios in VR. Through a dedicated desktop interface, instructors can monitor participants, access their point of view, and control the flow of the session. Students join from VR, fully immersed in a laboratory environment. A companion web platform allows educators to design custom experiences using modular building blocks — defining steps, tools, and learning goals with flexibility and control.',
+    description: 'A VR platform for immersive education in life sciences and manufacturing. Golinelli Live enables teachers to host and orchestrate real-time, multiplayer learning experiences, guiding students through interactive lab scenarios in VR. Through a dedicated desktop interface, instructors can monitor participants, access their point of view, and control the flow of the session. Students join from VR, fully immersed in a laboratory environment. A companion web platform allows educators to design custom experiences using modular building blocks, defining steps, tools, and learning goals with flexibility and control.',
     gallery: [
       { thumbnail: '/images/projects/golive/5.jpg', alt: 'DNA Fingerprinting',   size: 'full', type: 'vimeo', vimeoId: '1179503807' },
       { src: '/images/projects/golive/1.jpg', alt: 'Classroom', size: 'half' },
@@ -223,7 +223,7 @@ export const projects: Project[] = [
     coverAlt:    '',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_VR,
-    description: 'A mixed reality experience for Meta Quest 3 set in the heart of Cento, Guercino’s hometown. Through passthrough, users discover the artist’s works placed directly within the real environment. With hand tracking, a hidden interaction unlocks a secret scene — transporting users from the physical piazza into a vast, cosmic dimension for a striking “wow” moment.',
+    description: 'A mixed reality experience for Meta Quest 3 set in the heart of Cento, Guercino’s hometown. Through passthrough, users discover the artist’s works placed directly within the real environment. With hand tracking, a hidden interaction unlocks a secret scene, transporting users from the physical piazza into a vast, cosmic dimension for a striking “wow” moment.',
     gallery: [
       { thumbnail: '/images/projects/guercino/4.jpg', alt: 'Live experience',   size: 'full', type: 'vimeo', vimeoId: '1179216117' },
       { src: '/images/projects/guercino/2.jpg', alt: 'Hand tracking', size: 'half' },
@@ -244,8 +244,8 @@ export const projects: Project[] = [
     coverAlt:    '',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_VR,
-    description: 'Step into the Emilian countryside of the 1800s and witness the fall of the Renazzo meteorite. In the stillness of a cold night, a sudden light cuts through the sky — followed by three thunderous explosions that shatter the silence. This VR experience allows users to relive the event as it unfolded, combining immersive storytelling with educational insight to bring history back to life.',
-    descriptionExtra: 'Alongside the interactive experience, a documentary video was produced for the Guercino Museum in Cento — extending the project into a cinematic format designed for a broader audience and on-site exhibition.',
+    description: 'Step into the Emilian countryside of the 1800s and witness the fall of the Renazzo meteorite. In the stillness of a cold night, a sudden light cuts through the sky, followed by three thunderous explosions that shatter the silence. This VR experience allows users to relive the event as it unfolded, combining immersive storytelling with educational insight to bring history back to life.',
+    descriptionExtra: 'Alongside the interactive experience, a documentary video was produced for the Guercino Museum in Cento, extending the project into a cinematic format designed for a broader audience and on-site exhibition.',
     gallery: [
       { src: '/images/projects/bicentenario/2.webp', alt: 'Having fun!', size: 'half' },
       { src: '/images/projects/bicentenario/5.jpg', alt: 'Exposed beside the real meteorite', size: 'half' },
@@ -384,7 +384,7 @@ export const projects: Project[] = [
     coverAlt:    'A 3D web platform that gives young people a voice in shaping sustainable futures.',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_WEB,
-    description: 'A 3D web platform that gives young people a voice in shaping sustainable futures. Set within a digital Bologna, each participant appears as a personalized icon — inviting users to listen to their ideas, stories, and proposed actions. An interactive way to turn individual contributions into a shared vision for change.',
+    description: 'A 3D web platform that gives young people a voice in shaping sustainable futures. Set within a digital Bologna, each participant appears as a personalized icon, inviting users to listen to their ideas, stories, and proposed actions. An interactive way to turn individual contributions into a shared vision for change.',
     gallery: [
       { thumbnail: '/images/projects/politicopoetico/3.jpg', alt: 'Live experience',   size: 'full', type: 'vimeo', vimeoId: '1179374061' },
       { src: '/images/projects/politicopoetico/1.webp', alt: 'The city', size: 'half' },
@@ -428,7 +428,7 @@ export const projects: Project[] = [
     coverAlt:    '',
     placeholder: 'linear-gradient(135deg, #1e2832 0%, #2e4055 100%)',
     icon: ICON_AR,
-    description: 'An AR mobile experience that transforms ceramic tiles into interactive storytelling surfaces. By simply framing a marker, users trigger immersive scenes that reveal each tile’s key properties — self-cleaning, anti-pollution, antibacterial, and anti-odour — through engaging visual metaphors.',
+    description: 'An AR mobile experience that transforms ceramic tiles into interactive storytelling surfaces. By simply framing a marker, users trigger immersive scenes that reveal each tile’s key properties, self-cleaning, anti-pollution, antibacterial, and anti-odour, through engaging visual metaphors.',
     descriptionExtra: 'Built with Unity AR Foundation, ARCore, and ARKit.',
     gallery: [
       { thumbnail: '/images/projects/activeAR/6.jpg', alt: 'Active AR live action',   size: 'full', type: 'vimeo', vimeoId: '1179146385' },
@@ -475,7 +475,7 @@ export const projects: Project[] = [
     coverAlt:    'A VR product showcase set in a dynamic mountain environment.',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_VR,
-    description: 'A VR product showcase set in a dynamic mountain environment. Users experience Salewa’s tent across a full day-night cycle, observing it under changing light and conditions. Built for quick, frictionless sessions in-store and at trade fairs, the experience is optimized for first-time users — minimizing motion sickness and using hand tracking to deliver an immediate, engaging interaction.',
+    description: 'A VR product showcase set in a dynamic mountain environment. Users experience Salewa’s tent across a full day-night cycle, observing it under changing light and conditions. Built for quick, frictionless sessions in-store and at trade fairs, the experience is optimized for first-time users, minimizing motion sickness and using hand tracking to deliver an immediate, engaging interaction.',
     gallery: [
       { src: '/images/projects/salewa/1.jpg', alt: 'Night scene', size: 'half' },
       { src: '/images/projects/salewa/2.webp', alt: 'Day scene', size: 'half' },
@@ -497,7 +497,7 @@ export const projects: Project[] = [
     coverAlt:    'BI-REX Virtual Experience cover',
     placeholder: 'linear-gradient(135deg, #3d2e20 0%, #6b4a2e 100%)',
     icon: ICON_VR,
-    description: 'Step into an immersive virtual experience at the BI-REX Competence Center in Bologna. Guided by Robo Tino, users engage in three interactive mini-games — eliminating corrupted data, assembling robotic systems, and navigating a drone through obstacles. A series of playful yet meaningful interactions designed to translate big data, automation, and industrial processes into clear, memorable experiences.',
+    description: 'Step into an immersive virtual experience at the BI-REX Competence Center in Bologna. Guided by Robo Tino, users engage in three interactive mini-games, eliminating corrupted data, assembling robotic systems, and navigating a drone through obstacles. A series of playful yet meaningful interactions designed to translate big data, automation, and industrial processes into clear, memorable experiences.',
     descriptionExtra: '',
     gallery: [
       { thumbnail: '/images/projects/birex/2.jpg', alt: 'BI-REX gameplay',   size: 'full', type: 'vimeo', vimeoId: '1179008152'},

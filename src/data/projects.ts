@@ -576,8 +576,8 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/125773474'
   }, 
   {
-    slug:        'vivaEvents-armani',
-    title:       'VivaEvents - Armani',
+    slug:        'mangabear-armani',
+    title:       'Manga Bear - Armani',
     category:    'Advergame · 2D',
     tagline:     'An ADvergame created for Armani’s VivaEvents campaign.',
     cover:       '/images/projects/vivaevent/3.webp',
@@ -592,6 +592,7 @@ export const projects: Project[] = [
       { src: '/images/projects/vivaevent/4.webp', alt: 'Sydney', size: 'half' },
     ],
     details: [
+      { label: 'Client',   value: 'Touchlabs, Vivaevents, Armani'    },
       { label: 'Destination',    value: 'iOS, Android' },
       { label: 'Technologies',    value: 'Unity3D, Illustrator, Photoshop' }
     ]

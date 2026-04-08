@@ -576,6 +576,27 @@ export const projects: Project[] = [
     href: 'https://www.patreon.com/posts/125773474'
   }, 
   {
+    slug:        'vivaEvents-armani',
+    title:       'VivaEvents - Armani',
+    category:    'Advergame · 2D',
+    tagline:     'An ADvergame created for Armani’s VivaEvents campaign.',
+    cover:       '/images/projects/vivaevent/3.webp',
+    coverAlt:    '',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_GAME,
+    description: 'An endless-runner developed for Vivaevents and Armani. Players control the manga bear mascot racing through iconic cities while avoiding obstacles, collecting rewards, and reacting to dynamic elements like roaming pigeons. Designed for a physical arcade setup, the experience features a live leaderboard, turning gameplay into a shared, high-energy moment that drives engagement during events.',
+    gallery: [
+      { src: '/images/projects/vivaevent/1.webp', alt: 'New York', size: 'half' },
+      { src: '/images/projects/vivaevent/2.webp', alt: 'Rome', size: 'half' },
+      { src: '/images/projects/vivaevent/3.webp', alt: 'Tokyo', size: 'half' },
+      { src: '/images/projects/vivaevent/4.webp', alt: 'Sydney', size: 'half' },
+    ],
+    details: [
+      { label: 'Destination',    value: 'iOS, Android' },
+      { label: 'Technologies',    value: 'Unity3D, Illustrator, Photoshop' }
+    ]
+  }, 
+  {
     slug:        'tronnort',
     title:       'TronnorT',
     category:    'Videogame · Mobile · Multiplayer',

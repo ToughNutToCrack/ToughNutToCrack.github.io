@@ -1,0 +1,128 @@
+---
+interface Props {
+  handle: string;
+  limit?: number;
+}
+
+const { handle, limit = 6 } = Astro.props;
+---
+
+<section
+  id="bluesky"
+  class="px-6 md:px-14 lg:px-20 pb-24 md:pb-32"
+  aria-label="Bluesky feed"
+>
+  <!-- Section header -->
+  <div class="flex items-center justify-between mb-6 md:mb-8">
+    <div class="flex items-center gap-3">
+      <!-- Bluesky butterfly icon -->
+      <svg width="28" height="28" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" fill="var(--ink)">
+        <path d="M180 142c-16.3-31.7-60.7-90.8-102-120C38.5-5.9 23.4-1 13.5 3.4 2.1 8.6 0 26.2 0 36.5c0 10.4 5.7 84.8 9.4 97.2 12.1 41 55.4 55 95.3 50.5-58.7 8.6-110.8 30-42.4 106.1 75.1 77.9 103-16.7 117.7-63.8 14.7 47 33.5 138.6 117.7 63.8 64.6-67.1 16.1-97.5-42.6-106.1 39.9 4.5 83.2-9.5 95.3-50.5 3.7-12.4 9.4-86.8 9.4-97.2 0-10.3-2.1-27.9-13.5-33.1C336.6-1 321.5-6 282 22c-41.3 29.2-85.7 88.3-102 120z"/>
+      </svg>
+      <h2 class="font-serif text-xl md:text-3xl font-light tracking-[0.04em]">
+        From Bluesky
+      </h2>
+    </div>
+    <a
+      href={`https://bsky.app/profile/${handle}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-[0.58rem] tracking-[0.22em] uppercase transition-opacity duration-200 hover:opacity-60"
+      style="color: var(--muted);"
+    >
+      @{handle} →
+    </a>
+  </div>
+
+  <!-- Feed grid -->
+  <div
+    id="bsky-feed"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    aria-live="polite"
+  >
+    <!-- Skeleton placeholders -->
+    {Array.from({ length: limit }).map(() => (
+      <div class="bsky-skeleton border animate-pulse" style="border-color: var(--border); aspect-ratio: auto; min-height: 140px;" />
+    ))}
+  </div>
+</section>
+
+<script define:vars={{ handle, limit }}>
+  async function loadBskyFeed() {
+    const container = document.getElementById('bsky-feed');
+    if (!container) return;
+
+    try {
+      const res = await fetch(
+        `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${handle}&limit=${limit}&filter=posts_no_replies`
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const posts = (data.feed ?? [])
+        .filter((item) => !item.reason) // skip reposts
+        .slice(0, limit);
+
+      if (posts.length === 0) {
+        container.innerHTML = `<p style="color:var(--muted); font-size:0.75rem; letter-spacing:0.1em;">No posts found.</p>`;
+        return;
+      }
+
+      container.innerHTML = posts.map((item) => {
+        const post   = item.post;
+        const record = post.record;
+        const text   = record?.text ?? '';
+        const date   = new Date(record?.createdAt ?? post.indexedAt);
+        const url    = `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`;
+
+        const formattedDate = date.toLocaleDateString('en-GB', {
+          day:   'numeric',
+          month: 'short',
+          year:  'numeric',
+        });
+
+        // Linkify URLs and hashtags in text
+        const safeText = text
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+
+        const linkedText = safeText
+          .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">$1</a>')
+          .replace(/(#\w+)/g, '<span style="color:var(--accent);">$1</span>')
+          .replace(/\n/g, '<br>');
+
+        return `
+          <a
+            href="${url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bsky-card"
+            style="
+              display:flex; flex-direction:column;
+              border:1px solid var(--border);
+              overflow:hidden;
+              transition: background 0.2s ease;
+              text-decoration:none; color:inherit;
+            "
+            onmouseover="this.style.background='rgba(195,195,195,0.08)'"
+            onmouseout="this.style.background=''"
+          >
+            <div style="padding:1.1rem; display:flex; flex-direction:column; gap:0.75rem; flex:1;">
+              <p style="font-size:0.75rem; line-height:1.7; color:var(--ink);">${linkedText}</p>
+              <span style="font-size:0.52rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-top:auto; padding-top:0.5rem; border-top:1px solid var(--border); display:block;">${formattedDate}</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+
+    } catch (err) {
+      console.error('[BlueSkyFeed]', err);
+      if (container) {
+        container.innerHTML = `<p style="color:var(--muted); font-size:0.75rem; letter-spacing:0.1em;">Could not load posts.</p>`;
+      }
+    }
+  }
+
+  document.addEventListener('astro:page-load', loadBskyFeed);
+</script>

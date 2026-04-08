@@ -5,7 +5,7 @@ import Cover         from '../components/Cover.astro';
 import About         from '../components/About.astro';
 import PortfolioGrid from '../components/PortfolioGrid.astro';
 import Footer        from '../components/Footer.astro';
-import BlueSkyFeed  from '../components/BlueSkyFeed.astro';
+// import BlueSkyFeed  from '../components/BlueSkyFeed.astro';
 import { projects }  from '../data/projects';
 import type { FooterLink } from '../components/Footer.astro';
 
@@ -71,7 +71,7 @@ const footerLinks: FooterLink[] = [
     />
 
     <PortfolioGrid projects={gridProjects} />
-    <BlueSkyFeed handle="tntcproject.bsky.social" limit={6} />
+    <!-- <BlueSkyFeed handle="tntcproject.bsky.social" limit={6} /> -->
   </main>
 
   <Footer name="TNTC Studio" links={footerLinks} />

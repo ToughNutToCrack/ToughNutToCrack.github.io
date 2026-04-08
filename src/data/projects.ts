@@ -581,7 +581,7 @@ export const projects: Project[] = [
     category:    'Advergame · 2D',
     tagline:     'An ADvergame created for Armani’s VivaEvents campaign.',
     cover:       '/images/projects/vivaevent/3.webp',
-    coverAlt:    '',
+    coverAlt:    'An endless-runner developed for Vivaevents and Armani.',
     placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
     icon: ICON_GAME,
     description: 'An endless-runner developed for Vivaevents and Armani. Players control the manga bear mascot racing through iconic cities while avoiding obstacles, collecting rewards, and reacting to dynamic elements like roaming pigeons. Designed for a physical arcade setup, the experience features a live leaderboard, turning gameplay into a shared, high-energy moment that drives engagement during events.',

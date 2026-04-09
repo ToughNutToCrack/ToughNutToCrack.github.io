@@ -1,0 +1,203 @@
+---
+import Layout  from '../layouts/Layout.astro';
+import Nav     from '../components/Nav.astro';
+import Footer  from '../components/Footer.astro';
+import type { FooterLink } from '../components/Footer.astro';
+
+const footerLinks: FooterLink[] = [
+  { label: 'Email',    href: 'mailto:info@tntc.it'                              },
+  { label: 'Youtube',  href: 'http://youtube.com/tntcproject'                   },
+  { label: 'Patreon',  href: 'https://www.patreon.com/c/tntcproject'            },
+  { label: 'LinkedIn', href: 'https://it.linkedin.com/company/tntc'             },
+  { label: 'Bluesky',  href: 'https://bsky.app/profile/tntcproject.bsky.social' },
+  { label: 'GitHub',   href: 'https://github.com/ToughNutToCrack'               },
+];
+
+const updated = '9 aprile 2026';
+---
+
+<Layout
+  title="Privacy Policy — TNTC Studio"
+  description="Informativa sul trattamento dei dati personali del sito toughnuttocrack.it"
+>
+  <Nav />
+
+  <main class="max-w-2xl mx-auto px-6 pt-36 pb-28 md:pt-44 md:pb-36">
+
+    <h1 class="text-3xl md:text-4xl mb-2">Privacy Policy</h1>
+    <p class="text-[0.58rem] tracking-[0.2em] uppercase mb-4" style="color:var(--muted);">
+      Aggiornata il {updated}
+    </p>
+    <p class="text-[0.72rem] italic mb-12" style="color:var(--muted);">
+      This privacy policy is available in Italian only, as required by Italian law (GDPR — Reg. UE 2016/679).
+    </p>
+
+    <div class="prose-tntc">
+
+      <h2>1. Titolare del trattamento</h2>
+      <p>
+        TNTC Studio è un'associazione tra professionisti composta da:<br />
+        <strong>TNTC di Matteo Baraldi</strong> — P.IVA 03837730369<br />
+        <strong>TNTC di Erik Minarini</strong> — P.IVA 03749901207<br />
+        Con sede in Italia.<br />
+        Contatto: <a href="mailto:info@tntc.it">info@tntc.it</a>
+      </p>
+
+      <h2>2. Tipologia di dati raccolti</h2>
+      <p>
+        Questo sito è di natura statica e non raccoglie direttamente dati personali tramite form,
+        registrazioni o account. Tuttavia, come qualsiasi sito web, il server di hosting registra
+        automaticamente alcuni dati tecnici ogni volta che viene effettuata una visita:
+      </p>
+      <ul>
+        <li>Indirizzo IP del visitatore</li>
+        <li>Data e ora della richiesta</li>
+        <li>URL richiesto</li>
+        <li>Browser e sistema operativo (User-Agent)</li>
+      </ul>
+      <p>
+        Tali dati sono raccolti da <strong>GitHub Pages</strong> (GitHub, Inc. — USA),
+        il servizio di hosting utilizzato per questo sito, e sono soggetti alla sua
+        <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        Non sono accessibili al Titolare in forma nominativa e vengono utilizzati esclusivamente
+        per finalità di sicurezza e gestione del servizio.
+      </p>
+
+      <h2>3. Cookie</h2>
+      <p>
+        Questo sito <strong>non utilizza cookie di profilazione</strong> né cookie di terze parti
+        al caricamento della pagina. Non viene installato alcun tracker, pixel pubblicitario o
+        strumento di analisi comportamentale.
+      </p>
+      <p>
+        Il sito potrebbe utilizzare cookie tecnici strettamente necessari al funzionamento
+        (es. preferenze di navigazione), per i quali non è richiesto il consenso ai sensi
+        dell'art. 122 del Codice Privacy e delle Linee Guida del Garante.
+      </p>
+
+      <h2>4. Servizi di terze parti</h2>
+
+      <h3>Video incorporati (Vimeo e YouTube)</h3>
+      <p>
+        Alcune pagine di questo sito contengono video di <strong>Vimeo</strong> e
+        <strong>YouTube</strong>. I player non vengono caricati automaticamente al caricamento
+        della pagina: l'iframe viene inserito <em>esclusivamente su esplicita interazione
+        dell'utente</em> (click sul pulsante di riproduzione). Prima di tale interazione nessun
+        dato viene inviato a Vimeo o YouTube. Dopo il click si applicano le rispettive
+        privacy policy:
+      </p>
+      <ul>
+        <li>
+          <a href="https://vimeo.com/privacy" target="_blank" rel="noopener noreferrer">Vimeo Privacy Policy</a>
+        </li>
+        <li>
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google / YouTube Privacy Policy</a>
+        </li>
+      </ul>
+
+      <h3>Feed Bluesky</h3>
+      <p>
+        La homepage mostra i post pubblici dell'account Bluesky di TNTC Studio tramite una
+        richiesta effettuata direttamente dal browser dell'utente all'API pubblica di Bluesky
+        (<code>public.api.bsky.app</code>). Tale richiesta comporta la trasmissione dell'indirizzo
+        IP dell'utente verso i server di Bluesky (Bluesky Social, PBC — USA). Nessun cookie
+        viene impostato da questo servizio. Si rimanda alla
+        <a href="https://bsky.social/about/support/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy di Bluesky</a>.
+      </p>
+
+      <h2>5. Base giuridica del trattamento</h2>
+      <p>
+        Il trattamento dei dati tecnici di navigazione è fondato sul <strong>legittimo interesse</strong>
+        del Titolare (art. 6, par. 1, lett. f, GDPR) alla sicurezza e al corretto funzionamento
+        del sito, nonché sull'adempimento degli obblighi contrattuali con il fornitore di hosting.
+      </p>
+
+      <h2>6. Trasferimento dei dati verso paesi terzi</h2>
+      <p>
+        I dati tecnici di navigazione sono trattati da GitHub, Inc. negli Stati Uniti, nel rispetto
+        delle garanzie previste dal GDPR (Standard Contractual Clauses). Analogamente, in caso di
+        riproduzione di video o consultazione del feed Bluesky, i dati possono essere trasferiti
+        verso server ubicati negli USA.
+      </p>
+
+      <h2>7. Periodo di conservazione</h2>
+      <p>
+        I log tecnici di navigazione sono conservati da GitHub Pages per un periodo limitato
+        secondo le proprie politiche interne. Il Titolare non ha accesso diretto a tali dati
+        e non ne determina i tempi di conservazione.
+      </p>
+
+      <h2>8. Diritti dell'interessato</h2>
+      <p>
+        Ai sensi degli artt. 15–22 del GDPR, l'interessato ha diritto di accesso, rettifica,
+        cancellazione, opposizione, limitazione e portabilità dei propri dati, nonché di proporre
+        reclamo al Garante (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>).
+      </p>
+      <p>
+        Si precisa che il Titolare <strong>non raccoglie né conserva direttamente</strong> dati
+        personali degli utenti: i soli dati tecnici di navigazione (indirizzo IP, log del server)
+        sono detenuti da GitHub Pages, verso cui dovrà essere indirizzata un'eventuale richiesta
+        di cancellazione. Per qualsiasi chiarimento è comunque possibile contattare il Titolare
+        all'indirizzo <a href="mailto:info@tntc.it">info@tntc.it</a>.
+      </p>
+
+      <h2>9. Modifiche alla presente informativa</h2>
+      <p>
+        Il Titolare si riserva di aggiornare la presente informativa. La data di ultimo
+        aggiornamento è indicata in cima alla pagina.
+      </p>
+
+    </div>
+  </main>
+
+  <Footer links={footerLinks} />
+</Layout>
+
+<style>
+  .prose-tntc h2 {
+    font-family: 'Patua One', serif;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.6rem;
+    color: var(--ink);
+  }
+  .prose-tntc h3 {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+    color: var(--muted);
+  }
+  .prose-tntc p {
+    font-size: 0.8rem;
+    line-height: 1.9;
+    color: var(--ink);
+    margin-bottom: 0.9rem;
+  }
+  .prose-tntc ul {
+    margin: 0.5rem 0 0.9rem 1.2rem;
+    list-style: disc;
+  }
+  .prose-tntc ul li {
+    font-size: 0.8rem;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+  .prose-tntc a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-tntc a:hover {
+    color: var(--accent-red);
+  }
+  .prose-tntc code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    background: rgba(195,195,195,0.2);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+  }
+</style>

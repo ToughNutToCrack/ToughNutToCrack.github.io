@@ -15,7 +15,6 @@ const { handle, limit = 6 } = Astro.props;
   <!-- Section header -->
   <div class="flex items-center justify-between mb-6 md:mb-8">
     <div class="flex items-center gap-3">
-      <!-- Bluesky butterfly icon -->
       <svg width="28" height="28" viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" fill="var(--ink)">
         <path d="M180 142c-16.3-31.7-60.7-90.8-102-120C38.5-5.9 23.4-1 13.5 3.4 2.1 8.6 0 26.2 0 36.5c0 10.4 5.7 84.8 9.4 97.2 12.1 41 55.4 55 95.3 50.5-58.7 8.6-110.8 30-42.4 106.1 75.1 77.9 103-16.7 117.7-63.8 14.7 47 33.5 138.6 117.7 63.8 64.6-67.1 16.1-97.5-42.6-106.1 39.9 4.5 83.2-9.5 95.3-50.5 3.7-12.4 9.4-86.8 9.4-97.2 0-10.3-2.1-27.9-13.5-33.1C336.6-1 321.5-6 282 22c-41.3 29.2-85.7 88.3-102 120z"/>
       </svg>
@@ -40,14 +39,149 @@ const { handle, limit = 6 } = Astro.props;
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
     aria-live="polite"
   >
-    <!-- Skeleton placeholders -->
     {Array.from({ length: limit }).map(() => (
-      <div class="bsky-skeleton border animate-pulse" style="border-color: var(--border); aspect-ratio: auto; min-height: 140px;" />
+      <div class="bsky-skeleton border animate-pulse" style="border-color: var(--border); min-height: 200px;" />
     ))}
   </div>
 </section>
 
+<style is:global>
+  .bsky-video-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .bsky-video-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  .bsky-video-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .bsky-play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .bsky-play-btn span {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .bsky-video-wrap:hover .bsky-play-btn span {
+    background: rgba(0,0,0,0.8);
+    transform: scale(1.1);
+  }
+</style>
+
 <script define:vars={{ handle, limit }}>
+  // Lazy-load hls.js only when first video is played
+  let hlsLoaded = false;
+  let HlsClass = null;
+
+  async function loadHls() {
+    if (hlsLoaded) return;
+    hlsLoaded = true;
+    return new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js';
+      s.onload = () => { HlsClass = window.Hls; resolve(); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function playVideo(wrap, playlist) {
+    // Freeze the wrapper's height before touching its children
+    wrap.style.height = wrap.offsetHeight + 'px';
+
+    // Hide thumbnail and play button without removing them (avoids layout jump)
+    Array.from(wrap.children).forEach((el) => el.style.visibility = 'hidden');
+
+    const video = document.createElement('video');
+    video.autoplay = true;
+    video.controls = true;
+    video.playsInline = true;
+    video.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+    wrap.appendChild(video);
+
+    if (HlsClass && HlsClass.isSupported()) {
+      const hls = new HlsClass();
+      hls.loadSource(playlist);
+      hls.attachMedia(video);
+      hls.on(HlsClass.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = playlist;
+      video.play().catch(() => {});
+    }
+  }
+
+  function buildMediaHtml(embed) {
+    if (!embed) return '';
+    const type = embed.$type ?? '';
+
+    // ── Video ──────────────────────────────────────────────
+    if (type.includes('embed.video')) {
+      const thumb    = embed.thumbnail ?? embed.thumb ?? '';
+      const playlist = embed.playlist ?? '';
+      if (!playlist) return '';
+      return `
+        <div class="bsky-video-wrap" data-playlist="${playlist}">
+          ${thumb ? `<img src="${thumb}" alt="video thumbnail" loading="lazy" decoding="async" />` : ''}
+          <div class="bsky-play-btn">
+            <span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 2.5l9 5.5-9 5.5V2.5z"/>
+              </svg>
+            </span>
+          </div>
+        </div>`;
+    }
+
+    // ── Images ─────────────────────────────────────────────
+    if (type.includes('embed.images')) {
+      const imgs = embed.images ?? [];
+      if (!imgs.length) return '';
+      if (imgs.length === 1) {
+        return `<img src="${imgs[0].thumb}" alt="${(imgs[0].alt ?? '').replace(/"/g,'&quot;')}" loading="lazy" decoding="async" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" />`;
+      }
+      const cells = imgs.slice(0, 4).map((img) =>
+        `<img src="${img.thumb}" alt="${(img.alt ?? '').replace(/"/g,'&quot;')}" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block;" />`
+      ).join('');
+      const cols = imgs.length >= 3 ? 3 : 2;
+      return `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:2px;">${cells}</div>`;
+    }
+
+    // ── External link card ─────────────────────────────────
+    if (type.includes('embed.external') && embed.external?.thumb) {
+      const ext = embed.external;
+      return `
+        <div>
+          <img src="${ext.thumb}" alt="${(ext.title ?? '').replace(/"/g,'&quot;')}" loading="lazy" decoding="async" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" />
+          <div style="padding:0.5rem 1.1rem;border-bottom:1px solid var(--border);background:rgba(195,195,195,0.06);">
+            <p style="font-size:0.58rem;letter-spacing:0.1em;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${(ext.title ?? ext.uri).replace(/</g,'&lt;')}</p>
+          </div>
+        </div>`;
+    }
+
+    return '';
+  }
+
   async function loadBskyFeed() {
     const container = document.getElementById('bsky-feed');
     if (!container) return;
@@ -60,11 +194,11 @@ const { handle, limit = 6 } = Astro.props;
       const data = await res.json();
 
       const posts = (data.feed ?? [])
-        .filter((item) => !item.reason) // skip reposts
+        .filter((item) => !item.reason)
         .slice(0, limit);
 
       if (posts.length === 0) {
-        container.innerHTML = `<p style="color:var(--muted); font-size:0.75rem; letter-spacing:0.1em;">No posts found.</p>`;
+        container.innerHTML = `<p style="color:var(--muted);font-size:0.75rem;letter-spacing:0.1em;">No posts found.</p>`;
         return;
       }
 
@@ -74,52 +208,56 @@ const { handle, limit = 6 } = Astro.props;
         const text   = record?.text ?? '';
         const date   = new Date(record?.createdAt ?? post.indexedAt);
         const url    = `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`;
+        const mediaHtml = buildMediaHtml(post.embed);
 
         const formattedDate = date.toLocaleDateString('en-GB', {
-          day:   'numeric',
-          month: 'short',
-          year:  'numeric',
+          day: 'numeric', month: 'short', year: 'numeric',
         });
 
-        // Linkify URLs and hashtags in text
         const safeText = text
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const linkedText = safeText
           .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px;">$1</a>')
           .replace(/(#\w+)/g, '<span style="color:var(--accent);">$1</span>')
           .replace(/\n/g, '<br>');
 
+        const hasMedia = mediaHtml.trim() !== '';
+
         return `
-          <a
-            href="${url}"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div
             class="bsky-card"
-            style="
-              display:flex; flex-direction:column;
-              border:1px solid var(--border);
-              overflow:hidden;
-              transition: background 0.2s ease;
-              text-decoration:none; color:inherit;
-            "
-            onmouseover="this.style.background='rgba(195,195,195,0.08)'"
-            onmouseout="this.style.background=''"
+            style="display:flex;flex-direction:column;border:1px solid var(--border);overflow:hidden;"
           >
-            <div style="padding:1.1rem; display:flex; flex-direction:column; gap:0.75rem; flex:1;">
-              <p style="font-size:0.75rem; line-height:1.7; color:var(--ink);">${linkedText}</p>
-              <span style="font-size:0.52rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-top:auto; padding-top:0.5rem; border-top:1px solid var(--border); display:block;">${formattedDate}</span>
-            </div>
-          </a>
+            ${hasMedia ? mediaHtml : ''}
+            <a
+              href="${url}"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display:flex;flex-direction:column;gap:0.75rem;flex:1;padding:1.1rem;text-decoration:none;color:inherit;transition:background 0.2s ease;"
+              onmouseover="this.style.background='rgba(195,195,195,0.08)'"
+              onmouseout="this.style.background=''"
+            >
+              <p style="font-size:0.75rem;line-height:1.7;color:var(--ink);">${linkedText}</p>
+              <span style="font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:auto;padding-top:0.5rem;border-top:1px solid var(--border);display:block;">${formattedDate}</span>
+            </a>
+          </div>
         `;
       }).join('');
+
+      // Attach video click handlers
+      container.querySelectorAll('.bsky-video-wrap').forEach((wrap) => {
+        wrap.addEventListener('click', async () => {
+          const playlist = wrap.dataset.playlist;
+          if (!playlist) return;
+          await loadHls();
+          playVideo(wrap, playlist);
+        });
+      });
 
     } catch (err) {
       console.error('[BlueSkyFeed]', err);
       if (container) {
-        container.innerHTML = `<p style="color:var(--muted); font-size:0.75rem; letter-spacing:0.1em;">Could not load posts.</p>`;
+        container.innerHTML = `<p style="color:var(--muted);font-size:0.75rem;letter-spacing:0.1em;">Could not load posts.</p>`;
       }
     }
   }

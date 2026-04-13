@@ -326,6 +326,35 @@ export const projects: Project[] = [
     href: ''
   },
   {
+    slug:        'micro-mayhem',
+    title:       'Micro Mayhem',
+    category:    'Videogame · Steam',
+    tagline:     'Micro Mayhem is a local multiplayer game where up to 6 players challenge each other using toy cars in various location and different game modes.',
+    cover:       '/images/projects/micromayhem/1.webp',
+    coverAlt:    'Micro Mayhem is a local multiplayer game.',
+    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+    icon: ICON_GAME,
+    description: 'A chaotic local multiplayer game where toy-sized vehicles battle across interactive environments. Micro Mayhem brings up to six players together in fast-paced matches, combining varied game modes with unique vehicle abilities. Couch rosik and replayable fun.',
+    gallery: [
+      { src: '/images/projects/micromayhem/10.webp', alt: 'King of the hill', size: 'half' },
+      { src: '/images/projects/micromayhem/12.webp', alt: 'Capture the flag', size: 'half' },
+      { src: '/images/projects/micromayhem/13.webp', alt: 'Toy room', size: 'half' },
+      { src: '/images/projects/micromayhem/1.webp', alt: 'Capture the flag', size: 'half' },
+      { src: '/images/projects/micromayhem/7.webp', alt: 'King of the hill', size: 'half' },
+      { src: '/images/projects/micromayhem/3.webp', alt: 'Team death match', size: 'half' },
+      { src: '/images/projects/micromayhem/4.webp', alt: 'Basket!', size: 'half' },
+      { src: '/images/projects/micromayhem/6.webp', alt: 'King of the hill', size: 'half' },
+      { src: '/images/projects/micromayhem/11.webp', alt: 'Skins', size: 'half' },
+      { src: '/images/projects/micromayhem/9.webp', alt: 'Live events', size: 'half' },
+      
+    ],
+    details: [
+      { label: 'Destination',    value: 'Steam' },
+      { label: 'Technologies',    value: 'Unity3D, Blender' }
+    ],
+    href: 'https://store.steampowered.com/app/1019260/Micro_Mayhem/'
+  },
+  {
     slug:        'robotino',
     title:       'Robo Tino - Character Design for VR',
     category:    'Character Design · VR',

@@ -5,6 +5,7 @@ import Cover         from '../components/Cover.astro';
 import About         from '../components/About.astro';
 import PortfolioGrid from '../components/PortfolioGrid.astro';
 import Footer        from '../components/Footer.astro';
+import VideoSection  from '../components/VideoSection.astro';
 // import BlueSkyFeed  from '../components/BlueSkyFeed.astro';
 import { projects }  from '../data/projects';
 import type { FooterLink } from '../components/Footer.astro';
@@ -71,6 +72,14 @@ const footerLinks: FooterLink[] = [
     />
 
     <PortfolioGrid projects={gridProjects} />
+
+    <VideoSection
+      mp4="/videos/yt.mp4"
+      headline="Gamedev and Content Creation"
+      body={`We use our <span style="color:var(--accent)">YouTube channel</span> to explore and experiment real-time development techniques. We challenge ourselves by <span style="color:var(--accent)">recreating game mechanics</span> from scratch, exploring both trending topics and iconic systems from well-known games. These experiments are a way to dive into advanced techniques, break down complex workflows, and reveal the thinking behind our work.`}
+      body2={`We also publish tools, asset packages, and reusable systems on <span style="color:var(--accent)">Patreon and GitHub</span>, making a large part of our R&D openly accessible.`}
+    />
+
     <!-- <BlueSkyFeed handle="tntcproject.bsky.social" limit={3} /> -->
   </main>
 

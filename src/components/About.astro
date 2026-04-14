@@ -3,6 +3,7 @@ interface Props {
   headline?: string;
   body?: string;
   body2?: string;
+  body3?: string;
   images?: string[];
 }
 
@@ -10,6 +11,7 @@ const {
   headline = 'I design and build things that are <em>intentional</em>, considered, and built to last.',
   body     = 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
   body2,
+  body3,
   images   = ['/images/tntc.webp'],
 } = Astro.props;
 ---
@@ -37,6 +39,13 @@ const {
           class="mt-4 text-[0.95rem] leading-[1.85] tracking-[0.04em]"
           style="color: var(--muted);"
           set:html={body2}
+        />
+      )}
+      {body3 && (
+        <p
+          class="mt-4 text-[0.95rem] leading-[1.85] tracking-[0.04em]"
+          style="color: var(--muted);"
+          set:html={body3}
         />
       )}
     </div>

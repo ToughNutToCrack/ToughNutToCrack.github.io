@@ -122,6 +122,24 @@ const {
     </div>
   </div>
 
+  <!-- Video dots -->
+  {videos.length > 1 && (
+    <div
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-2"
+      aria-label="Video navigation"
+      style="z-index: 20;"
+    >
+      {videos.map((_, i) => (
+        <button
+          class="hero-dot"
+          data-index={i}
+          aria-label={`Go to video ${i + 1}`}
+          style={i === 0 ? 'background: var(--accent); opacity:1;' : 'opacity:0.4;'}
+        />
+      ))}
+    </div>
+  )}
+
   <!-- Scroll indicator -->
   <div
     class="absolute right-6 bottom-12 hidden sm:flex"
@@ -131,6 +149,19 @@ const {
     <span class="scroll-indicator">Scroll</span>
   </div>
 </section>
+
+<style>
+  .hero-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+</style>
 
 <script>
   function initHeroVideos() {
@@ -143,7 +174,23 @@ const {
       document.querySelectorAll<HTMLElement>('.hero-text')
     );
 
+    const dots = Array.from(
+      document.querySelectorAll<HTMLElement>('.hero-dot')
+    );
+
     let current = 0;
+
+    function updateDots(index: number) {
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.style.background = 'var(--accent)';
+          dot.style.opacity    = '1';
+        } else {
+          dot.style.background = '#ffffff';
+          dot.style.opacity    = '0.4';
+        }
+      });
+    }
 
     function playAt(index: number) {
       const next = videos[index];
@@ -157,6 +204,9 @@ const {
       textBlocks.forEach((el, i) => {
         el.style.opacity = i === index ? '1' : '0';
       });
+
+      // Update dots
+      updateDots(index);
 
       // Fade out previous video
       const prev = videos.find((_, i) => i !== index && parseFloat(_.style.opacity) === 1);
@@ -173,6 +223,14 @@ const {
     videos.forEach((video, i) => {
       video.addEventListener('ended', () => {
         current = (i + 1) % videos.length;
+        playAt(current);
+      });
+    });
+
+    // Dot click → jump to that video
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        current = i;
         playAt(current);
       });
     });

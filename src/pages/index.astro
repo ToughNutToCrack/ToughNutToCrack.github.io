@@ -7,7 +7,7 @@ import PortfolioGrid from '../components/PortfolioGrid.astro';
 import Footer        from '../components/Footer.astro';
 import VideoSection  from '../components/VideoSection.astro';
 // import BlueSkyFeed  from '../components/BlueSkyFeed.astro';
-import { projects }  from '../data/projects';
+import { projects, ICON_VR, ICON_AR, ICON_GAME, ICON_3D, ICON_WEB } from '../data/projects';
 import type { FooterLink } from '../components/Footer.astro';
 
 // Map central data → PortfolioGrid shape.
@@ -20,6 +20,11 @@ const gridProjects = projects.map((p) => ({
   placeholder: p.placeholder,
   href:        `/projects/${p.slug}`,
   icon:        p.icon,
+  tag:         p.icon === ICON_VR                    ? 'vr'
+             : p.icon === ICON_AR                    ? 'ar'
+             : p.icon === ICON_GAME || p.icon === ICON_3D ? 'gamedev'
+             : p.icon === ICON_WEB                   ? 'web'
+             : undefined,
 }));
 
 const footerLinks: FooterLink[] = [

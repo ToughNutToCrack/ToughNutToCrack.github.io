@@ -5,7 +5,8 @@ import Cover         from '../components/Cover.astro';
 import About         from '../components/About.astro';
 import PortfolioGrid from '../components/PortfolioGrid.astro';
 import Footer        from '../components/Footer.astro';
-import VideoSection  from '../components/VideoSection.astro';
+import VideoSection    from '../components/VideoSection.astro';
+import CoursesSection  from '../components/CoursesSection.astro';
 // import BlueSkyFeed  from '../components/BlueSkyFeed.astro';
 import { projects, ICON_VR, ICON_AR, ICON_GAME, ICON_3D, ICON_WEB } from '../data/projects';
 import type { FooterLink } from '../components/Footer.astro';
@@ -85,6 +86,18 @@ const footerLinks: FooterLink[] = [
       body={`We use our <span style="color:var(--accent)">YouTube channel</span> to explore and experiment real-time development techniques. We challenge ourselves by <span style="color:var(--accent)">recreating game mechanics</span> from scratch, exploring both trending topics and iconic systems from well-known games. These experiments are a way to dive into advanced techniques, break down complex workflows, and reveal the thinking behind our work.`}
       body2={`We also publish tools, asset packages, and reusable systems on <span style="color:var(--accent)">Patreon and GitHub</span>, making a large part of our R&D openly accessible.`},
       body3={`<span style="color:var(--accent)"> Patreon supporters </span> get access to a growing library of downloadable packages.`}
+    />
+
+    <CoursesSection
+      headline="Teaching &amp; Courses"
+      body= {`We <span style="color:var(--accent)">teach Unity</span> at all levels, from beginners to advanced users. We design and deliver <span style="color:var(--accent)">live courses</span> for schools, professionals, and companies. From building a first game to advanced topics like programming, shaders, and real-time systems, our courses cover a wide range of applications, including AR and VR for creative and enterprise use.`}
+      body2={`Each course is tailored to your needs, with a strong hands-on approach that reflects how real-time development is learned in practice. We can host <span style="color:var(--accent)">single sessions</span> for events or structure <span style="color:var(--accent)">full courses</span> across multiple lessons, both remotely and on-site.`},
+      body3={`<span style="color:var(--accent)">Get in touch!</span>`},
+      images={[
+        '/images/projects/live/1.webp',
+        '/images/projects/live/2.webp',
+        '/images/projects/live/3.webp',
+      ]}
     />
 
     <!-- <BlueSkyFeed handle="tntcproject.bsky.social" limit={3} /> -->

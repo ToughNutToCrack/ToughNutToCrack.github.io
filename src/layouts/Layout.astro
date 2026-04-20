@@ -3,18 +3,43 @@ import '../styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
-  title?: string;
+  title?:       string;
   description?: string;
-  ogImage?: string;
+  ogImage?:     string;
+  /** Set to 'article' on project pages */
+  ogType?:      'website' | 'article';
 }
 
 const {
-  title = 'TNTC Studio — Portfolio',
-  description = 'Designer and developer crafting intentional, considered work.',
-  ogImage = '/images/cover.jpg',
+  title       = 'TNTC Studio — Gamedev, XR & Real-Time Experiences',
+  description = 'TNTC Studio is a Bologna-based team of developers specialising in videogames, VR/AR, technical art, and custom real-time tools.',
+  ogImage     = '/images/cover.jpg',
+  ogType      = 'website',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL  = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageAbs    = new URL(ogImage, Astro.site).toString();
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type':    'Organization',
+  name:       'TNTC Studio',
+  url:        'https://toughnuttocrack.it',
+  logo:       'https://toughnuttocrack.it/images/logo.png',
+  email:      'info@tntc.it',
+  description,
+  foundingLocation: {
+    '@type': 'Place',
+    address: { '@type': 'PostalAddress', addressLocality: 'Bologna', addressCountry: 'IT' },
+  },
+  sameAs: [
+    'https://www.youtube.com/tntcproject',
+    'https://www.patreon.com/c/tntcproject',
+    'https://it.linkedin.com/company/tntc',
+    'https://bsky.app/profile/tntcproject.bsky.social',
+    'https://github.com/ToughNutToCrack',
+  ],
+});
 ---
 
 <!doctype html>
@@ -23,26 +48,34 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Matteo Baraldi" />
+    <meta name="author" content="TNTC Studio — Matteo Baraldi, Erik Minarini" />
+    <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:type"        content={ogType} />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image"       content={ogImageAbs} />
+    <meta property="og:site_name"   content="TNTC Studio" />
+    <meta property="og:locale"      content="en_US" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image"       content={ogImageAbs} />
 
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/images/logoW.png" />
+    <link rel="icon" type="image/png" href="/images/logoW.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
-<title>{title}</title>
-    <ViewTransitions /></head>
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
   <body class="grain">
     <slot />
   </body>

@@ -4,6 +4,8 @@ const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
 const links = [
   { label: 'About',   href: isHome ? '#about'   : '/#about'   },
   { label: 'Portfolio',    href: isHome ? '#work'    : '/#work'    },
+  { label: 'Video',    href: isHome ? '#content'    : '/#content'    },
+  { label: 'Teaching',    href: isHome ? '#teaching'    : '/#teaching'    },
   { label: 'Contact', href: isHome ? '#contact' : '/#contact' },
 ];
 

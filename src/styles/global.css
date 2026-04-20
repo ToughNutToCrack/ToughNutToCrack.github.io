@@ -204,12 +204,24 @@ a {
   line-height: 1.2;
 }
 
+@media (max-width: 639px) {
+  .card-title {
+    font-size: 0.8rem;
+  }
+}
+
 .card-category {
   font-size: 0.55rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
   margin-top: 0.35rem;
+}
+
+@media (max-width: 639px) {
+  .card-category {
+    font-size: 0.45rem;
+  }
 }
 
 .card-icon {

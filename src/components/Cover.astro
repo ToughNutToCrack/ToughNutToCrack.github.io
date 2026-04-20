@@ -235,6 +235,35 @@ const {
       });
     });
 
+    // ── Swipe support ─────────────────────────────────────
+    const section = document.getElementById('home');
+    if (section) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      section.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      section.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+
+        // Only trigger if horizontal swipe is dominant (ignore scroll gestures)
+        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+
+        if (dx < 0) {
+          // Swipe left → next
+          current = (current + 1) % videos.length;
+        } else {
+          // Swipe right → prev
+          current = (current - 1 + videos.length) % videos.length;
+        }
+        playAt(current);
+      }, { passive: true });
+    }
+
     playAt(0);
   }
 

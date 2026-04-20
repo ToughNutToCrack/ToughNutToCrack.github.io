@@ -551,10 +551,11 @@ export const projects: Project[] = [
     icon: ICON_WEB,
     description: 'A 3D web experience to explore Peccioli through a playful journey. Users drive a small Ape vehicle across a stylized landscape, discovering local non-profit organizations and their stories along the way. A simple, engaging way to connect people with the community and its initiatives.',
     gallery: [
+      { thumbnail: '/images/projects/peccioli/1.jpg', alt: 'Full gameplay',   size: 'full', type: 'vimeo', vimeoId: '1184758892'},
       { src: '/images/projects/peccioli/3.webp', alt: 'Association', size: 'half' },
-      { src: '/images/projects/peccioli/1.jpg', alt: 'Map view', size: 'half' },
+      // { src: '/images/projects/peccioli/1.jpg', alt: 'Map view', size: 'half' },
       { src: '/images/projects/peccioli/2.webp', alt: 'Ape car', size: 'half' },
-      { src: '/images/projects/peccioli/4.webp', alt: 'Blender', size: 'half' },
+      { src: '/images/projects/peccioli/4.webp', alt: 'Blender', size: 'half' }
     ],
     details: [
       { label: 'Client',   value: 'Comune di Peccioli'    },

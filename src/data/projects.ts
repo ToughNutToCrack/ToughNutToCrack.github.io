@@ -670,28 +670,28 @@ export const projects: Project[] = [
     ],
     href: 'https://www.patreon.com/posts/130775711/',
   },
-  {
-    slug:        'procedural-hands',
-    title:       'Procedural Hands',
-    category:    'VR · Tool Development',
-    tagline:     'A procedural hand interaction system for VR',
-    cover:       '/images/projects/hands/1.png',
-    coverAlt:    '',
-    placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
-    icon: ICON_3D,
-    description: 'A procedural hand interaction system for VR, built to deliver physically coherent and immersive interactions. Fingers dynamically conform to surfaces through real-time collision detection, while predefined poses are continuously adapted to match environmental constraints.',
-    gallery: [
-      { thumbnail: '/images/projects/hands/3.png', alt: 'Showcase 1',   size: 'half', type: 'vimeo', vimeoId: '1179241748' },
-      { thumbnail: '/images/projects/hands/2.png', alt: 'Showcase 2',   size: 'half', type: 'vimeo', vimeoId: '1179241691' },
-      { thumbnail: '/images/projects/hands/1.png', alt: 'Showcase 3',   size: 'half', type: 'vimeo', vimeoId: '1179241602' },
+  // {
+  //   slug:        'procedural-hands',
+  //   title:       'Procedural Hands',
+  //   category:    'VR · Tool Development',
+  //   tagline:     'A procedural hand interaction system for VR',
+  //   cover:       '/images/projects/hands/1.png',
+  //   coverAlt:    '',
+  //   placeholder: 'linear-gradient(135deg, #2e2030 0%, #4a3050 100%)',
+  //   icon: ICON_3D,
+  //   description: 'A procedural hand interaction system for VR, built to deliver physically coherent and immersive interactions. Fingers dynamically conform to surfaces through real-time collision detection, while predefined poses are continuously adapted to match environmental constraints.',
+  //   gallery: [
+  //     { thumbnail: '/images/projects/hands/3.png', alt: 'Showcase 1',   size: 'half', type: 'vimeo', vimeoId: '1179241748' },
+  //     { thumbnail: '/images/projects/hands/2.png', alt: 'Showcase 2',   size: 'half', type: 'vimeo', vimeoId: '1179241691' },
+  //     { thumbnail: '/images/projects/hands/1.png', alt: 'Showcase 3',   size: 'half', type: 'vimeo', vimeoId: '1179241602' },
 
-    ],
-    details: [
-      { label: 'Client',   value: 'Fondazione Golinelli'    },
-      { label: 'Destination',    value: 'Meta Quest 2, 3' },
-      { label: 'Technologies',    value: 'Unity3D, Blender' }
-    ],
-  },
+  //   ],
+  //   details: [
+  //     { label: 'Client',   value: 'Fondazione Golinelli'    },
+  //     { label: 'Destination',    value: 'Meta Quest 2, 3' },
+  //     { label: 'Technologies',    value: 'Unity3D, Blender' }
+  //   ],
+  // },
 ];
 
 

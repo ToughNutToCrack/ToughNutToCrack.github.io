@@ -12,7 +12,7 @@
     "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/dm-mono": "^5.2.7",
     "@fontsource/patua-one": "^5.2.8",
-    "astro": "^4.16.0"
+    "astro": "^6.1.10"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",

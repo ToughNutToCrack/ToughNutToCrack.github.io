@@ -72,11 +72,24 @@ const jsonLd = JSON.stringify({
 
     <!-- JSON-LD structured data -->
     <script type="application/ld+json" set:html={jsonLd} />
+    
 
     <title>{title}</title>
     <ViewTransitions />
   </head>
   <body class="grain">
     <slot />
+    <script data-goatcounter="https://tntc.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+    <script>
+    document.addEventListener('astro:page-load', () => {
+      if (window.goatcounter?.count) {
+        window.goatcounter.count({
+          path: location.pathname + location.search + location.hash,
+        });
+      }
+    });
+    </script>
   </body>
 </html>

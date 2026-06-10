@@ -17,15 +17,22 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js" crossorigin="anonymous"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
+        rel="stylesheet">
+
     <script crossorigin="anonymous" src="./external/runtime/runtime.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" async crossorigin="anonymous"
         data-preload-chunks="slam"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js"
+        crossorigin="anonymous"></script>
 
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         #tntc-desktop-gate {
             display: none;
@@ -43,7 +50,9 @@
 
         /* Show only on non-touch / desktop */
         @media (hover: hover) and (pointer: fine) {
-            #tntc-desktop-gate { display: flex; }
+            #tntc-desktop-gate {
+                display: flex;
+            }
         }
 
         .gate-logo {
@@ -76,8 +85,18 @@
             border-color: #c17f3d;
             border-style: solid;
         }
-        .gate-qr-wrapper::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
-        .gate-qr-wrapper::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        .gate-qr-wrapper::before {
+            top: -1px;
+            left: -1px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .gate-qr-wrapper::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 2px 2px 0;
+        }
 
         .gate-qr-wrapper img {
             display: block;
@@ -124,18 +143,11 @@
     <div id="tntc-desktop-gate">
         <img class="gate-logo" src="/images/logoW.png" alt="TNTC Studio" />
         <div class="gate-divider"></div>
-        <img
-            class=""
-            style="display:none"
-            id="gate-qr-img"
-            alt="QR Code"
-        />
+        <img class="" style="display:none" id="gate-qr-img" alt="QR Code" />
         <div class="gate-qr-wrapper">
-            <img
-                id="gate-qr"
+            <img id="gate-qr"
                 src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Ftoughnuttocrack.it%2Far%2F"
-                alt="QR Code"
-            />
+                alt="QR Code" />
         </div>
         <p class="gate-label">Scan to open on your phone</p>
         <p class="gate-url">toughnuttocrack.it/ar</p>

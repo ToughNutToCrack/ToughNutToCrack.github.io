@@ -1,1 +1,148 @@
-<!doctype html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>World Effects</title><meta itemprop="name" content="World Effects"><meta name="twitter:title" content="World Effects"><meta property="og:title" content="World Effects"><meta property="og:site_name" content="World Effects"><meta name="description" content="This project demonstrates how to use World Effects to anchor virtual content to a flat surface."><meta itemprop="description" content="This project demonstrates how to use World Effects to anchor virtual content to a flat surface."><meta property="og:description" content="This project demonstrates how to use World Effects to anchor virtual content to a flat surface."><meta name="twitter:description" content="This project demonstrates how to use World Effects to anchor virtual content to a flat surface."><script crossorigin="anonymous" src="./external/runtime/runtime.js"></script><script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" async crossorigin="anonymous" data-preload-chunks="slam"></script><script src="https://cdn.jsdelivr.net/npm/@8thwall/landing-page@1/dist/landing-page.js" crossorigin="anonymous"></script><meta property="og:image" content="https://8thwall.org/studio-world-effects-example/assets/preview.png"></head><body><script src="bundle.js"></script></body></html>
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TNTC — AR Experience</title>
+    <meta itemprop="name" content="TNTC AR Experience">
+    <meta name="twitter:title" content="TNTC AR Experience">
+    <meta property="og:title" content="TNTC AR Experience">
+    <meta property="og:site_name" content="TNTC AR Experience">
+    <meta name="description" content="An augmented reality experience by Tough Nut To Crack.">
+    <meta itemprop="description" content="An augmented reality experience by Tough Nut To Crack.">
+    <meta property="og:description" content="An augmented reality experience by Tough Nut To Crack.">
+    <meta name="twitter:description" content="An augmented reality experience by Tough Nut To Crack.">
+    <meta property="og:image" content="https://toughnuttocrack.it/ar/assets/preview.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+    <script crossorigin="anonymous" src="./external/runtime/runtime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" async crossorigin="anonymous"
+        data-preload-chunks="slam"></script>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        #tntc-desktop-gate {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background-color: #1a1814;
+            font-family: 'DM Mono', monospace;
+            color: #f5f2ec;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+        }
+
+        /* Show only on non-touch / desktop */
+        @media (hover: hover) and (pointer: fine) {
+            #tntc-desktop-gate { display: flex; }
+        }
+
+        .gate-logo {
+            width: 96px;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+
+        .gate-divider {
+            width: 1px;
+            height: 40px;
+            background: rgba(193, 127, 61, 0.4);
+            margin-bottom: 40px;
+        }
+
+        .gate-qr-wrapper {
+            position: relative;
+            padding: 16px;
+            border: 1px solid rgba(193, 127, 61, 0.3);
+            background: rgba(245, 242, 236, 0.04);
+            margin-bottom: 32px;
+        }
+
+        .gate-qr-wrapper::before,
+        .gate-qr-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-color: #c17f3d;
+            border-style: solid;
+        }
+        .gate-qr-wrapper::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .gate-qr-wrapper::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        .gate-qr-wrapper img {
+            display: block;
+            width: 160px;
+            height: 160px;
+            filter: invert(1);
+            opacity: 0.9;
+        }
+
+        .gate-label {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.05rem;
+            color: rgba(245, 242, 236, 0.55);
+            letter-spacing: 0.04em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .gate-url {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            color: #c17f3d;
+            letter-spacing: 0.08em;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .gate-footer {
+            position: absolute;
+            bottom: 32px;
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(245, 242, 236, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Desktop gate — hidden on mobile via CSS -->
+    <div id="tntc-desktop-gate">
+        <img class="gate-logo" src="/images/logoW.png" alt="TNTC Studio" />
+        <div class="gate-divider"></div>
+        <img
+            class=""
+            style="display:none"
+            id="gate-qr-img"
+            alt="QR Code"
+        />
+        <div class="gate-qr-wrapper">
+            <img
+                id="gate-qr"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=0&data=https%3A%2F%2Ftoughnuttocrack.it%2Far%2F"
+                alt="QR Code"
+            />
+        </div>
+        <p class="gate-label">Scan to open on your phone</p>
+        <p class="gate-url">toughnuttocrack.it/ar</p>
+        <span class="gate-footer">AR Experience &mdash; Mobile only</span>
+    </div>
+
+    <script src="bundle.js"></script>
+
+</body>
+
+</html>
